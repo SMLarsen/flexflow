@@ -3,7 +3,7 @@ var router = express.Router();
 var pg = require('pg');
 var connectionString = require('../modules/database-config');
 
-router.get("/", function(req, res) {
+router.get("/privateData", function(req, res) {
     pg.connect(connectionString, function(err, client, done) {
         var userEmail = req.decodedToken.email;
         console.log(userEmail);

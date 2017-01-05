@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="sampleApp">
+<html ng-app="flexFlowApp">
   <head>
     <meta charset="utf-8">
     <title>nodeFire with Authentication</title>
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-
+    <script type="text/javascript" src="../../bower_components/angular-route/angular-route.min.js"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 
@@ -17,38 +17,10 @@
 
     <!-- Angular Application with Authentication -->
     <script src="scripts/client.js"></script>
+    <script src="scripts/factory/auth.factory.js"></script>
+    <script src="scripts/controller/home.controller.js"></script>
   </head>
-  <body ng-controller="SampleCtrl as sc">
-    <h1>Hi! Log in to get some secret data from the server!</h1>
-    <button ng-click="sc.logIn()">Log In</button>
-    <button ng-click="sc.logOut()">Log Out</button>
-    <div ng-if="sc.secretData.length === 0">Log in to get some secret data.</div>
-    <table ng-if="sc.secretData.length > 0">
-      <thead>
-        <tr>
-          <th>
-            Secrecy Level
-          </th>
-          <th>
-            Secret Message
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="secret in sc.secretData">
-          <td>
-            {{secret.secrecyLevel}}
-          </td>
-          <td>
-            {{secret.secretText}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div>
-      <input ng-model="sc.newUser.email" placeholder="Email">
-      <input ng-model="sc.newUser.clearanceLevel" placeholder="Clearance Level">
-      <button ng-click="sc.createUser()">Create New User</button>
-    </div>
+  <body>
+    <main ng-view></main>
   </body>
 </html>

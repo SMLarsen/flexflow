@@ -1,0 +1,18 @@
+{
+  "name": "nodefire-attempt2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "test": "nodemon server/app.js"
+  },
+  "author": "Luke Schlangen",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "firebase-admin": "^4.0.3",
+    "mongoose": "^4.7.0"
+  }
+}

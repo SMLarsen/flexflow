@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="sampleApp">
+  <head>
+    <meta charset="utf-8">
+    <title>nodeFire with Authentication</title>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="scripts/config.js"></script>
+
+    <!-- Angular Application with Authentication -->
+    <script src="scripts/client.js"></script>
+  </head>
+  <body ng-controller="SampleCtrl as sc">
+    <h1>Hi! Log in to get some secret data from the server!</h1>
+    <button ng-click="sc.logIn()">Log In</button>
+    <button ng-click="sc.logOut()">Log Out</button>
+    <div ng-if="sc.secretData.length === 0">Log in to get some secret data.</div>
+    <table ng-if="sc.secretData.length > 0">
+      <thead>
+        <tr>
+          <th>
+            Secrecy Level
+          </th>
+          <th>
+            Secret Message
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="secret in sc.secretData">
+          <td>
+            {{secret.secrecyLevel}}
+          </td>
+          <td>
+            {{secret.secretText}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <input ng-model="sc.newUser.email" placeholder="Email">
+      <input ng-model="sc.newUser.clearanceLevel" placeholder="Clearance Level">
+      <button ng-click="sc.createUser()">Create New User</button>
+    </div>
+  </body>
+</html>

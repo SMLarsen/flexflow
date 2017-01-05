@@ -1,18 +1,19 @@
 {
-  "name": "nodefire-attempt2",
-  "version": "1.0.0",
+  "name": "flexflow",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node server/app.js",
     "test": "nodemon server/app.js"
   },
-  "author": "Luke Schlangen",
+  "author": "FlexFlow Team",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "firebase-admin": "^4.0.3",
-    "mongoose": "^4.7.0"
+    "path": "^0.12.7",
+    "pg": "^6.1.2"
   }
 }

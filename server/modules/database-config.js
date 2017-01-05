@@ -1,1 +1,1 @@
-module.exports = 'mongodb://localhost:27017/travelogger';
+module.exports = 'postgres://localhost:5432/flexflow';

@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = require('../config/dbconfig');
+var config = require('../modules/database-config.js');
 
 var pool = new pg.Pool({
   database: config.database

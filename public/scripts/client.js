@@ -20,7 +20,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controllerAs: 'fx'
 		})
 		.when('/flowspend', {
-			templateUrl: '/views/templates/flwospend.html',
+			templateUrl: '/views/templates/flowspend.html',
 			controller: 'FlowSpendController',
 			controllerAs: 'fl'
 		})

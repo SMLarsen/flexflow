@@ -2,14 +2,54 @@ var app = angular.module('flexFlowApp', ['ngRoute', 'firebase']);
 
 console.log('flexFlowApp running');
 
-app.config(['$routeProvider', function($routeProvider) {
-    $routeProvider
-        .when('/home', {
-            templateUrl: '/views/templates/home.html',
-            controller: 'HomeController',
-            controllerAs: 'hc'
-        })
-        .otherwise({
-            redirectTo: 'home'
-        });
+app.config(['$routeProvider', function ($routeProvider) {
+	$routeProvider
+		.when('/home', {
+			templateUrl: '/views/templates/home.html',
+			controller: 'HomeController',
+			controllerAs: 'hc'
+		})
+		.when('/clientprofile', {
+			templateUrl: '/views/templates/clientprofile.html',
+			controller: 'ClientProfileController',
+			controllerAs: 'cp'
+		})
+		.when('/flexspend', {
+			templateUrl: '/views/templates/flexspend.html',
+			controller: 'FlexSpendController',
+			controllerAs: 'fx'
+		})
+		.when('/flowspend', {
+			templateUrl: '/views/templates/flwospend.html',
+			controller: 'FlowSpendController',
+			controllerAs: 'fl'
+		})
+		.when('/functionalspend', {
+			templateUrl: '/views/templates/functionalspend.html',
+			controller: 'FunctionalSpendController',
+			controllerAs: 'fu'
+		})
+		.when('/financialspend', {
+			templateUrl: '/views/templates/fincancialspend.html',
+			controller: 'FinancialSpendController',
+			controllerAs: 'fi'
+		})
+		.when('/additionalinfo', {
+			templateUrl: '/views/templates/additionalinfo.html',
+			controller: 'AdditionalInfoController',
+			controllerAs: 'ai'
+		})
+		.when('/results', {
+			templateUrl: '/views/templates/results.html',
+			controller: 'ResultsController',
+			controllerAs: 'rc'
+		})
+		.when('/nav', {
+			templateUrl: '/views/templates/nav.html',
+			controller: 'NavController',
+			controllerAs: 'nc'
+		})
+		.otherwise({
+			redirectTo: 'home'
+		});
 }]); // End config

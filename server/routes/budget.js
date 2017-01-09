@@ -19,7 +19,6 @@ router.get("/profile/:email", function(req, res) {
                         console.log('Error COMPLETING profile select profile', err);
                         res.sendStatus(500);
                     } else {
-
                         res.send(result.rows[0]);
                         console.log('retrieved profile', result.rows[0]);
                     }

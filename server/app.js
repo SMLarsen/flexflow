@@ -18,7 +18,6 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.use("/template", templates);
-app.use("/budget", budget);
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request.
 app.use(decoder.token);
@@ -28,6 +27,7 @@ app.use(decoder.token);
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.get("/privateData", privateData);
 app.use('/users', users);
+app.use("/budget", budget);
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

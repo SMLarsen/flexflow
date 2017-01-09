@@ -21,7 +21,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                             })
                             .then(function(response) {
                                     currentUser.authIdToken = idToken;
-                                    console.log('current user authorized');
+                                    console.log('current user authorized:', currentUser);
                                     return currentUser;
                                 },
                                 function(err) {
@@ -46,21 +46,21 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
 
     // Function get idToken
     getIdToken = function() {
-        // console.log('getIdToken currentUser', currentUser);
-        if (currentUser) {
-            // This is where we make our call to our server
-            return currentUser.getToken().then(function(idToken) {
-                    currentUser.authIdToken = idToken;
-                    console.log('got current user idToken:', currentUser.email);
-                    return currentUser;
-                },
-                function(err) {
-                    console.log('current user not registered', err);
-                    return;
-                });
-        } else {
-            return;
-        }
+        console.log('getIdToken currentUser', currentUser);
+        // if (currentUser) {
+        //     // This is where we make our call to our server
+        //     return currentUser.getToken().then(function(idToken) {
+        //             currentUser.authIdToken = idToken;
+        //             console.log('got current user idToken:', currentUser.email);
+        //             return currentUser;
+        //         },
+        //         function(err) {
+        //             console.log('current user not registered', err);
+        //             return;
+        //         });
+        // } else {
+        //     return;
+        // }
     }; // End getIdToken
 
     // This code runs whenever the user changes authentication states

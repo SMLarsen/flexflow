@@ -35,14 +35,12 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         //     });
     }; //end getBudget
 
-    getBudget();
-
     var publicApi = {
         putBudget: function(budget) {
             return putBudget(budget);
         },
-        getBudget: function(user) {
-            return getBudget(user);
+        getBudget: function() {
+            return getBudget();
         },
         postBudget: function(budget) {
             return postBudget(budget);

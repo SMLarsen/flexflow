@@ -8,7 +8,7 @@ router.get("/privateData", function(req, res) {
         var userEmail = req.decodedToken.email;
         console.log(userEmail);
         /* getting user by email */
-        client.query('SELECT * FROM users WHERE email=$1', [userEmail], function(err, result) {
+        client.query('SELECT email, clearance_level FROM users WHERE email=$1', [userEmail], function(err, result) {
             done();
             if (err) {
                 console.log('Error COMPLETING clearance_level query task', err);
@@ -26,7 +26,7 @@ router.get("/privateData", function(req, res) {
                                     res.sendStatus(500);
                                 } else {
                                     /* Retrieve new user to get id */
-                                    client.query('SELECT * FROM users WHERE email=$1', [userEmail], function(err, result) {
+                                    client.query('SELECT email, clearance_level FROM users WHERE email=$1', [userEmail], function(err, result) {
                                         done();
                                         if (err) {
                                             console.log('Error Selecting new user', err);

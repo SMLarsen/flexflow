@@ -1,28 +1,6 @@
 app.factory("TemplateFactory", function($http) {
     console.log('TemplateFactory started');
 
-    // var categoryTemplate = [{
-    //         id: 1,
-    //         category_name: 'Flow',
-    //         category_text: 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'
-    //     },
-    //     {
-    //         id: 2,
-    //         category_name: 'Flex',
-    //         category_text: 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'
-    //     },
-    //     {
-    //         id: 3,
-    //         category_name: 'Financial',
-    //         category_text: 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'
-    //     },
-    //     {
-    //         id: 4,
-    //         category_name: 'Functional',
-    //         category_text: 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.'
-    //     }
-    // ];
-
 
     var categoryTemplate = [];
 
@@ -265,9 +243,9 @@ app.factory("TemplateFactory", function($http) {
               url: '/template/item'
           })
           .then(function(response) {
-                  categoryTemplate = response;
+                  itemTemplate = response.data;
                   console.log('Items returned:', response.data);
-                  return categoryTemplate;
+                  return;
               },
               function(err) {
                   console.log('Error getting /template/item', err);
@@ -290,6 +268,7 @@ app.factory("TemplateFactory", function($http) {
     getItemTemplate = function(category) {
         var categoryID = 0;
         for (var i = 0; i < categoryTemplate.length; i++) {
+          console.log(categoryTemplate[i].category_name);
             if (categoryTemplate[i].category_name === category) {
                 categoryID = categoryTemplate[i].id;
             }

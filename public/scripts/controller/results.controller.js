@@ -1,3 +1,3 @@
-app.controller('ResultsController', ['$firebaseAuth', '$http', 'AuthFactory', function($firebaseAuth, $http, AuthFactory) {
+app.controller('ResultsController', ['$http', 'AuthFactory', 'TemplateFactory', function($http, AuthFactory, TemplateFactory) {
   console.log('Results controller started');
 }]);

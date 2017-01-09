@@ -1,3 +1,3 @@
-app.controller('AdditionalInfoController', ['$firebaseAuth', '$http', 'AuthFactory', function($firebaseAuth, $http, AuthFactory) {
+app.controller('AdditionalInfoController', ['$http', 'AuthFactory', 'TemplateFactory', function($http, AuthFactory, TemplateFactory) {
   console.log('Additional Info controller started');
 }]);

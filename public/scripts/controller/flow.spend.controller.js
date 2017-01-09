@@ -1,3 +1,3 @@
-app.controller('FlowSpendController', ['$firebaseAuth', '$http', 'AuthFactory', function($firebaseAuth, $http, AuthFactory) {
+app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', function($http, AuthFactory, TemplateFactory) {
   console.log('Flow Spend controller started');
 }]);

@@ -4,6 +4,9 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   this.currentMonth = null;
   this.currentMonthIndex = null;
+  this.flowCategories = TemplateFactory.getItemTemplate('Flow');
+  console.log(this.flowCategories);
+
 
   this.enterMonthFlowData = function(month, i) {
     console.log('you have clicked', month);

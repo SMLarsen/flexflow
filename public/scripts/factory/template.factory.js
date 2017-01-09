@@ -1,27 +1,30 @@
 app.factory("TemplateFactory", function($http) {
     console.log('TemplateFactory started');
 
-    var categoryTemplate = [{
-            id: 1,
-            category_name: 'Flow',
-            category_text: 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'
-        },
-        {
-            id: 2,
-            category_name: 'Flex',
-            category_text: 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'
-        },
-        {
-            id: 3,
-            category_name: 'Financial',
-            category_text: 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'
-        },
-        {
-            id: 4,
-            category_name: 'Functional',
-            category_text: 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.'
-        }
-    ];
+    // var categoryTemplate = [{
+    //         id: 1,
+    //         category_name: 'Flow',
+    //         category_text: 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'
+    //     },
+    //     {
+    //         id: 2,
+    //         category_name: 'Flex',
+    //         category_text: 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'
+    //     },
+    //     {
+    //         id: 3,
+    //         category_name: 'Financial',
+    //         category_text: 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'
+    //     },
+    //     {
+    //         id: 4,
+    //         category_name: 'Functional',
+    //         category_text: 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.'
+    //     }
+    // ];
+
+
+    var categoryTemplate = [];
 
     var itemTemplate = [{
             id: 1,
@@ -232,6 +235,46 @@ app.factory("TemplateFactory", function($http) {
         }
     ];
 
+    // function to do initial load of template date
+    loadTemplateData = function() {
+      getCategories();
+      getItems();
+    }; // end loadTemplateData
+
+    // function to get categories for initial load
+    getCategories = function() {
+      return $http({
+              method: 'GET',
+              url: '/template/category'
+          })
+          .then(function(response) {
+                  categoryTemplate = response.data;
+                  console.log('Categories', response.data);
+                  return;
+              },
+              function(err) {
+                  console.log('error getting /template/category ', err);
+                  return;
+              });
+    }; //end getCategories
+
+    // function to get items for initial load
+    getItems = function() {
+      return $http({
+              method: 'GET',
+              url: '/template/item'
+          })
+          .then(function(response) {
+                  categoryTemplate = response;
+                  console.log('Items returned:', response.data);
+                  return categoryTemplate;
+              },
+              function(err) {
+                  console.log('Error getting /template/item', err);
+                  return;
+              });
+    }; //end getItems
+
     // function to get info needed to build budget template
     // returns object for requested category
     getCategoryTemplate = function(category) {
@@ -260,10 +303,10 @@ app.factory("TemplateFactory", function($http) {
         return categoryItems;
     };  // end getItemTemplate
 
-    console.log('Category Flow:', getCategoryTemplate('Flow'));
-    console.log('Item Flow:', getItemTemplate('Flow'));
-    console.log('Category Flex:', getCategoryTemplate('Flex'));
-    console.log('Flex:', getItemTemplate('Flex'));
+    // console.log('Category Flow:', getCategoryTemplate('Flow'));
+    // console.log('Item Flow:', getItemTemplate('Flow'));
+    // console.log('Category Flex:', getCategoryTemplate('Flex'));
+    // console.log('Flex:', getItemTemplate('Flex'));
 
     var publicApi = {
         getCategoryTemplate: function(category) {
@@ -271,7 +314,11 @@ app.factory("TemplateFactory", function($http) {
         },
         getItemTemplate: function(category) {
             return getItemTemplate(category);
+        },
+        loadTemplateData: function(){
+          return loadTemplateData();
         }
+
     };
 
     return publicApi;

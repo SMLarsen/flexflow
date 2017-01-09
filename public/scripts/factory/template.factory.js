@@ -260,10 +260,10 @@ app.factory("TemplateFactory", function($http) {
         return categoryItems;
     };  // end getItemTemplate
 
-    // console.log('Category Flow:', getCategoryTemplate('Flow'));
-    // console.log('Item Flow:', getItemTemplate('Flow'));
-    // console.log('Category Flex:', getCategoryTemplate('Flex'));
-    // console.log('Flex:', getItemTemplate('Flex'));
+    console.log('Category Flow:', getCategoryTemplate('Flow'));
+    console.log('Item Flow:', getItemTemplate('Flow'));
+    console.log('Category Flex:', getCategoryTemplate('Flex'));
+    console.log('Flex:', getItemTemplate('Flex'));
 
     var publicApi = {
         getCategoryTemplate: function(category) {

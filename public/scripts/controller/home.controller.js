@@ -1,4 +1,4 @@
-app.controller("HomeController", ["$http", "AuthFactory", function($http, AuthFactory) {
+app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", function($http, AuthFactory, TemplateFactory) {
     console.log('HomeController started');
     var self = this;
     var authFactory = AuthFactory;

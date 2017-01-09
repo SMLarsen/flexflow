@@ -6,6 +6,7 @@ var decoder = require('./modules/decoder');
 var privateData = require('./routes/private-data');
 var users = require('./routes/users');
 var templates = require('./routes/template');
+var budget = require('./routes/budget');
 
 var portDecision = process.env.PORT || 5000;
 
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.use("/template", templates);
+app.use("/budget", budget);
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request.
 app.use(decoder.token);

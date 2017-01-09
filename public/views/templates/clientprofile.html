@@ -4,12 +4,36 @@
 
 
 
-<h2>Name(s)</h2>
 <div class="client_names">
-<input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob">
-<input type="text" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly">
-<button type="submit" name="submit">Submit</button>
-</div>
+  <label for="names">Name(s)</label><br>
+  <input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob">
+  <input type="text" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly"><br>
+  <label for="total income">Total Household Income</label><br>
+  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
+  <label for="total take-home">Total Monthly Take-Home Cash</label><br>
+  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. $5,000" class="form-control"><br>
+  <label for="start budget">What month are you starting your budget?</label><br>
+  <select name="month" ng-model="cp.budget.budget_start_month">
+    <option value="jan">January</option>
+    <option value="feb">February</option>
+    <option value="mar">March</option>
+    <option value="apr">April</option>
+    <option value="may">May</option>
+    <option value="jun">June</option>
+    <option value="jul">July</option>
+    <option value="aug">August</option>
+    <option value="sep">September</option>
+    <option value="oct">October</option>
+    <option value="nov">November</option>
+    <option value="dec">December</option>
+  </select>
+  <select name="year" ng-model="cp.budget.budget_start_year">
+    <option value="2017">2017</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+  </select><br>
+  <button type="submit" name="submit">Submit</button>
+</div><br>
 <footer>
-<button class="next">Next</button>
+  <button class="next">Next</button>
 </footer>

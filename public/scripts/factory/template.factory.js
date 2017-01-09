@@ -1,7 +1,7 @@
 app.factory("TemplateFactory", function($http) {
     console.log('TemplateFactory started');
 
-    var budgetTemplate = [{
+    var categoryTemplate = [{
             id: 1,
             category_name: 'Flow',
             category_text: 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'
@@ -232,15 +232,23 @@ app.factory("TemplateFactory", function($http) {
         }
     ];
 
-    getBudgetTemplate = function() {
-        return budgetTemplate;
-    };
+    // function to get info needed to build budget template
+    // returns object for requested category
+    getCategoryTemplate = function(category) {
+       for (var i = 0; i < categoryTemplate.length; i++) {
+         if (categoryTemplate[i].category_name === category) {
+           return categoryTemplate[i];
+         }
+       }
+    }; // end getCategoryTemplate
 
+    // function to return template items for requested category
+    // returns array of item objects
     getItemTemplate = function(category) {
         var categoryID = 0;
-        for (var i = 0; i < budgetTemplate.length; i++) {
-            if (budgetTemplate[i].category_name === category) {
-                categoryID = budgetTemplate[i].id;
+        for (var i = 0; i < categoryTemplate.length; i++) {
+            if (categoryTemplate[i].category_name === category) {
+                categoryID = categoryTemplate[i].id;
             }
         }
         var categoryItems = [];
@@ -250,14 +258,16 @@ app.factory("TemplateFactory", function($http) {
             }
         }
         return categoryItems;
-    };
+    };  // end getItemTemplate
 
-    // console.log('Flow:', getItemTemplate('Flow'));
+    // console.log('Category Flow:', getCategoryTemplate('Flow'));
+    // console.log('Item Flow:', getItemTemplate('Flow'));
+    // console.log('Category Flex:', getCategoryTemplate('Flex'));
     // console.log('Flex:', getItemTemplate('Flex'));
 
     var publicApi = {
-        getBudgetTemplate: function() {
-            return getBudgetTemplate();
+        getCategoryTemplate: function(category) {
+            return getCategoryTemplate(category);
         },
         getItemTemplate: function(category) {
             return getItemTemplate(category);

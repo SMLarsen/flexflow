@@ -3,6 +3,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     var auth = $firebaseAuth();
 
     var currentUser = {};
+    var newUser = true;
 
     // Authenticates user at login
     logIn = function() {
@@ -21,11 +22,15 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                             })
                             .then(function(response) {
                                     currentUser.authIdToken = idToken;
+<<<<<<< HEAD
                                     console.log('current user authorized:', currentUser);
+=======
+                                    newUser = currentUser.newUser;
+                                    console.log('current user authorized');
+>>>>>>> development
                                     return currentUser;
                                 },
                                 function(err) {
-                                    isUserLoggedIn = false;
                                     console.log('current user not registered', err);
                                     return;
                                 })
@@ -91,6 +96,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
 
     var publicApi = {
         currentUser: currentUser,
+        newUser: newUser,
         getIdToken: function() {
             return getIdToken();
         },

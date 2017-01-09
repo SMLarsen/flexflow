@@ -291,10 +291,12 @@ CREATE TABLE financial_item (
 );
 
 INSERT INTO financial_item (budget_id, item_name, item_amount)
-VALUES (1, 'NM Ins and Investments', 500),
-(1, 'Cash (Emergency)', 300),
-(2, 'Cash (Emergency)', 400),
-(2, 'ROTH IRA', 400)
+VALUES (1, 'Insurance', 500),
+(1, 'Investments', 300),
+(1, 'Emergency Cash', 300),
+(2, 'Insurance', 400),
+(2, 'Investments', 1400),
+(1, 'Emergency Cash', 300)
 ;
 
 SELECT * FROM financial_item;
@@ -380,7 +382,10 @@ VALUES (1, 'Holidays', 'appareat dignissim ex vix', 'Holidays', 'img1.jpg', 0),
 (4, 'Student Loans', 'appareat dignissim ex vix', 'Student Loans', 'img16.jpg', 6),
 (4, 'Credit Card | Loans', 'appareat dignissim ex vix', 'Credit Card | Loans', 'img17.jpg', 7),
 (4, 'Gas', 'appareat dignissim ex vix', 'Gas', 'img18.jpg', 8),
-(4, 'Groceries', 'appareat dignissim ex vix', 'Groceries', 'img19.jpg', 9)
+(4, 'Groceries', 'appareat dignissim ex vix', 'Groceries', 'img19.jpg', 9),
+(3, 'Insurance', 'appareat dignissim ex vix', 'Insurance', 'img20.jpg', 0),
+(3, 'Investments', 'appareat dignissim ex vix', 'Investments', 'img21.jpg', 1),
+(3, 'Emergency Cash', 'appareat dignissim ex vix', 'Emergency Cash', 'img22.jpg', 2)
 ;
 
 select * from budget_item

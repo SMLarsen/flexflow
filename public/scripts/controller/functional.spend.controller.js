@@ -1,4 +1,4 @@
-app.controller('FunctionalSpendController', ['$firebaseAuth', '$http', 'AuthFactory', function($firebaseAuth, $http, AuthFactory) {
+app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFactory', function($http, AuthFactory, TemplateFactory) {
   console.log('Functional Spend controller started');
 
 // Add functional spending to DB

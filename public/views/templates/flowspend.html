@@ -1,5 +1,5 @@
 <h1>Your Flow Spending</h1>
-<button ng-repeat="month in fl.months" ng-click="fl.enterMonthFlowData(month)" data-toggle="modal" data-target="#monthDataForm">{{month}}</button>
+<button ng-repeat="month in fl.months" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month}}</button>
 
 
 
@@ -14,8 +14,8 @@
         <p>This is a large modal.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default">Previous Month</button>
-        <button type="button" class="btn btn-default">Next Month</button>
+        <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
+        <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
       </div>
     </div>
   </div>

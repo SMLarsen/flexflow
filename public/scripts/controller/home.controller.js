@@ -2,6 +2,9 @@ app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", fun
     console.log('HomeController started');
     var self = this;
     var authFactory = AuthFactory;
+    var templateFactory = TemplateFactory;
+
+    templateFactory.loadTemplateData();
 
     // Function to Login
     self.logIn = function() {

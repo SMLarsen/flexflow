@@ -10,6 +10,8 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   console.log('flow categories', self.flowCategories);
 
+  addToggleStatus();
+
   self.enterMonthFlowData = function(month, i) {
     console.log('you have clicked', month);
     console.log(i);
@@ -34,5 +36,20 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     self.currentMonthIndex = 11;
   }
     return self.currentMonth = self.months[this.currentMonthIndex];
+  }
+
+  self.toggleActive = function(category) {
+    if(category.activeCategory === false) {
+    category.activeCategory = true;
+  } else {
+    category.activeCategory = false;
+  }
+  }
+
+  function addToggleStatus(){
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      var category = self.flowCategories[i];
+      category.activeCategory = false;
+    }
   }
 }]);

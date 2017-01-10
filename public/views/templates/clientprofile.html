@@ -9,10 +9,10 @@
 
 <div class="client_names">
   <label for="names">Name(s)</label><br>
-  <input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob" class="form-control">
-  <input type="text" ng-show="cp.numPeople >= 2" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly" class="form-control">
-  <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.flex_item.person3.flex_name" placeholder="e.g. Ben" class="form-control">
-  <input type="text" ng-show="cp.numPeople >= 4" ng-model="cp.flex_item.person4.flex_name" placeholder="e.g. Betty" class="form-control"><br>
+  <input type="text" ng-model="cp.person1.flex_item.flex_name" placeholder="e.g. Bob" class="form-control">
+  <input type="text" ng-show="cp.numPeople >= 2" ng-model="cp.person2.flex_item.flex_name" placeholder="e.g. Beverly" class="form-control">
+  <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.person3.flex_item.flex_name" placeholder="e.g. Ben" class="form-control">
+  <input type="text" ng-show="cp.numPeople >= 4" ng-model="cp.person4.flex_item.flex_name" placeholder="e.g. Betty" class="form-control"><br>
   <label for="total income">Total Household Income</label><br>
   <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
@@ -58,6 +58,3 @@
   </div>
 </div>
 </div><br>
-<footer>
-  <button class="btn btn-primary next">Next Page ></button>
-</footer>

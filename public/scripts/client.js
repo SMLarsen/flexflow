@@ -59,6 +59,11 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'SavingsGoalsController',
 			controllerAs: 'sg'
 		})
+		.when('/congrats', {
+			templateUrl: '/views/templates/congrats.html',
+			controller: 'CongratsController',
+			controllerAs: 'cc'
+		})
 		.otherwise({
 			redirectTo: 'home'
 		});

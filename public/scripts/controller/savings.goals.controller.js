@@ -5,5 +5,5 @@ app.controller('SavingsGoalsController', ['$http', 'AuthFactory', 'TemplateFacto
 
   var templateFactory = TemplateFactory;
 
-  self.budget.annual_salary
+  
 }]);

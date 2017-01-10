@@ -17,13 +17,13 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.enterMonthFlowData = function(month, i) {
     self.currentMonth = month;
     self.currentMonthIndex = i;
-  }
+  } // end enterMonthFlowData
 
   // advances to the next month
   self.nextMonth = function() {
     console.log(self.flowCategories);
     postMonthFlowData();
-    self.clearData();
+    clearData();
     removeActiveToggles();
     self.newFlowBudget = [];
     self.flowCategories = templateFactory.getItemTemplate("Flow");
@@ -33,12 +33,12 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       self.currentMonthIndex = 0;
     }
     return self.currentMonth = self.months[self.currentMonthIndex];
-  }
+  } // end nextMonth
 
   // retreats to previous month
   self.prevMonth = function() {
     postMonthFlowData();
-    self.clearData();
+    clearData();
     removeActiveToggles();
     self.newFlowBudget = [];
     self.flowCategories = templateFactory.getItemTemplate("Flow");
@@ -48,7 +48,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       self.currentMonthIndex = 11;
     }
     return self.currentMonth = self.months[this.currentMonthIndex];
-  }
+  } // end prevMonth
 
   // toggles activeCategory value for each category
   self.toggleActive = function(category) {
@@ -57,16 +57,16 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     } else {
       category.activeCategory = false;
     }
-  }
+  } // end toggleActive
 
-  self.clearData = function() {
+  function clearData() {
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
       if(category.item_amount != undefined) {
         category.item_amount = undefined;
       }
     }
-  }
+  } // end clearData
 
   // removes all active values in individual flow categories
   function removeActiveToggles(){
@@ -78,7 +78,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
         category.activeCategory = false;
       }
     }
-  }
+  } // end removeActiveToggles
 
   // restructuring monthly flow data for database
   function postMonthFlowData() {
@@ -95,6 +95,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       self.newFlowBudget[i] = monthlyBudgetCategoryData;
     }
     console.log(self.newFlowBudget);
-  }
+  } // end postMonthFlowData
 
 }]); //end flow controller

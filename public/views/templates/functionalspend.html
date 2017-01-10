@@ -1,13 +1,27 @@
-<!-- <div class="form-group">
-        <label for="Rent/Mortgage"></label>
-        <input type="number" ng-model="fi.newArticle.description" name="description" class="form-control" placeholder="Summary (optional)" />
-    </div> -->
+
+<!-- <div class="modal fade" id="functionalData" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="!!!EDIT!!!"></button>
+          <button type="button" class="btn btn-default" ng-click="!!!SUBMIT FUNCTIONAL!!!">Looks Good! Submit<nav>
+          </nav></button>
+        </div>
+      </div> -->
+
+
+
 <div class="functionalSpending" ng-repeat="item in fu.itemArray">
-{{item.item_img_src}}
-{{item.item_name}}
-<input type="text" name="" placeholder="{{item.item_placeholder_text}}">
+  <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
+  <span ng-hide="item.activeItem">{{item.item_placeholder_text}}</span>
+  <input placeholder="eg. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount"/>
 </div>
 
 <footer>
-<button class="next">Next</button>
+<button class="next" data-toggle="modal" data-target="#functionalData">Review Info/Next</button>
 </footer>

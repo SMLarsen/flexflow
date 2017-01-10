@@ -5,6 +5,32 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     var profile = {};
     var itemArray = [];
 
+    // function to insert budget profile
+    postBudget = function(profile) {
+      console.log('postBudget');
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/profile/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: profile
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error updating profile for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postBudget
+
     // function to get budget profile
     getBudget = function() {
         var currentUser = authFactory.getCurrentUser();
@@ -31,14 +57,17 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     }; //end getBudget
 
     var publicApi = {
-        putBudget: function(budget) {
-            return putBudget(budget);
+        // update budget profile
+        putBudget: function(profile) {
+            return putBudget(profile);
         },
+        // get budget profile
         getBudget: function() {
             return getBudget();
         },
-        postBudget: function(budget) {
-            return postBudget(budget);
+        // insert budget profile
+        postBudget: function(profile) {
+            return postBudget(profile);
         }
     };
 

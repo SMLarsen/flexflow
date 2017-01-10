@@ -21,7 +21,8 @@
                 .then(function(result) {
                     self.budget = result;
                     // console.log('WelcomeController budget', self.budget);
-                });        }
+                });
+        }
 
         self.postBudget = function() {
             console.log('post clicked');
@@ -50,11 +51,80 @@
         };
 
         self.getFlowItems = function() {
-          budgetFactory.getFlowItems()
-              .then(function(result) {
-                  self.flowItemArray = result;
-                  // console.log('WelcomeController flowItemArray', self.flowItemArray);
-              });
+            budgetFactory.getFlowItems()
+                .then(function(result) {
+                    self.flowItemArray = result;
+                    // console.log('WelcomeController flowItemArray', self.flowItemArray);
+                });
+        };
+
+        var month = [{
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 0,
+                item_name: 'Holidays'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 50,
+                item_name: 'Cash (Other / Random)'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 40,
+                item_name: 'Car/Home Maintenance'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 0,
+                item_name: 'Birthdays'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 50,
+                item_name: 'Stuff for Kids'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 0,
+                item_name: 'Trips/ Vacation'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 0,
+                item_name: 'Auto Registration'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 150,
+                item_name: 'Personal Care'
+            },
+            {
+                item_month: 1,
+                item_year: 2017,
+                item_amount: 0,
+                item_name: 'P&C Insurance'
+            }
+        ];
+
+        self.postFlowItems = function() {
+            console.log('post flow items clicked');
+            budgetFactory.postFlowItems(month)
+                .then(function(result) {
+                        console.log('Flow items inserted');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error inserting flow items for', currentUser.email, ': ', err);
+                        return;
+                    });
         };
 
 

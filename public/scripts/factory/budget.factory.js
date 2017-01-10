@@ -88,7 +88,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     //**************************** Flow Item Functions ******************************//
         // function to insert flow items
         postFlowItems = function(month) {
-            console.log('postFlowItems');
+            console.log('postFlowItems', month);
             var currentUser = authFactory.getCurrentUser();
             if (currentUser) {
                 return $http({

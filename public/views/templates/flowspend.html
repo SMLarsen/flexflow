@@ -11,7 +11,10 @@
         <h4 class="modal-title">{{fl.currentMonth}}</h4>
       </div>
       <div class="modal-body">
-        <p>This is a large modal.</p>
+        <div ng-repeat="category in fl.flowCategories">
+          <label for="category.item_name">{{category.item_name}}</label>
+          <input placeholder="{{category.item_placeholder_text}}" name="category.item_name" ng-model="fl.newFlowBudget"/>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>

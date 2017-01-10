@@ -10,8 +10,8 @@
 <div class="client_names">
   <label for="names">Name(s)</label><br>
   <input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob" class="form-control">
-  <input type="text" ng-show="cp.numPeople >= 2" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly" class="form-control"><br>
-  <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.flex_item.person3.flex_name" placeholder="e.g. Ben" class="form-control"><br>
+  <input type="text" ng-show="cp.numPeople >= 2" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly" class="form-control">
+  <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.flex_item.person3.flex_name" placeholder="e.g. Ben" class="form-control">
   <input type="text" ng-show="cp.numPeople >= 4" ng-model="cp.flex_item.person4.flex_name" placeholder="e.g. Betty" class="form-control"><br>
   <label for="total income">Total Household Income</label><br>
   <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
@@ -51,8 +51,8 @@
         <p>Annual Income: {{cp.budget.annual_salary}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="cp.editInfo()">Edit Info</button>
-        <button type="button" class="btn btn-default" ng-click="cp.submit()">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
+        <button onclick="window.location.href='#savingsgoals'" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

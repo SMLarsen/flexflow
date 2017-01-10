@@ -21,8 +21,7 @@
                 .then(function(result) {
                     self.budget = result;
                     // console.log('WelcomeController budget', self.budget);
-                });
-        }
+                });        }
 
         self.postBudget = function() {
             console.log('post clicked');
@@ -49,6 +48,15 @@
                         return;
                     });
         };
+
+        self.getFlowItems = function() {
+          budgetFactory.getFlowItems()
+              .then(function(result) {
+                  self.flowItemArray = result;
+                  // console.log('WelcomeController flowItemArray', self.flowItemArray);
+              });
+        };
+
 
     }]);
 

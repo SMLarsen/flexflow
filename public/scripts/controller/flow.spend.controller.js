@@ -4,7 +4,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   self.currentMonth = null;
   self.currentMonthIndex = null;
-  self.newFlowBudget = {};
+  self.newFlowBudget = [];
   var templateFactory = TemplateFactory;
   self.flowCategories = templateFactory.getItemTemplate("Flow");
 

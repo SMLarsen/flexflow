@@ -19,18 +19,18 @@
   <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. $5,000" class="form-control"><br>
   <label for="start budget">What month are you starting your budget?</label><br>
   <select name="month" ng-model="cp.budget.budget_start_month">
-    <option value="jan">January</option>
-    <option value="feb">February</option>
-    <option value="mar">March</option>
-    <option value="apr">April</option>
-    <option value="may">May</option>
-    <option value="jun">June</option>
-    <option value="jul">July</option>
-    <option value="aug">August</option>
-    <option value="sep">September</option>
-    <option value="oct">October</option>
-    <option value="nov">November</option>
-    <option value="dec">December</option>
+    <option value="1">January</option>
+    <option value="2">February</option>
+    <option value="3">March</option>
+    <option value="4">April</option>
+    <option value="5">May</option>
+    <option value="6">June</option>
+    <option value="7">July</option>
+    <option value="8">August</option>
+    <option value="9">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
   </select>
   <select name="year" ng-model="cp.budget.budget_start_year">
     <option value="2017">2017</option>
@@ -52,7 +52,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button onclick="window.location.href='#savingsgoals'" class="btn btn-default" data-dismiss="modal">Submit</button>
+        <!-- <button onclick="window.location.href='#savingsgoals'" class="btn btn-default" data-dismiss="modal">Submit</button> -->
+        <button onclick="window.location.href='#savingsgoals'" ng-click="cp.postBudget()" class="btn btn-default" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

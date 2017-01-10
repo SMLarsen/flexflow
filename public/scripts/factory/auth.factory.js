@@ -90,7 +90,6 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     // });
 
     var publicApi = {
-        currentUser: currentUser,
         getIdToken: function() {
             return getIdToken();
         },
@@ -99,6 +98,9 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
         },
         logOut: function() {
             return logOut();
+        },
+        isNewUser: function() {
+          return currentUser.newUser;
         }
     };
 

@@ -6,10 +6,10 @@
         var authFactory = AuthFactory;
         var budgetFactory = BudgetFactory;
 
-        self.newUser = authFactory.currentUser.newUser;
-        console.log('setting newuser', self.newUser);
+        var newUser = authFactory.isNewUser();
+        console.log('setting newuser', newUser);
 
-        if (!self.newUser) {
+        if (!newUser) {
             budgetFactory.getBudget();
             console.log('getBudget in welcome', budgetFactory.getBudget());
         }

@@ -1,1 +1,25 @@
-<h1>flexspend</h1>
+<h1>Your Monthly Flex Allowance</h1>
+
+<label for="first_flex">{{fx.person1.flex_item.flex_name}}</label><br>
+<input type="text" ng-model="fx.flex_item.flex1.flex_amount" placeholder="e.g. $500" class="form-control">
+<label for="second_flex">{{fx.person2.flex_item.flex_name}}</label><br>
+<input type="text" ng-model="fx.flex_item.flex2.flex_amount" placeholder="e.g. $450" class="form-control">
+<button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitFlex()" data-target="#flexProfileForm">Submit Flex</button>
+<div class="modal fade" id="flexProfileForm" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">This is your Flex allowance.</h4>
+      </div>
+      <div class="modal-body">
+        <p>Person 1: {{fx.flex_item.flex1.flex_amount}}</p>
+        <p>Person 2: {{fx.flex_item.flex2.flex_amount}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
+        <button onclick="window.location.href='#flowspend'" class="btn btn-default" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

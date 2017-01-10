@@ -9,6 +9,11 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'HomeController',
 			controllerAs: 'hc'
 		})
+		.when('/welcome', {
+			templateUrl: '/views/templates/welcome.html',
+			controller: 'WelcomeController',
+			controllerAs: 'wc'
+		})
 		.when('/clientprofile', {
 			templateUrl: '/views/templates/clientprofile.html',
 			controller: 'ClientProfileController',

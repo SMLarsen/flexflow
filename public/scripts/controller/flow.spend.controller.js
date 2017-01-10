@@ -32,6 +32,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   // retreats to previous month
   self.prevMonth = function() {
+    removeActiveToggles();
     if(self.currentMonthIndex > 0) {
     self.currentMonthIndex--;
   } else {

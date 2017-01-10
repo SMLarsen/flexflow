@@ -22,7 +22,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // advances to the next month
   self.nextMonth = function() {
     console.log(self.flowCategories);
+    postMonthFlowData();
+    self.clearData();
     removeActiveToggles();
+    self.newFlowBudget = [];
+    self.flowCategories = templateFactory.getItemTemplate("Flow");
     if(self.currentMonthIndex < 11) {
       self.currentMonthIndex++;
     } else {
@@ -33,7 +37,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   // retreats to previous month
   self.prevMonth = function() {
+    postMonthFlowData();
+    self.clearData();
     removeActiveToggles();
+    self.newFlowBudget = [];
+    self.flowCategories = templateFactory.getItemTemplate("Flow");
     if(self.currentMonthIndex > 0) {
       self.currentMonthIndex--;
     } else {
@@ -51,11 +59,42 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   }
 
+  self.clearData = function() {
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      var category = self.flowCategories[i];
+      if(category.item_amount != undefined) {
+        category.item_amount = undefined;
+      }
+    }
+  }
+
   // removes all active values in individual flow categories
   function removeActiveToggles(){
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
-      category.activeCategory = false;
+      if(category.item_amount) {
+        category.activeCategory  = true;
+      } else {
+        category.activeCategory = false;
+      }
     }
   }
-}]);
+
+  // restructuring monthly flow data for database
+  function postMonthFlowData() {
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      if(self.flowCategories[i].item_amount === undefined) {
+        self.flowCategories[i].item_amount = 0;
+      }
+      var monthlyBudgetCategoryData = {
+        item_month: self.currentMonthIndex + 1,
+        item_year: 2017,
+        item_name: self.flowCategories[i].item_name,
+        item_amount: parseInt(self.flowCategories[i].item_amount)
+      };
+      self.newFlowBudget[i] = monthlyBudgetCategoryData;
+    }
+    console.log(self.newFlowBudget);
+  }
+
+}]); //end flow controller

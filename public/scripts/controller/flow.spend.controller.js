@@ -10,7 +10,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   console.log('flow categories', self.flowCategories);
 
-  addToggleStatus();
+  removeActiveToggles();
 
   self.enterMonthFlowData = function(month, i) {
     console.log('you have clicked', month);
@@ -21,6 +21,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   }
 
   self.nextMonth = function() {
+    removeActiveToggles();
     if(self.currentMonthIndex < 11) {
     self.currentMonthIndex++;
   } else {
@@ -46,7 +47,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   }
   }
 
-  function addToggleStatus(){
+  function removeActiveToggles(){
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
       category.activeCategory = false;

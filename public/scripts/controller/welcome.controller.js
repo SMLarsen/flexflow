@@ -17,12 +17,29 @@
         };
 
         if (!newUser) {
-            budgetFactory.getBudget();
+            budgetFactory.getBudget()
+                .then(function(result) {
+                    self.budget = result;
+                    // console.log('WelcomeController budget', self.budget);
+                });
         }
 
         self.postBudget = function() {
-          console.log('post clicked');
-            budgetFactory.postBudget(testProfile)
+            console.log('post clicked');
+            budgetFactory.postBudget(self.budget)
+                .then(function(result) {
+                        console.log('Profile inserted');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error inserting profile for', currentUser.email, ': ', err);
+                        return;
+                    });
+        };
+
+        self.updateBudget = function() {
+            console.log('update clicked');
+            budgetFactory.updateBudget(self.budget)
                 .then(function(result) {
                         console.log('Profile updated');
                         return;

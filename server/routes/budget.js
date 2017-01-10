@@ -30,7 +30,7 @@ router.get("/profile/:email", function(req, res) {
 
 router.post("/profile/:email", function(req, res) {
     var userEmail = req.params.email;
-    console.log('email:', userEmail, 'req:', req.body);
+    // console.log('email:', userEmail, 'req:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
             done();
@@ -52,6 +52,38 @@ router.post("/profile/:email", function(req, res) {
                         } else {
                             res.sendStatus(201);
                             console.log('Profile inserted');
+                        }
+                    }
+                );
+            }
+        });
+    });
+});
+
+router.put("/profile/:email", function(req, res) {
+    var userEmail = req.params.email;
+    console.log('email:', userEmail, 'req:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting userID:', err);
+                res.sendStatus(500);
+            } else {
+                var userID = result.rows[0].id;
+                var queryString = 'UPDATE budget SET ';
+                queryString += 'budget_start_month = $1, budget_start_year = $2, monthly_take_home_amount = $3,';
+                queryString += ' annual_salary = $4, meeting_scheduled = $5 ';
+                queryString += 'WHERE user_id = $6';
+                client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, userID],
+                    function(err, result) {
+                        done();
+                        if (err) {
+                            console.log('Error Updating profile', err);
+                            res.sendStatus(500);
+                        } else {
+                            res.sendStatus(201);
+                            console.log('Profile updated');
                         }
                     }
                 );

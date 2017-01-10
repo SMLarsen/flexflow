@@ -6,4 +6,13 @@
 
 
 <button type="button" ng-click="wc.postBudget()">Post Profile</button>
+<br>
+<input type="text" ng-model="wc.budget.budget_start_month" placeholder="budget_start_month"/>
+<input type="text" ng-model="wc.budget.budget_start_year" placeholder="budget_start_year"/>
+<input type="text" ng-model="wc.budget.monthly_take_home_amount" placeholder="monthly_take_home_amount"/>
+<input type="text" ng-model="wc.budget.annual_salary" placeholder="annual_salary"/>
+<input type="text" ng-model="wc.budget.meeting_scheduled" placeholder="meeting_scheduled"/>
+<br>
+<button type="button" ng-click="wc.updateBudget()">Update Profile</button>
+
 </footer>

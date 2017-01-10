@@ -1,4 +1,4 @@
-app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', function($http, AuthFactory, TemplateFactory) {
+app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function($http, AuthFactory, TemplateFactory, BudgetFactory) {
   console.log('Flow Spend controller started');
   var self = this;
   self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -21,7 +21,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   // advances to the next month
   self.nextMonth = function() {
-    console.log(self.flowCategories);
     postMonthFlowData();
     clearData();
     setToggles();
@@ -94,7 +93,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       };
       self.newFlowBudget[i] = monthlyBudgetCategoryData;
     }
-    console.log(self.newFlowBudget);
   } // end postMonthFlowData
 
 }]); //end flow controller

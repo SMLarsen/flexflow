@@ -1,13 +1,18 @@
-<h1>Client Profile</h1>
+<h1>Your Profile</h1>
 
 <h2>How many adults are in your household?</h2>
 
-
+<button ng-click="cp.clickOnePerson()">One Person</button>
+<button ng-click="cp.clickTwoPeople()">Two People</button>
+<button ng-click="cp.clickThreePeople()">Three People</button>
+<button ng-click="cp.clickFourPeople()">Four People</button>
 
 <div class="client_names">
   <label for="names">Name(s)</label><br>
-  <input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob">
-  <input type="text" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly"><br>
+  <input type="text" ng-model="cp.flex_item.person1.flex_name" placeholder="e.g. Bob" class="form-control">
+  <input type="text" ng-show="cp.numPeople >= 2" ng-model="cp.flex_item.person2.flex_name" placeholder="e.g. Beverly" class="form-control"><br>
+  <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.flex_item.person3.flex_name" placeholder="e.g. Ben" class="form-control"><br>
+  <input type="text" ng-show="cp.numPeople >= 4" ng-model="cp.flex_item.person4.flex_name" placeholder="e.g. Betty" class="form-control"><br>
   <label for="total income">Total Household Income</label><br>
   <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
@@ -32,9 +37,27 @@
     <option value="2018">2018</option>
     <option value="2019">2019</option>
   </select><br>
-  <button type="submit" name="submit">Submit</button><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled">I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
+<button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
+<div class="modal fade" id="clientProfileForm" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">This is your Client Profile.</h4>
+      </div>
+      <div class="modal-body">
+        <p>Number of Adults: {{cp.numPeople}} </p>
+        <p>Annual Income: {{cp.budget.annual_salary}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cp.editInfo()">Edit Info</button>
+        <button type="button" class="btn btn-default" ng-click="cp.submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div><br>
 <footer>
-  <button class="next">Next</button>
+  <button class="btn btn-primary next">Next Page ></button>
 </footer>

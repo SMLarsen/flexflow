@@ -11,7 +11,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   console.log('flow categories', self.flowCategories);
 
   // adding false value to flowCategories
-  removeActiveToggles();
+  setToggles();
 
   // enters correct month and month index
   self.enterMonthFlowData = function(month, i) {
@@ -24,7 +24,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     console.log(self.flowCategories);
     postMonthFlowData();
     clearData();
-    removeActiveToggles();
+    setToggles();
     self.newFlowBudget = [];
     self.flowCategories = templateFactory.getItemTemplate("Flow");
     if(self.currentMonthIndex < 11) {
@@ -39,7 +39,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.prevMonth = function() {
     postMonthFlowData();
     clearData();
-    removeActiveToggles();
+    setToggles();
     self.newFlowBudget = [];
     self.flowCategories = templateFactory.getItemTemplate("Flow");
     if(self.currentMonthIndex > 0) {
@@ -69,16 +69,16 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   } // end clearData
 
   // removes all active values in individual flow categories
-  function removeActiveToggles(){
+  function setToggles(){
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
-      if(category.item_amount) {
-        category.activeCategory  = true;
+      if(category.item_amount === undefined || category.item_amount === 0) {
+        category.activeCategory  = false;
       } else {
-        category.activeCategory = false;
+        category.activeCategory = true;
       }
     }
-  } // end removeActiveToggles
+  } // end setToggles
 
   // restructuring monthly flow data for database
   function postMonthFlowData() {

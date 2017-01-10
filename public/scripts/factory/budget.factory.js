@@ -2,15 +2,12 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     console.log('BudgetFactory started');
 
     var authFactory = AuthFactory;
-    // var currentUserEmail = 'stevelarsen01@gmail.com';
-    // console.log(currentUserEmail);
     var profile = {};
     var itemArray = [];
 
-    // function to get categories for initial load
+    // function to get budget profile
     getBudget = function() {
         var currentUser = authFactory.getCurrentUser();
-        console.log('budgetFactory currentUser:', currentUser);
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -21,7 +18,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                 })
                 .then(function(response) {
                         profile = response.data;
-                        console.log('Profile:', response.data);
+                        console.log('Profile returned:', response.data);
                         return profile;
                     },
                     function(err) {
@@ -29,7 +26,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return;
                     });
         } else {
-            console.log('user not signed in');
+            console.log('User not signed in');
         }
     }; //end getBudget
 
@@ -43,7 +40,6 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         postBudget: function(budget) {
             return postBudget(budget);
         }
-
     };
 
     return publicApi;

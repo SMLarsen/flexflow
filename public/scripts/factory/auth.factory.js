@@ -1,7 +1,6 @@
 app.factory("AuthFactory", function($firebaseAuth, $http) {
     console.log('AuthFactory started');
     var auth = $firebaseAuth();
-
     var currentUser = {};
 
     // Authenticates user at login
@@ -22,11 +21,11 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                             .then(function(response) {
                                     currentUser.newUser = response.data.newUser;
                                     currentUser.authIdToken = idToken;
-                                    console.log('current user authorized', currentUser);
+                                    console.log('Current user authorized:', currentUser);
                                     return currentUser;
                                 },
                                 function(err) {
-                                    console.log('current user not registered', err);
+                                    console.log('Current user not registered:', err);
                                     return;
                                 })
                             .catch(function(error) {
@@ -40,7 +39,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     logOut = function() {
         return auth.$signOut().then(function() {
             currentUser = {};
-            console.log('Logging the user out!');
+            console.log('User logged out');
         });
     }; // END: logOut
 

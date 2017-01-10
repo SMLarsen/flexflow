@@ -20,7 +20,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                                 }
                             })
                             .then(function(response) {
-                              currentUser = response.data;
+                                    currentUser.newUser = response.data.newUser;
                                     currentUser.authIdToken = idToken;
                                     console.log('current user authorized', currentUser);
                                     return currentUser;
@@ -45,23 +45,24 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     }; // END: logOut
 
     // Function get idToken
-    getIdToken = function() {
-        console.log('getIdToken currentUser', currentUser);
-        // if (currentUser) {
-        //     // This is where we make our call to our server
-        //     return currentUser.getToken().then(function(idToken) {
-        //             currentUser.authIdToken = idToken;
-        //             console.log('got current user idToken:', currentUser.email);
-        //             return currentUser;
-        //         },
-        //         function(err) {
-        //             console.log('current user not registered', err);
-        //             return;
-        //         });
-        // } else {
-        //     return;
-        // }
-    }; // End getIdToken
+    // getIdToken = function() {
+    //     console.log('getIdToken currentUser', currentUser);
+    //     if (currentUser) {
+    //         // This is where we make our call to our server
+    //         return currentUser.getToken()
+    //             .then(function(idToken) {
+    //                     currentUser.authIdToken = idToken;
+    //                     console.log('got current user idToken:', currentUser.email);
+    //                     return currentUser;
+    //                 },
+    //                 function(err) {
+    //                     console.log('current user not registered', err);
+    //                     return;
+    //                 });
+    //     } else {
+    //         return;
+    //     }
+    // }; // End getIdToken
 
     // This code runs whenever the user changes authentication states
     // e.g. whevenever the user logs in or logs out
@@ -91,7 +92,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
 
     var publicApi = {
         getIdToken: function() {
-            return getIdToken();
+            return currentUser.authIdToken;
         },
         logIn: function() {
             return logIn();
@@ -99,8 +100,11 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
         logOut: function() {
             return logOut();
         },
+        getCurrentUser: function() {
+            return currentUser;
+        },
         isNewUser: function() {
-          return currentUser.newUser;
+            return currentUser.newUser;
         }
     };
 

@@ -9,30 +9,28 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
 
     // function to get categories for initial load
     getBudget = function() {
-      if (authFactory.currentUser) {
-        console.log('Current',authFactory.getIdToken());
-      } else {
-        console.log('user not signed in');
-      }
-        // return authFactory.getIdToken()
-        //     .then(function(currentUser) {
-        //         return $http({
-        //                 method: 'GET',
-        //                 url: '/budget/profile/' + currentUser.Email,
-        //                 headers: {
-        //                     id_token: currentUser.authIdToken
-        //                 }
-        //             })
-        //             .then(function(response) {
-        //                     profile = response.data;
-        //                     console.log('Profile1', response.data);
-        //                     return profile;
-        //                 },
-        //                 function(err) {
-        //                     console.log('Error getting profile for', currentUserEmail, ': ', err);
-        //                     return;
-        //                 });
-        //     });
+        var currentUser = authFactory.getCurrentUser();
+        console.log('budgetFactory currentUser:', currentUser);
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/profile/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        profile = response.data;
+                        console.log('Profile:', response.data);
+                        return profile;
+                    },
+                    function(err) {
+                        console.log('Error getting profile for', currentUserEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('user not signed in');
+        }
     }; //end getBudget
 
     var publicApi = {

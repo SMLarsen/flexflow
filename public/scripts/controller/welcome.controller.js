@@ -11,7 +11,7 @@
 
         if (!newUser) {
             budgetFactory.getBudget();
-            console.log('getBudget in welcome', budgetFactory.getBudget());
+            console.log('getBudget in welcome');
         }
 
     }]);

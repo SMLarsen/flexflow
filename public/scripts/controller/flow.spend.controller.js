@@ -2,13 +2,20 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   console.log('Flow Spend controller started');
   var self = this;
   self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  self.startingMonthID = 0;
+  self.startingMonth = '';
+  self.startingYear = null;
   self.currentMonth = null;
   self.currentMonthIndex = null;
   self.newFlowBudget = [];
   var templateFactory = TemplateFactory;
+  var budgetFactory = BudgetFactory;
   self.flowCategories = templateFactory.getItemTemplate("Flow");
 
   console.log('flow categories', self.flowCategories);
+
+  // get initial budget data
+  getBudgetData();
 
   // adding false value to flowCategories
   setToggles();
@@ -48,6 +55,16 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
     return self.currentMonth = self.months[this.currentMonthIndex];
   } // end prevMonth
+
+  // reverts to previous flex spending page
+  self.prevPage = function() {
+    window.location = '/#/flexspend'
+  } // end prevPage
+
+  // advances to functional spending page
+  self.nextPage = function() {
+    window.location = '/#/functionalspend'
+  } // end nextPage
 
   // toggles activeCategory value for each category
   self.toggleActive = function(category) {
@@ -94,5 +111,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       self.newFlowBudget[i] = monthlyBudgetCategoryData;
     }
   } // end postMonthFlowData
+
+  function getBudgetData() {
+    budgetFactory.getBudget().then(function(response) {
+      console.log(reponse);
+    });
+  }
 
 }]); //end flow controller

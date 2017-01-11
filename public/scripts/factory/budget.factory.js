@@ -139,9 +139,9 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     }; //end getFlowItems
 
     //**************************** Flex Item Functions ******************************//
-    // function to insert flow items
-    postFlexItems = function(month) {
-        console.log('postFlexItems', month);
+    // function to insert flex items
+    postFlexItems = function(budgetArray) {
+        console.log('postFlexItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -150,7 +150,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
-                    data: month
+                    data: budgetArray
                 })
                 .then(function(response) {
                         // console.log('Profile updated');
@@ -191,10 +191,55 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFlexItems
 
+    // function to delete flex items
+    deleteFlexItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'DELETE',
+                    url: '/budget/flexitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        console.log('Flex items deleted successfully');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error deleting flex items for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end deleteFlexItems
+
+    // function to update flex items (delete all for budgetID then add new items)
+    updateFlexItems = function(budgetArray) {
+        deleteFlexItems()
+            .then(function(response) {
+                    postFlexItems(budgetArray)
+                        .then(function(response) {
+                                console.log('Flex items replaced');
+                                return;
+                            },
+                            function(err) {
+                                console.log('Error replacing flext items for', currentEmail, ': ', err);
+                                return;
+                            });
+                },
+                function(err) {
+                    console.log('Replacement delete unsuccessful', err);
+                    return;
+                });
+    };
+
     //**************************** Functional Item Functions ******************************//
     // function to insert functional items
-    postFunctionalItems = function(month) {
-        console.log('postFunctionalItems', month);
+    postFunctionalItems = function(budgetArray) {
+        console.log('postFunctionalItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -203,7 +248,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
-                    data: month
+                    data: budgetArray
                 })
                 .then(function(response) {
                         // console.log('Profile updated');
@@ -246,8 +291,8 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
 
     //**************************** Financial Item Functions ******************************//
     // function to insert financial items
-    postFinancialItems = function(month) {
-        console.log('postFinancialItems', month);
+    postFinancialItems = function(budgetArray) {
+        console.log('postFinancialItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -256,7 +301,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
-                    data: month
+                    data: budgetArray
                 })
                 .then(function(response) {
                         // console.log('Profile updated');
@@ -324,40 +369,40 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
             return postFlowItems(month);
         },
         // update flex item
-        updateFlexItems: function(month) {
-            return updateFlexItems(month);
+        updateFlexItems: function(budgetArray) {
+            return updateFlexItems(budgetArray);
         },
         // get flex item
         getFlexItems: function() {
             return getFlexItems();
         },
         // insert flex item
-        postFlexItems: function(month) {
-            return postFlexItems(month);
+        postFlexItems: function(budgetArray) {
+            return postFlexItems(budgetArray);
         },
         // update financial item
-        updateFinancialItems: function(month) {
-            return updateFinancialItems(month);
+        updateFinancialItems: function(budgetArray) {
+            return updateFinancialItems(budgetArray);
         },
         // get financial item
         getFinancialItems: function() {
             return getFinancialItems();
         },
         // insert financial item
-        postFinancialItems: function(month) {
-            return postFinancialItems(month);
+        postFinancialItems: function(budgetArray) {
+            return postFinancialItems(budgetArray);
         },
         // update functional item
-        updateFunctionalItems: function(month) {
-            return updateFunctionalItems(month);
+        updateFunctionalItems: function(budgetArray) {
+            return updateFunctionalItems(budgetArray);
         },
         // get functional item
         getFunctionalItems: function() {
             return getFunctionalItems();
         },
         // insert functional item
-        postFunctionalItems: function(month) {
-            return postFunctionalItems(month);
+        postFunctionalItems: function(budgetArray) {
+            return postFunctionalItems(budgetArray);
         }
     };
 

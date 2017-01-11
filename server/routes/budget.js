@@ -273,6 +273,33 @@ router.post("/flexitems/:email", function(req, res) {
     });
 });
 
+router.delete("/flexitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                var queryString = 'DELETE FROM flex_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error deleting flex items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Flex items deleted', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
 // *********************************** FUNCTIONAL ITEM routes **************************
 router.get("/functionalitems/:email", function(req, res) {
     var userEmail = req.params.email;

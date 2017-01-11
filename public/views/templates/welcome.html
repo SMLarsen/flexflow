@@ -5,26 +5,56 @@
 <a href="#">Home</a>
 
 
-<button type="button" ng-click="wc.postBudget()">Post Profile</button>
 <br>
+<h4>Profile</h4>
 <input type="text" ng-model="wc.budget.budget_start_month" placeholder="budget_start_month"/>
 <input type="text" ng-model="wc.budget.budget_start_year" placeholder="budget_start_year"/>
 <input type="text" ng-model="wc.budget.monthly_take_home_amount" placeholder="monthly_take_home_amount"/>
 <input type="text" ng-model="wc.budget.annual_salary" placeholder="annual_salary"/>
 <input type="text" ng-model="wc.budget.meeting_scheduled" placeholder="meeting_scheduled"/>
+<button class="btn btn-primary" type="button" ng-click="wc.postBudget()">Post Profile</button>
+<button class="btn btn-danger" type="button" ng-click="wc.updateBudget()">Update Profile</button>
 <br>
-<button type="button" ng-click="wc.updateBudget()">Update Profile</button>
+<h4>Flow Items</h4>
+<button class="btn btn-primary" type="button" ng-click="wc.getFlowItems()">getFlowItems</button>
+<button class="btn btn-default" type="button" ng-click="wc.postFlowItems()">postFlowItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.deleteFlowItems()">updateFlowItems</button>
+<div ng-repeat="item in wc.flowItemArray">
+  <input type="text" ng-model="item.item_month" placeholder="flow_month"/>
+  <input type="text" ng-model="item.item_year" placeholder="flow_year"/>
+  <input type="text" ng-model="item.item_amount" placeholder="flow_amount"/>
+  <input type="text" ng-model="item.item_name" placeholder="flow_name"/>
+</div>
 <br>
-<button type="button" ng-click="wc.getFlowItems()">getFlowItems</button>
-<button type="button" ng-click="wc.postFlowItems()">postFlowItems</button>
+<h4>Flex Items</h4>
+
+<button class="btn btn-primary" type="button" ng-click="wc.getFlexItems()">getFlexItems</button>
+<button class="btn btn-default" type="button" ng-click="wc.postFlexItems()">postFlexItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.updateFlexItems()">updateFlexItems</button>
+<div ng-repeat="item in wc.flexItemArray">
+  <input type="text" ng-model="item.flex_amount" placeholder="flex_amount"/>
+  <input type="text" ng-model="item.flex_name" placeholder="flex_name"/>
+</div>
+
 <br>
-<button type="button" ng-click="wc.getFlexItems()">getFlexItems</button>
-<button type="button" ng-click="wc.postFlexItems()">postFlexItems</button>
+<h4>Functional Items</h4>
+<button class="btn btn-primary" type="button" ng-click="wc.getFunctionalItems()">getFunctionalItems</button>
+<button class="btn btn-default" type="button" ng-click="wc.postFunctionalItems()">postFunctionalItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.deleteFunctionalItems()">updateFunctionalItems</button>
+<div ng-repeat="item in wc.functionalItemArray">
+  <input type="text" ng-model="item.item_amount" placeholder="functional_amount"/>
+  <input type="text" ng-model="item.item_name" placeholder="functional_name"/>
+</div>
+
 <br>
-<button type="button" ng-click="wc.getFunctionalItems()">getFunctionalItems</button>
-<button type="button" ng-click="wc.postFunctionalItems()">postFunctionalItems</button>
-<br>
-<button type="button" ng-click="wc.getFinancialItems()">getFinancialItems</button>
-<button type="button" ng-click="wc.postFinancialItems()">postFinancialItems</button>
+<h4>Financial Items</h4>
+<button class="btn btn-primary" type="button" ng-click="wc.getFinancialItems()">getFinancialItems</button>
+<button class="btn btn-default" type="button" ng-click="wc.postFinancialItems()">postFinancialItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.deleteFinancialItems()">updateFinancialItems</button>
+<div ng-repeat="item in wc.financialItemArray">
+  <input type="text" ng-model="item.item_amount" placeholder="financial_amount"/>
+  <input type="text" ng-model="item.item_name" placeholder="financial_name"/>
+</div>
+
 
 </footer>

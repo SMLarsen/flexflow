@@ -18,8 +18,8 @@
 
 <div class="functionalSpending" ng-repeat="item in fu.itemArray">
   <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
-  <span ng-hide="item.activeItem">{{item.item_placeholder_text}}</span>
-  <input placeholder="eg. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount"/>
+  <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
+  <input placeholder="eg. 150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount"/>
 </div>
 
 <footer>

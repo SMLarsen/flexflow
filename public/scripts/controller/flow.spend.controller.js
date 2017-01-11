@@ -1,7 +1,33 @@
 app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function($http, AuthFactory, TemplateFactory, BudgetFactory) {
   console.log('Flow Spend controller started');
   var self = this;
-  self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var allMonths = [
+    {month: 'January',
+    year: 0},
+    {month: 'February',
+    year: 0},
+    {month: 'March',
+    year: 0},
+    {month: 'April',
+    year: 0},
+    {month: 'May',
+    year: 0},
+    {month: 'June',
+    year: 0},
+    {month: 'July',
+    year: 0},
+    {month: 'August',
+    year: 0},
+    {month: 'September',
+    year: 0},
+    {month: 'October',
+    year: 0},
+    {month: 'November',
+    year: 0},
+    {month: 'December',
+    year: 0},
+  ];
+  self.budgetMonths = [];
   self.startingMonthID = 0;
   self.startingMonth = '';
   self.startingYear = null;
@@ -113,8 +139,48 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // gets initial budget data
   function getBudgetData() {
     budgetFactory.getBudget().then(function(response) {
-      console.log(reponse);
+      var budget = response;
+      self.startingMonthID = budget.budget_start_month;
+      self.startingYear = budget.budget_start_year;
+      setStartingMonth();
+      setYears();
     });
   } //end getBudgetData
+
+  function setStartingMonth() {
+    var startingMonthIndex = self.startingMonthID - 1;
+    for (var i = 0; i < allMonths.length; i++) {
+      if(i >= startingMonthIndex) {
+        self.budgetMonths.push(allMonths[i]);
+      }
+    }
+    for (var i = 0; i < allMonths.length; i++) {
+      if(i < startingMonthIndex) {
+        self.budgetMonths.push(allMonths[i]);
+      }
+    }
+  } // end setStartingMonth
+
+  // sets years of months
+  function setYears() {
+    if(self.budgetMonths[0].month === 'January') {
+      for (var i = 0; i < self.budgetMonths.length; i++) {
+        self.budgetMonths[i].year = self.startingYear;
+      }
+    } else {
+      var newYear = false;
+      for (var i = 0; i < self.budgetMonths.length; i++) {
+        if(newYear === false && self.budgetMonths[i].month != 'January') {
+          newYear = false;
+          self.budgetMonths[i].year = self.startingYear;
+        } else if (newYear === false && self.budgetMonths[i].month === 'January') {
+          newYear = true;
+          self.budgetMonths[i].year = self.startingYear + 1;
+        } else {
+          self.budgetMonths[i].year = self.startingYear + 1;
+        }
+      }
+    }
+  } // end setYears
 
 }]); //end flow controller

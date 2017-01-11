@@ -4,10 +4,8 @@ var pg = require('pg');
 var connectionString = require('../modules/database-config');
 
 // *********************************** PROFILE routes **************************
-
-// Route: GET budget profile for user
-router.get("/profile/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/profile", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
             done();
@@ -32,9 +30,8 @@ router.get("/profile/:email", function(req, res) {
 });
 
 // Route: Post budget profile for a user
-router.post("/profile/:email", function(req, res) {
-    var userEmail = req.params.email;
-    // console.log('email:', userEmail, 'req:', req.body);
+router.post("/profile", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
             done();
@@ -65,8 +62,8 @@ router.post("/profile/:email", function(req, res) {
 });
 
 // Route: Update budget profile for a user
-router.put("/profile/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.put("/profile", function(req, res) {
+    var userEmail = req.decodedToken.email;
     console.log('email:', userEmail, 'req:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
@@ -100,8 +97,8 @@ router.put("/profile/:email", function(req, res) {
 // *********************************** FLOw ITEM routes **************************
 
 // Route: GET flow items for a budget
-router.get("/flowitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/flowitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -129,8 +126,8 @@ router.get("/flowitems/:email", function(req, res) {
 });
 
 // Route: GET flow monthly totals for a budget
-router.get("/flowitems/totalbymonth/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/flowitems/totalbymonth", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -158,8 +155,8 @@ router.get("/flowitems/totalbymonth/:email", function(req, res) {
 });
 
 // Route: GET flow yearly total for a budget
-router.get("/flowitems/totalbyyear/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/flowitems/totalbyyear", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -187,9 +184,8 @@ router.get("/flowitems/totalbyyear/:email", function(req, res) {
 });
 
 // Route: Insert flow items for a budget
-router.post("/flowitems/:email", function(req, res) {
-    var userEmail = req.params.email;
-    // console.log('email:', userEmail, 'req:', req.body);
+router.post("/flowitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
             client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
                     done();
@@ -235,8 +231,40 @@ router.post("/flowitems/:email", function(req, res) {
 });
 
 // Route: Delete flow items for a budget
-router.delete("/flowitems/:month/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.put("/flowitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
+    console.log('email:', userEmail, 'req:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting userID:', err);
+                res.sendStatus(500);
+            } else {
+                var userID = result.rows[0].id;
+                var queryString = 'UPDATE budget SET ';
+                queryString += 'budget_start_month = $1, budget_start_year = $2, monthly_take_home_amount = $3,';
+                queryString += ' annual_salary = $4, meeting_scheduled = $5 ';
+                queryString += 'WHERE user_id = $6';
+                client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, userID],
+                    function(err, result) {
+                        done();
+                        if (err) {
+                            console.log('Error Updating profile', err);
+                            res.sendStatus(500);
+                        } else {
+                            res.sendStatus(201);
+                            console.log('Profile updated');
+                        }
+                    }
+                );
+            }
+        });
+    });
+});
+
+router.delete("/flowitems/:month", function(req, res) {
+    var userEmail = req.decodedToken.email;
     var month = req.params.month;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
@@ -266,8 +294,8 @@ router.delete("/flowitems/:month/:email", function(req, res) {
 // *********************************** FLEX ITEM routes **************************
 
 // Route: GET flex items for a budget
-router.get("/flexitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/flexitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -295,9 +323,8 @@ router.get("/flexitems/:email", function(req, res) {
 });
 
 // Route: Insert flex items for a budget
-router.post("/flexitems/:email", function(req, res) {
-    var userEmail = req.params.email;
-    // console.log('email:', userEmail, 'req:', req.body);
+router.post("/flexitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
             client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
                     done();
@@ -339,8 +366,8 @@ router.post("/flexitems/:email", function(req, res) {
 });
 
 // Route: Delete flex items for a budget
-router.delete("/flexitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.delete("/flexitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -369,8 +396,8 @@ router.delete("/flexitems/:email", function(req, res) {
 // *********************************** FUNCTIONAL ITEM routes **************************
 
 // Route: GET functional items for a budget
-router.get("/functionalitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/functionalitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -398,9 +425,8 @@ router.get("/functionalitems/:email", function(req, res) {
 });
 
 // Route: Insert functional items for a budget
-router.post("/functionalitems/:email", function(req, res) {
-    var userEmail = req.params.email;
-    // console.log('email:', userEmail, 'req:', req.body);
+router.post("/functionalitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
             client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
                     done();
@@ -443,8 +469,8 @@ router.post("/functionalitems/:email", function(req, res) {
 });
 
 // Route: Delete functional items for a budget
-router.delete("/functionalitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.delete("/functionalitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -473,8 +499,8 @@ router.delete("/functionalitems/:email", function(req, res) {
 // *********************************** FINANCIAL ITEM routes **************************
 
 // Route: GET financial items for a budget
-router.get("/financialitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.get("/financialitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();
@@ -502,9 +528,8 @@ router.get("/financialitems/:email", function(req, res) {
 });
 
 // Route: Insert financial items for a budget
-router.post("/financialitems/:email", function(req, res) {
-    var userEmail = req.params.email;
-    // console.log('email:', userEmail, 'req:', req.body);
+router.post("/financialitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
             client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
                     done();
@@ -546,8 +571,8 @@ router.post("/financialitems/:email", function(req, res) {
 });
 
 // Route: Delete financial items for a budget
-router.delete("/financialitems/:email", function(req, res) {
-    var userEmail = req.params.email;
+router.delete("/financialitems", function(req, res) {
+    var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
             done();

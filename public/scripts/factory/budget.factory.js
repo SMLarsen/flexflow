@@ -14,7 +14,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/profile/' + currentUser.email,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -36,11 +36,10 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     // function to get budget profile
     getBudget = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/profile/' + currentEmail,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -51,7 +50,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return profile;
                     },
                     function(err) {
-                        console.log('Error getting profile for', currentUserEmail, ': ', err);
+                        console.log('Error getting profile', err);
                         return;
                     });
         } else {
@@ -66,7 +65,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'PUT',
-                    url: '/budget/profile/' + currentUser.email,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -93,7 +92,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flowitems/' + currentUser.email,
+                    url: '/budget/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -115,11 +114,10 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     // function to get flow items
     getFlowItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/' + currentEmail,
+                    url: '/budget/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -130,7 +128,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return flowItems;
                     },
                     function(err) {
-                        console.log('Error getting flow item for', currentEmail, ': ', err);
+                        console.log('Error getting flow item for', err);
                         return;
                     });
         } else {
@@ -140,13 +138,12 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
 
 
     // function to get flow items totals
-    getFlowItemItemTotalsByMonth = function() {
+    getFlowItemTotalsByMonth = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbymonth' + currentEmail,
+                    url: '/budget/flowitems/totalbymonth',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -157,22 +154,22 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return flowItemMonthlyTotals;
                     },
                     function(err) {
-                        console.log('Error getting flow item totals by month for', currentEmail, ': ', err);
+                        console.log('Error getting flow item totals by month for', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end getFlowItemItemTotalsByMonth
+    }; //end getFlowItemTotalsByMonth
 
     // function to get flow items totals for year
-    getFlowItemItemTotalsByYear = function() {
+    getFlowItemTotalsByYear = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
+
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbyyear' + currentEmail,
+                    url: '/budget/flowitems/totalbyyear',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -183,22 +180,21 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return flowItemYearlyTotal;
                     },
                     function(err) {
-                        console.log('Error getting flow item totals by year for', currentEmail, ': ', err);
+                        console.log('Error getting flow item totals by year for', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end getFlowItemItemTotalsByYear
+    }; //end getFlowItemTotalsByYear
 
     // function to delete flow items
     deleteFlowItems = function(month) {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flowitems/' + month + '/' + currentEmail,
+                    url: '/budget/flowitems/' + month,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -208,7 +204,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error deleting flow items for', currentEmail, 'and month:', month, ': ', err);
+                        console.log('Error deleting flow items for month:', month, ': ', err);
                         return;
                     });
         } else {
@@ -227,7 +223,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                                 return;
                             },
                             function(err) {
-                                console.log('Error replacing flow items for', currentEmail, ': ', err);
+                                console.log('Error replacing flow items for', err);
                                 return;
                             });
                 },
@@ -245,7 +241,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flexitems/' + currentUser.email,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -267,11 +263,10 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     // function to get flow items
     getFlexItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flexitems/' + currentEmail,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -282,7 +277,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return flexItems;
                     },
                     function(err) {
-                        console.log('Error getting flex item for', currentEmail, ': ', err);
+                        console.log('Error getting flex item for', err);
                         return;
                     });
         } else {
@@ -290,14 +285,38 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFlexItems
 
+    // function to get flex items totals for year
+    getFlexItemTotal = function() {
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/flexitems/total',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        flexItemTotal = response.data;
+                        console.log('flexItemTotal', flexItemTotal);
+                        return flexItemTotal;
+                    },
+                    function(err) {
+                        console.log('Error getting flex item totals for', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFlexItemTotal
+
     // function to delete flex items
     deleteFlexItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flexitems/' + currentEmail,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -307,7 +326,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error deleting flex items for', currentEmail, ': ', err);
+                        console.log('Error deleting flex items for', err);
                         return;
                     });
         } else {
@@ -325,7 +344,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                                 return;
                             },
                             function(err) {
-                                console.log('Error replacing flext items for', currentEmail, ': ', err);
+                                console.log('Error replacing flext items for', err);
                                 return;
                             });
                 },
@@ -338,12 +357,11 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     //**************************** Functional Item Functions ******************************//
     // function to insert functional items
     postFunctionalItems = function(budgetArray) {
-        // console.log('postFunctionalItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/functionalitems/' + currentUser.email,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -365,11 +383,10 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     // function to get functional items
     getFunctionalItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/functionalitems/' + currentEmail,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -380,7 +397,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return functionalItems;
                     },
                     function(err) {
-                        console.log('Error getting functional item for', currentEmail, ': ', err);
+                        console.log('Error getting functional item for', err);
                         return;
                     });
         } else {
@@ -388,14 +405,38 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFunctionalItems
 
+    // function to get functional items totals for year
+    getFunctionalItemTotal = function() {
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/functionalitems/total',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        functionalItemTotal = response.data;
+                        console.log('functionalItemTotal', functionalItemTotal);
+                        return functionalItemTotal;
+                    },
+                    function(err) {
+                        console.log('Error getting functional item totals for', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFunctionalItemTotal
+
     // function to delete functional items
     deleteFunctionalItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/functionalitems/' + currentEmail,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -405,7 +446,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error deleting functional items for', currentEmail, ': ', err);
+                        console.log('Error deleting functional items for', err);
                         return;
                     });
         } else {
@@ -423,7 +464,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                                 return;
                             },
                             function(err) {
-                                console.log('Error replacing functional items for', currentEmail, ': ', err);
+                                console.log('Error replacing functional items for', err);
                                 return;
                             });
                 },
@@ -436,12 +477,11 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     //**************************** Financial Item Functions ******************************//
     // function to insert financial items
     postFinancialItems = function(budgetArray) {
-        // console.log('postFinancialItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/financialitems/' + currentUser.email,
+                    url: '/budget/financialitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -463,11 +503,10 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     // function to get financial items
     getFinancialItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/financialitems/' + currentEmail,
+                    url: '/budget/financialitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -478,7 +517,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return financialItems;
                     },
                     function(err) {
-                        console.log('Error getting financial item for', currentEmail, ': ', err);
+                        console.log('Error getting financial item for', err);
                         return;
                     });
         } else {
@@ -486,14 +525,38 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFinancialItems
 
+    // function to get financial items totals for year
+    getFinancialItemTotal = function() {
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/financialitems/total',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        financialItemTotal = response.data;
+                        console.log('financialItemTotal', financialItemTotal);
+                        return financialItemTotal;
+                    },
+                    function(err) {
+                        console.log('Error getting financial item totals for', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFinancialItemTotal
+
     // function to delete financial items
     deleteFinancialItems = function() {
         var currentUser = authFactory.getCurrentUser();
-        var currentEmail = currentUser.email;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/financialitems/' + currentEmail,
+                    url: '/budget/financialitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -503,7 +566,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error deleting financial items for', currentEmail, ': ', err);
+                        console.log('Error deleting financial items for', err);
                         return;
                     });
         } else {
@@ -521,7 +584,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                                 return;
                             },
                             function(err) {
-                                console.log('Error replacing financial items for', currentEmail, ': ', err);
+                                console.log('Error replacing financial items for', err);
                                 return;
                             });
                 },
@@ -593,8 +656,21 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         postFunctionalItems: function(budgetArray) {
             return postFunctionalItems(budgetArray);
         },
-
-        getFlowItemTotalsByMonth
+        getFlowItemTotalsByMonth: function() {
+            return getFlowItemTotalsByMonth();
+        },
+        getFlowItemTotalByYear: function() {
+            return getFlowItemTotalByYear();
+        },
+        getFlexItemTotal: function() {
+            return getFlexItemTotal();
+        },
+        getFinancialItemTotal: function() {
+            return getFinancialItemTotal();
+        },
+        getFunctionalItemTotal: function() {
+            return getFunctionalItemTotal();
+        }
     };
 
     return publicApi;

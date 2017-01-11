@@ -14,7 +14,7 @@ CREATE TABLE users (
   clearance_level INT NOT NULL DEFAULT 0
 );
 
-INSERT INTO users (email) 
+INSERT INTO users (email)
 VALUES ('stevelarsen01@gmail.com'),
 ('lhien11@gmail.com')
 ;
@@ -28,10 +28,10 @@ CREATE TABLE budget (
     budget_start_year integer,
     monthly_take_home_amount integer,
     annual_salary integer,
-    meeting_scheduled boolean default false 
+    meeting_scheduled boolean default false
 );
 
-INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled) 
+INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled)
 VALUES (1, 01, 2017, 5000, 100000, true),
 (2, 02, 2017, 7200, 120000, true)
 ;
@@ -271,7 +271,7 @@ SELECT * FROM flow_item;
 CREATE TABLE flex_item (
     id serial PRIMARY KEY,
     budget_id INTEGER REFERENCES budget,
-    flex_name VARCHAR(30) UNIQUE NOT NULL,
+    flex_name VARCHAR(30),
     flex_amount integer
 );
 
@@ -343,7 +343,7 @@ CREATE TABLE budget_category(
     category_text TEXT
 );
 
-INSERT INTO budget_category (category_name, category_text) 
+INSERT INTO budget_category (category_name, category_text)
 VALUES ('Flow', 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'),
 ('Flex', 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'),
 ('Financial', 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'),
@@ -399,7 +399,7 @@ WHERE budget_category.id = budget_category_id
 ORDER BY budget_category_id, item_sort_sequence
 ;
 
-SELECT * FROM budget_item 
+SELECT * FROM budget_item
 WHERE budget_category_id = 1
 ORDER BY item_sort_sequence
 ;

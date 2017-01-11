@@ -6,7 +6,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     var itemArray = [];
     var flowItems = [];
 
-//**************************** Budget Functions ******************************//
+    //**************************** Budget Functions ******************************//
     // function to insert budget profile
     postBudget = function(profile) {
         console.log('postBudget');
@@ -86,85 +86,218 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     }; //end updateBudget
 
     //**************************** Flow Item Functions ******************************//
-        // function to insert flow items
-        postFlowItems = function(month) {
-            console.log('postFlowItems', month);
-            var currentUser = authFactory.getCurrentUser();
-            if (currentUser) {
-                return $http({
-                        method: 'POST',
-                        url: '/budget/flowitems/' + currentUser.email,
-                        headers: {
-                            id_token: authFactory.getIdToken()
-                        },
-                        data: month
-                    })
-                    .then(function(response) {
-                            // console.log('Profile updated');
-                            return;
-                        },
-                        function(err) {
-                            console.log('Error updating flow items for', currentUser.email, ': ', err);
-                            return;
-                        });
-            } else {
-                console.log('User not signed in');
-            }
-        }; //end postFlowItems
+    // function to insert flow items
+    postFlowItems = function(month) {
+        console.log('postFlowItems', month);
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/flowitems/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: month
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error updating flow items for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postFlowItems
 
-        // function to get flow items
-        getFlowItems = function() {
-            var currentUser = authFactory.getCurrentUser();
-            var currentEmail = currentUser.email;
-            if (currentUser) {
-                return $http({
-                        method: 'GET',
-                        url: '/budget/flowitems/' + currentEmail,
-                        headers: {
-                            id_token: authFactory.getIdToken()
-                        }
-                    })
-                    .then(function(response) {
-                            flowItems = response.data;
-                            // console.log('Profile returned:', response.data);
-                            return flowItems;
-                        },
-                        function(err) {
-                            console.log('Error getting flow item for', currentEmail, ': ', err);
-                            return;
-                        });
-            } else {
-                console.log('User not signed in');
-            }
-        }; //end getFlowItems
+    // function to get flow items
+    getFlowItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/flowitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        flowItems = response.data;
+                        // console.log('Profile returned:', response.data);
+                        return flowItems;
+                    },
+                    function(err) {
+                        console.log('Error getting flow item for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFlowItems
 
-        // function to update flow items
-        updateFlowItems = function(month) {
-            console.log('updateFlowItems');
-            var currentUser = authFactory.getCurrentUser();
-            if (currentUser) {
-                return $http({
-                        method: 'PUT',
-                        url: '/budget/flowitems/' + currentUser.email,
-                        headers: {
-                            id_token: authFactory.getIdToken()
-                        },
-                        data: month
-                    })
-                    .then(function(response) {
-                            console.log('Profile updated');
-                            return;
-                        },
-                        function(err) {
-                            console.log('Error updating flow item for', currentUser.email, ': ', err);
-                            return;
-                        });
-            } else {
-                console.log('User not signed in');
-            }
-        }; //end updateFlowItems
+    //**************************** Flex Item Functions ******************************//
+    // function to insert flow items
+    postFlexItems = function(month) {
+        console.log('postFlexItems', month);
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/flexitems/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: month
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error updating flow items for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postFlexItems
 
-// ******************************** APIs ************************************//
+    // function to get flow items
+    getFlexItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/flexitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        flexItems = response.data;
+                        // console.log('Profile returned:', response.data);
+                        return flexItems;
+                    },
+                    function(err) {
+                        console.log('Error getting flex item for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFlexItems
+
+    //**************************** Functional Item Functions ******************************//
+    // function to insert functional items
+    postFunctionalItems = function(month) {
+        console.log('postFunctionalItems', month);
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/functionalitems/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: month
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error updating functional items for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postFunctionalItems
+
+    // function to get functional items
+    getFunctionalItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/functionalitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        functionalItems = response.data;
+                        // console.log('Profile returned:', response.data);
+                        return functionalItems;
+                    },
+                    function(err) {
+                        console.log('Error getting functional item for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFunctionalItems
+
+    //**************************** Financial Item Functions ******************************//
+    // function to insert financial items
+    postFinancialItems = function(month) {
+        console.log('postFinancialItems', month);
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/financialitems/' + currentUser.email,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: month
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error updating financial items for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postFinancialItems
+
+    // function to get financial items
+    getFinancialItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/financialitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        financialItems = response.data;
+                        // console.log('Profile returned:', response.data);
+                        return financialItems;
+                    },
+                    function(err) {
+                        console.log('Error getting financial item for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFinancialItems
+
+    // ******************************** APIs ************************************//
     var publicApi = {
         // update budget profile
         updateBudget: function(profile) {

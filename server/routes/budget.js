@@ -92,6 +92,7 @@ router.put("/profile/:email", function(req, res) {
         });
     });
 });
+
 // *********************************** FLOw ITEM routes **************************
 router.get("/flowitems/:email", function(req, res) {
     var userEmail = req.params.email;
@@ -113,7 +114,7 @@ router.get("/flowitems/:email", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        // console.log('Flow items retrieved', result.rows);
+                        console.log('Flow items retrieved', result.rows);
                     }
                 });
             }
@@ -168,7 +169,6 @@ router.post("/flowitems/:email", function(req, res) {
     });
 });
 
-
 router.put("/flowitems/:email", function(req, res) {
     var userEmail = req.params.email;
     console.log('email:', userEmail, 'req:', req.body);
@@ -200,5 +200,222 @@ router.put("/flowitems/:email", function(req, res) {
         });
     });
 });
+
+// *********************************** FLEX ITEM routes **************************
+router.get("/flexitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT flex_amount, flex_name FROM flex_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting flex items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Flex items retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
+router.post("/flexitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    // console.log('email:', userEmail, 'req:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+            client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting budgetID:', err);
+                        res.sendStatus(500);
+                    } else {
+                        var budgetID = result.rows[0].id;
+                        // console.log('body:', req.body);
+                        var queryString = 'INSERT INTO flex_item (budget_id, flex_amount, flex_name) VALUES ';
+                        for (var i = 0; i < req.body.length - 1; i++) {
+                            var item = req.body[i];
+                            // replace real values with $values
+                            queryString += "(" + budgetID;
+                            queryString += ", " + item.flex_amount;
+                            queryString += ", '" + item.flex_name + "'), ";
+                        }
+                        var lastItem = req.body[req.body.length - 1];
+                        queryString += "(" + budgetID;
+                        queryString += ", " + lastItem.flex_amount;
+                        queryString += ", '" + lastItem.flex_name + "')";
+                        console.log('queryString', queryString);
+                        client.query(queryString,
+                            function(err, result) {
+                                done();
+                                if (err) {
+                                    console.log('Error Inserting flexitems', err);
+                                    res.sendStatus(500);
+                                } else {
+                                    res.sendStatus(201);
+                                    console.log('Flex items inserted');
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+    });
+});
+
+// *********************************** FUNCTIONAL ITEM routes **************************
+router.get("/functionalitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT item_amount, item_name FROM functional_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting functional items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Functional items retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
+router.post("/functionalitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    // console.log('email:', userEmail, 'req:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+            client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting budgetID:', err);
+                        res.sendStatus(500);
+                    } else {
+                        var budgetID = result.rows[0].id;
+                        // console.log('body:', req.body);
+                        var queryString = 'INSERT INTO functional_item (budget_id, item_amount, item_name) VALUES ';
+                        for (var i = 0; i < req.body.length - 1; i++) {
+                            var item = req.body[i];
+                            // replace real values with $values
+                            queryString += "(" + budgetID;
+                            queryString += ", " + item.item_amount;
+                            queryString += ", '" + item.item_name + "'), ";
+                        }
+                        var lastItem = req.body[req.body.length - 1];
+                        queryString += "(" + budgetID;
+                        queryString += ", " + lastItem.item_amount;
+                        queryString += ", '" + lastItem.item_name + "')";
+                        console.log('queryString', queryString);
+                        client.query(queryString,
+                            function(err, result) {
+                                done();
+                                if (err) {
+                                    console.log('Error Inserting functionalitems', err);
+                                    res.sendStatus(500);
+                                } else {
+                                    res.sendStatus(201);
+                                    console.log('Functional items inserted');
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+    });
+});
+
+// *********************************** FINANCIAL ITEM routes **************************
+router.get("/financialitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT item_amount, item_name FROM financial_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting financial items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Financial items retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
+router.post("/financialitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    // console.log('email:', userEmail, 'req:', req.body);
+    pg.connect(connectionString, function(err, client, done) {
+            client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting budgetID:', err);
+                        res.sendStatus(500);
+                    } else {
+                        var budgetID = result.rows[0].id;
+                        // console.log('body:', req.body);
+                        var queryString = 'INSERT INTO financial_item (budget_id, item_amount, item_name) VALUES ';
+                        for (var i = 0; i < req.body.length - 1; i++) {
+                            var item = req.body[i];
+                            // replace real values with $values
+                            queryString += "(" + budgetID;
+                            queryString += ", " + item.item_amount;
+                            queryString += ", '" + item.item_name + "'), ";
+                        }
+                        var lastItem = req.body[req.body.length - 1];
+                        queryString += "(" + budgetID;
+                        queryString += ", " + lastItem.item_amount;
+                        queryString += ", '" + lastItem.item_name + "')";
+                        console.log('queryString', queryString);
+                        client.query(queryString,
+                            function(err, result) {
+                                done();
+                                if (err) {
+                                    console.log('Error Inserting financialitems', err);
+                                    res.sendStatus(500);
+                                } else {
+                                    res.sendStatus(201);
+                                    console.log('Financial items inserted');
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+    });
+});
+
 
 module.exports = router;

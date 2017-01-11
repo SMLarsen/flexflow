@@ -139,6 +139,31 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     }; //end getFlowItems
 
 
+    // function to get flow items totals
+    getFlowItemItemTotalsByMonth = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/flowitems/totalbymonth' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        flowItemMonthlyTotals = response.data;
+                        return flowItemMonthlyTotals;
+                    },
+                    function(err) {
+                        console.log('Error getting flow item totals by month for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFlowItemItemTotalsByMonth
+
     // function to delete flow items
     deleteFlowItems = function(month) {
         var currentUser = authFactory.getCurrentUser();
@@ -434,30 +459,30 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFinancialItems
 
-        // function to delete financial items
-        deleteFinancialItems = function() {
-            var currentUser = authFactory.getCurrentUser();
-            var currentEmail = currentUser.email;
-            if (currentUser) {
-                return $http({
-                        method: 'DELETE',
-                        url: '/budget/financialitems/' + currentEmail,
-                        headers: {
-                            id_token: authFactory.getIdToken()
-                        }
-                    })
-                    .then(function(response) {
-                            console.log('Financial items deleted successfully');
-                            return;
-                        },
-                        function(err) {
-                            console.log('Error deleting financial items for', currentEmail, ': ', err);
-                            return;
-                        });
-            } else {
-                console.log('User not signed in');
-            }
-        }; //end deleteFinancialItems
+    // function to delete financial items
+    deleteFinancialItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'DELETE',
+                    url: '/budget/financialitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        console.log('Financial items deleted successfully');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error deleting financial items for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end deleteFinancialItems
 
     // function to update financial items (delete all for budgetID then add new items)
     updateFinancialItems = function(budgetArray) {

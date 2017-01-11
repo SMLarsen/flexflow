@@ -4,6 +4,8 @@ var pg = require('pg');
 var connectionString = require('../modules/database-config');
 
 // *********************************** PROFILE routes **************************
+
+// Route: GET budget profile for user
 router.get("/profile/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -29,6 +31,7 @@ router.get("/profile/:email", function(req, res) {
     });
 });
 
+// Route: Post budget profile for a user
 router.post("/profile/:email", function(req, res) {
     var userEmail = req.params.email;
     // console.log('email:', userEmail, 'req:', req.body);
@@ -61,6 +64,7 @@ router.post("/profile/:email", function(req, res) {
     });
 });
 
+// Route: Update budget profile for a user
 router.put("/profile/:email", function(req, res) {
     var userEmail = req.params.email;
     console.log('email:', userEmail, 'req:', req.body);
@@ -94,6 +98,8 @@ router.put("/profile/:email", function(req, res) {
 });
 
 // *********************************** FLOw ITEM routes **************************
+
+// Route: GET flow items for a budget
 router.get("/flowitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -122,6 +128,7 @@ router.get("/flowitems/:email", function(req, res) {
     });
 });
 
+// Route: Insert flow items for a budget
 router.post("/flowitems/:email", function(req, res) {
     var userEmail = req.params.email;
     // console.log('email:', userEmail, 'req:', req.body);
@@ -169,38 +176,7 @@ router.post("/flowitems/:email", function(req, res) {
     });
 });
 
-router.put("/flowitems/:email", function(req, res) {
-    var userEmail = req.params.email;
-    console.log('email:', userEmail, 'req:', req.body);
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting userID:', err);
-                res.sendStatus(500);
-            } else {
-                var userID = result.rows[0].id;
-                var queryString = 'UPDATE budget SET ';
-                queryString += 'budget_start_month = $1, budget_start_year = $2, monthly_take_home_amount = $3,';
-                queryString += ' annual_salary = $4, meeting_scheduled = $5 ';
-                queryString += 'WHERE user_id = $6';
-                client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, userID],
-                    function(err, result) {
-                        done();
-                        if (err) {
-                            console.log('Error Updating profile', err);
-                            res.sendStatus(500);
-                        } else {
-                            res.sendStatus(201);
-                            console.log('Profile updated');
-                        }
-                    }
-                );
-            }
-        });
-    });
-});
-
+// Route: Delete flow items for a budget
 router.delete("/flowitems/:month/:email", function(req, res) {
     var userEmail = req.params.email;
     var month = req.params.month;
@@ -230,6 +206,8 @@ router.delete("/flowitems/:month/:email", function(req, res) {
 });
 
 // *********************************** FLEX ITEM routes **************************
+
+// Route: GET flex items for a budget
 router.get("/flexitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -258,6 +236,7 @@ router.get("/flexitems/:email", function(req, res) {
     });
 });
 
+// Route: Insert flex items for a budget
 router.post("/flexitems/:email", function(req, res) {
     var userEmail = req.params.email;
     // console.log('email:', userEmail, 'req:', req.body);
@@ -301,6 +280,7 @@ router.post("/flexitems/:email", function(req, res) {
     });
 });
 
+// Route: Delete flex items for a budget
 router.delete("/flexitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -329,6 +309,8 @@ router.delete("/flexitems/:email", function(req, res) {
 });
 
 // *********************************** FUNCTIONAL ITEM routes **************************
+
+// Route: GET functional items for a budget
 router.get("/functionalitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -357,6 +339,7 @@ router.get("/functionalitems/:email", function(req, res) {
     });
 });
 
+// Route: Insert functional items for a budget
 router.post("/functionalitems/:email", function(req, res) {
     var userEmail = req.params.email;
     // console.log('email:', userEmail, 'req:', req.body);
@@ -401,6 +384,7 @@ router.post("/functionalitems/:email", function(req, res) {
     });
 });
 
+// Route: Delete functional items for a budget
 router.delete("/functionalitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -429,6 +413,8 @@ router.delete("/functionalitems/:email", function(req, res) {
 });
 
 // *********************************** FINANCIAL ITEM routes **************************
+
+// Route: GET financial items for a budget
 router.get("/financialitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -457,6 +443,7 @@ router.get("/financialitems/:email", function(req, res) {
     });
 });
 
+// Route: Insert financial items for a budget
 router.post("/financialitems/:email", function(req, res) {
     var userEmail = req.params.email;
     // console.log('email:', userEmail, 'req:', req.body);
@@ -500,6 +487,7 @@ router.post("/financialitems/:email", function(req, res) {
     });
 });
 
+// Route: Delete financial items for a budget
 router.delete("/financialitems/:email", function(req, res) {
     var userEmail = req.params.email;
     pg.connect(connectionString, function(err, client, done) {

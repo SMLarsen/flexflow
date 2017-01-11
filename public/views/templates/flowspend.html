@@ -46,15 +46,3 @@
     </div>
   </div>
 </div>
-
-
-<h4>Flow Items</h4>
-<button class="btn btn-primary" type="button" ng-click="fl.getFlowItems()">getFlowItems</button>
-<button class="btn btn-default" type="button" ng-click="fl.postFlowItems()">postFlowItems</button>
-<button class="btn btn-danger" type="button" ng-click="fl.updateFlowItems()">updateFlowItems</button>
-<div ng-repeat="item in fl.flowItemArray">
-  <input type="text" ng-model="item.item_month" placeholder="flow_month"/>
-  <input type="text" ng-model="item.item_year" placeholder="flow_year"/>
-  <input type="text" ng-model="item.item_amount" placeholder="flow_amount"/>
-  <input type="text" ng-model="item.item_name" placeholder="flow_name"/>
-</div>

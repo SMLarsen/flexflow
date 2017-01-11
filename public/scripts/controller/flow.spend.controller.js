@@ -37,13 +37,20 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.newFlowBudget = [];
   var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
+  var authFactory = AuthFactory;
   self.flowCategories = templateFactory.getItemTemplate("Flow");
+
+  // check user state
+  var newUser = authFactory.isNewUser();
+
+  console.log(newUser);
+
 
   // get initial budget data
   getBudgetData();
 
-  // adding false value to flowCategories
-  setToggles();
+  // setting up flowCategories
+  setUpFlow(newUser);
 
   // enters correct month and month index
   self.enterMonthFlowData = function(month, i) {
@@ -118,13 +125,17 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   // removes all active values in individual flow categories
   function setToggles(){
-    for (var i = 0; i < self.flowCategories.length; i++) {
-      var category = self.flowCategories[i];
-      if(category.item_amount === undefined || category.item_amount === 0) {
-        category.activeCategory  = false;
-      } else {
-        category.activeCategory = true;
+    if(newUser ===true) {
+      for (var i = 0; i < self.flowCategories.length; i++) {
+        var category = self.flowCategories[i];
+        if(category.item_amount === undefined || category.item_amount === 0) {
+          category.activeCategory  = false;
+        } else {
+          category.activeCategory = true;
+        }
       }
+    } else {
+      
     }
   } // end setToggles
 
@@ -208,30 +219,46 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   }
 
+  // set stage if new or returning user
+  function setUpFlow(newUser) {
+    if(newUser === true) {
+      self.flowCategories = templateFactory.getItemTemplate("Flow");
+      console.log(self.flowCategories);
+    } else {
+      self.flowCategories = self.getFlowItems;
+      console.log(self.flowCategories);
+      setToggles();
+    }
+  }
+
+
+
+  // CRUD functions
+
   self.getFlowItems = function() {
-      budgetFactory.getFlowItems()
-          .then(function(result) {
-              self.flowItemArray = result;
-              console.log(result);
-          });
+    budgetFactory.getFlowItems()
+    .then(function(result) {
+      self.flowItemArray = result;
+      console.log(result);
+    });
   };
 
   self.postFlowItems = function(month) {
-      console.log('post flow items clicked');
-      budgetFactory.postFlowItems(month)
-          .then(function(result) {
-                  console.log('Flow items inserted');
-                  return;
-              },
-              function(err) {
-                  console.log('Error inserting flow items for', currentUser.email, ': ', err);
-                  return;
-              });
+    console.log('post flow items clicked');
+    budgetFactory.postFlowItems(month)
+    .then(function(result) {
+      console.log('Flow items inserted');
+      return;
+    },
+    function(err) {
+      console.log('Error inserting flow items for', currentUser.email, ': ', err);
+      return;
+    });
   };
 
   self.updateFlowItems = function() {
-      console.log('update flow items clicked');
-      budgetFactory.updateFlowItems(self.flowItemArray);
+    console.log('update flow items clicked');
+    budgetFactory.updateFlowItems(self.flowItemArray);
   };
 
 }]); //end flow controller

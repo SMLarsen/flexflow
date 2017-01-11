@@ -1,39 +1,37 @@
+<!-- confirmation/submit modal-->
 <div class="modal fade" id="functionalData" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Functional Spending Budget</h4>
-        <div class="modal-body">
-
+        <div class="modal-body" ng-repeat="item in fu.functionalItemArray">
+          <input type="number" ng-model="item.item_amount" placeholder="functional_amount" />
+          <input type="text" ng-model="item.item_name" placeholder="functional_name" />
         </div>
         <div class="modal-footer">
+          <!--<button class="btn btn-danger" type="button" ng-click="fu.updateFunctionalItems()">updateFunctionalItems</button>-->
           <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-          <button type="button" class="btn btn-default" ng-click="!!!SUBMIT FUNCTIONAL!!!">Looks Good! Submit<nav>
-          </nav></button>
+          <button class="btn btn-default" type="button">Looks Good! Submit</button>
         </div>
       </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-
+<!-- template for input -->
 <div class="functionalSpending" ng-repeat="item in fu.itemArray">
   <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
   <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
-  <input placeholder="eg. 150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount"/>
+  <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
 </div>
-
-<br>
+<!--<br>
 <h4>Functional Items</h4>
 <button class="btn btn-primary" type="button" ng-click="fu.getFunctionalItems()">getFunctionalItems</button>
-<button class="btn btn-default" type="button" ng-click="fu.postFunctionalItems()">postFunctionalItems</button>
-<button class="btn btn-danger" type="button" ng-click="fu.updateFunctionalItems()">updateFunctionalItems</button>
 <div ng-repeat="item in fu.functionalItemArray">
-  <input type="text" ng-model="item.item_amount" placeholder="functional_amount"/>
-  <input type="text" ng-model="item.item_name" placeholder="functional_name"/>
+  <input type="text" ng-model="item.item_amount" placeholder="functional_amount" />
+  <input type="text" ng-model="item.item_name" placeholder="functional_name" />
 </div>
-<br>
-
+<br>-->
 <footer>
-<button class="next" data-toggle="modal" data-target="#functionalData">Review Info/Next</button>
+  <button class="next" data-toggle="modal" data-target="#functionalData" ng-click="fu.postFunctionalItems()">Review Info/Next</button>
 </footer>

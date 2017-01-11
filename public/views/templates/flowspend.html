@@ -1,8 +1,5 @@
 <h1>Your Flow Spending</h1>
 <button ng-repeat="month in fl.months" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month}}</button>
-
-
-
 <div class="modal fade" id="monthDataForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -14,7 +11,8 @@
         <div ng-repeat="category in fl.flowCategories">
           <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
           <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
-          <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
+          <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"
+          />
         </div>
       </div>
       <div class="modal-footer">

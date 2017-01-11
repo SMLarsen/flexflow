@@ -14,6 +14,7 @@ app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory",func
                 authFactory.idToken = currentUser.idToken;
                 self.isUserLoggedIn = true;
                 authFactory.isUserLoggedIn = self.isUserLoggedIn;
+                window.location = '/#/clientprofile';
             });
     }; // End Login
 

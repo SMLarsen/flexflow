@@ -6,11 +6,6 @@ app.controller('ClientProfileController', ['$http', 'AuthFactory', 'TemplateFact
   var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
   self.budget = {};
-  console.log(self.budget);
-  self.postBudget = function(){
-    budgetFactory.postBudget(self.budget);
-  }
-  getBudget();
 
   self.numPeople = 0;
 
@@ -29,6 +24,11 @@ app.controller('ClientProfileController', ['$http', 'AuthFactory', 'TemplateFact
   self.clickFourPeople = function() {
     self.numPeople = 4;
   }
+
+  self.postBudget = function(){
+    budgetFactory.postBudget(self.budget);
+  }
+  getBudget();
 
 
 

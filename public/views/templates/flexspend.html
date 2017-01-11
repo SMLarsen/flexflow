@@ -1,10 +1,9 @@
 <h1>Your Monthly Flex Allowance</h1>
 
-<label for="first_flex">{{fx.person1.flex_item.flex_name}}</label><br>
-<input type="text" ng-model="fx.flex_item.flex1.flex_amount" placeholder="e.g. $500" class="form-control">
-<label for="second_flex">{{fx.person2.flex_item.flex_name}}</label><br>
-<input type="text" ng-model="fx.flex_item.flex2.flex_amount" placeholder="e.g. $450" class="form-control">
-<button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitFlex()" data-target="#flexProfileForm">Submit Flex</button>
+<div ng-repeat="person in fx.flexArray"><label>{{person.flex_name}}</label><br>
+  <input type="text" ng-model="person.flex_amount" placeholder="e.g. $500" class="form-control">
+</div>
+<button class="btn btn-primary" data-toggle="modal" data-target="#flexProfileForm">Submit Flex</button>
 <div class="modal fade" id="flexProfileForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -13,12 +12,11 @@
         <h4 class="modal-title">This is your Flex allowance.</h4>
       </div>
       <div class="modal-body">
-        <p>Person 1: {{fx.flex_item.flex1.flex_amount}}</p>
-        <p>Person 2: {{fx.flex_item.flex2.flex_amount}}</p>
+        <div ng-repeat="person in fx.flexArray"> <p>{{person.flex_name}}: ${{person.flex_amount}}</p></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button onclick="window.location.href='#flowspend'" class="btn btn-default" data-dismiss="modal">Submit</button>
+        <button ng-click="fx.submitFlex()" class="btn btn-default" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

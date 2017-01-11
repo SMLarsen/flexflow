@@ -183,4 +183,30 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   } // end setYears
 
+  self.getFlowItems = function() {
+      budgetFactory.getFlowItems()
+          .then(function(result) {
+              self.flowItemArray = result;
+              console.log(result);
+          });
+  };
+
+  self.postFlowItems = function() {
+      console.log('post flow items clicked');
+      budgetFactory.postFlowItems(self.flowItemArray)
+          .then(function(result) {
+                  console.log('Flow items inserted');
+                  return;
+              },
+              function(err) {
+                  console.log('Error inserting flow items for', currentUser.email, ': ', err);
+                  return;
+              });
+  };
+
+  self.updateFlowItems = function() {
+      console.log('update flow items clicked');
+      budgetFactory.updateFlowItems(self.flowItemArray);
+  };
+
 }]); //end flow controller

@@ -1,5 +1,5 @@
 <h1>Your Flow Spending</h1>
-<button ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}}</button>
+<button ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} {{month.year}}</button>
 
 
 
@@ -45,4 +45,16 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<h4>Flow Items</h4>
+<button class="btn btn-primary" type="button" ng-click="fl.getFlowItems()">getFlowItems</button>
+<button class="btn btn-default" type="button" ng-click="fl.postFlowItems()">postFlowItems</button>
+<button class="btn btn-danger" type="button" ng-click="fl.updateFlowItems()">updateFlowItems</button>
+<div ng-repeat="item in fl.flowItemArray">
+  <input type="text" ng-model="item.item_month" placeholder="flow_month"/>
+  <input type="text" ng-model="item.item_year" placeholder="flow_year"/>
+  <input type="text" ng-model="item.item_amount" placeholder="flow_amount"/>
+  <input type="text" ng-model="item.item_name" placeholder="flow_name"/>
 </div>

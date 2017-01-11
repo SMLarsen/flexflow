@@ -26,8 +26,69 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	// 		item.activeItem = false;
 	// 	}
 	// }
+	//
+	var budgetFactory = BudgetFactory;
+	// console.log('budgetfactory ', budgetfactory.getFunctionalItems());
+	// 		// Dummy data for testing
+	// var functionalArray = [{
+	// 		item_amount: 1000,
+	// 		item_name: 'Rent | Mortgage'
+	//             },
+	// 	{
+	// 		item_amount: 500,
+	// 		item_name: 'Daycare'
+	//             },
+	// 	{
+	// 		item_amount: 40,
+	// 		item_name: 'Cars'
+	//             },
+	// 	{
+	// 		item_amount: 150,
+	// 		item_name: 'P&C Insurance'
+	//             },
+	// 	{
+	// 		item_amount: 150,
+	// 		item_name: 'Cell Phone'
+	//             },
+	// 	{
+	// 		item_amount: 200,
+	// 		item_name: 'Utilities'
+	//             },
+	// 	{
+	// 		item_amount: 150,
+	// 		item_name: 'Student Loans'
+	//             },
+	// 	{
+	// 		item_amount: 150,
+	// 		item_name: 'Credit Card | Loans'
+	//             },
+	// 	{
+	// 		item_amount: 110,
+	// 		item_name: 'Gas'
+	//             }
+	//         ];
 
-	var budgetfactory = BudgetFactory;
-	console.log('budgetfactory ', budgetfactory.getFunctionalItems());
+
+	self.postFunctionalItems = function () {
+		console.log('post functional items clicked');
+		// budgetFactory.postFunctionalItems(functionalArray)
+		budgetFactory.postFunctionalItems(self.functionalItemArray)
+			.then(function (result) {
+					console.log('Functional items inserted');
+					return;
+				},
+				function (err) {
+					console.log('Error inserting functional items for', currentUser.email, ': ', err);
+					return;
+				});
+	};
+	self.getFunctionalItems = function () {
+		console.log("getFinancialItems is clicked");
+		budgetFactory.getFunctionalItems()
+			.then(function (result) {
+				self.functionalItemArray = result;
+				// console.log('WelcomeController functionalItemArray', self.functionalItemArray);
+			});
+	};
 
 }]);

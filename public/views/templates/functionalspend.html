@@ -23,6 +23,17 @@
   <input placeholder="eg. 150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount"/>
 </div>
 
+<br>
+<h4>Functional Items</h4>
+<button class="btn btn-primary" type="button" ng-click="fu.getFunctionalItems()">getFunctionalItems</button>
+<button class="btn btn-default" type="button" ng-click="fu.postFunctionalItems()">postFunctionalItems</button>
+<button class="btn btn-danger" type="button" ng-click="fu.updateFunctionalItems()">updateFunctionalItems</button>
+<div ng-repeat="item in fu.functionalItemArray">
+  <input type="text" ng-model="item.item_amount" placeholder="functional_amount"/>
+  <input type="text" ng-model="item.item_name" placeholder="functional_name"/>
+</div>
+<br>
+
 <footer>
 <button class="next" data-toggle="modal" data-target="#functionalData">Review Info/Next</button>
 </footer>

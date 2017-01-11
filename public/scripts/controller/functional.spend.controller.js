@@ -1,3 +1,4 @@
+
 app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFactory', function ($http, AuthFactory, TemplateFactory) {
 	console.log('Functional Spend controller started');
 
@@ -17,7 +18,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 		} else {
 			item.activeitem = false;
 		}
-	}
+	};
 
 	// removes all active values in individual functional items
 	function removeActiveToggles() {

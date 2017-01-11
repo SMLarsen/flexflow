@@ -12,8 +12,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   var budgetFactory = BudgetFactory;
   self.flowCategories = templateFactory.getItemTemplate("Flow");
 
-  console.log('flow categories', self.flowCategories);
-
   // get initial budget data
   getBudgetData();
 
@@ -112,10 +110,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   } // end postMonthFlowData
 
+  // gets initial budget data
   function getBudgetData() {
     budgetFactory.getBudget().then(function(response) {
       console.log(reponse);
     });
-  }
+  } //end getBudgetData
 
 }]); //end flow controller

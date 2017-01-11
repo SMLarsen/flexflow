@@ -285,6 +285,11 @@
             budgetFactory.updateFinancialItems(self.financialItemArray);
         };
 
+        self.getFlowItemItemTotalsByMonth = function() {
+          self.flowItemMonthlyTotals = budgetFactory.getFlowItemTotalsByMonth;
+          console.log(self.flowItemMonthlyTotals);
+        };
+
 
     }]);
 

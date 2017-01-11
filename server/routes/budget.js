@@ -128,6 +128,35 @@ router.get("/flowitems/:email", function(req, res) {
     });
 });
 
+// Route: GET flow monthly totals for a budget
+router.get("/flowitems/totalbymonth/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT item_year, item_month, SUM(item_amount) FROM flow_item WHERE budget_id = $1 GROUP BY item_year, item_month';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting flow items monthly totals', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Flow items monthly totals retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
 // Route: Insert flow items for a budget
 router.post("/flowitems/:email", function(req, res) {
     var userEmail = req.params.email;

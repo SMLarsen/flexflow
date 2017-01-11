@@ -153,6 +153,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
                 })
                 .then(function(response) {
                         flowItemMonthlyTotals = response.data;
+                        console.log('flowItemMonthlyTotals', flowItemMonthlyTotals);
                         return flowItemMonthlyTotals;
                     },
                     function(err) {

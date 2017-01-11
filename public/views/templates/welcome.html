@@ -14,11 +14,13 @@
 <input type="text" ng-model="wc.budget.meeting_scheduled" placeholder="meeting_scheduled"/>
 <button class="btn btn-primary" type="button" ng-click="wc.postBudget()">Post Profile</button>
 <button class="btn btn-danger" type="button" ng-click="wc.updateBudget()">Update Profile</button>
+
 <br>
 <h4>Flow Items</h4>
 <button class="btn btn-primary" type="button" ng-click="wc.getFlowItems()">getFlowItems</button>
 <button class="btn btn-default" type="button" ng-click="wc.postFlowItems()">postFlowItems</button>
 <button class="btn btn-danger" type="button" ng-click="wc.updateFlowItems()">updateFlowItems</button>
+<button class="btn btn-info" type="button" ng-click="wc.getFlowItemTotalsByMonth()">Totals by Month</button>
 <div ng-repeat="item in wc.flowItemArray">
   <input type="text" ng-model="item.item_month" placeholder="flow_month"/>
   <input type="text" ng-model="item.item_year" placeholder="flow_year"/>

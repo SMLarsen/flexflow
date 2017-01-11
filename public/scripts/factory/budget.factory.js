@@ -165,6 +165,32 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFlowItemItemTotalsByMonth
 
+    // function to get flow items totals for year
+    getFlowItemItemTotalsByYear = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/budget/flowitems/totalbyyear' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        flowItemYearlyTotal = response.data;
+                        console.log('flowItemYearlyTotal', flowItemYearlyTotal);
+                        return flowItemYearlyTotal;
+                    },
+                    function(err) {
+                        console.log('Error getting flow item totals by year for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end getFlowItemItemTotalsByYear
+
     // function to delete flow items
     deleteFlowItems = function(month) {
         var currentUser = authFactory.getCurrentUser();
@@ -566,7 +592,9 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         // insert functional item
         postFunctionalItems: function(budgetArray) {
             return postFunctionalItems(budgetArray);
-        }
+        },
+
+        getFlowItemTotalsByMonth
     };
 
     return publicApi;

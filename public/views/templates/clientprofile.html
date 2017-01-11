@@ -7,6 +7,7 @@
 <button ng-click="cp.clickThreePeople()">Three People</button>
 <button ng-click="cp.clickFourPeople()">Four People</button>
 
+<div ng-show="cp.numPeople > 0">
 <div class="client_names">
   <label for="names">Name(s)</label><br>
   <input type="text" ng-model="cp.person1.flex_item.flex_name" placeholder="e.g. Bob" class="form-control">
@@ -14,9 +15,9 @@
   <input type="text" ng-show="cp.numPeople >= 3" ng-model="cp.person3.flex_item.flex_name" placeholder="e.g. Ben" class="form-control">
   <input type="text" ng-show="cp.numPeople >= 4" ng-model="cp.person4.flex_item.flex_name" placeholder="e.g. Betty" class="form-control"><br>
   <label for="total income">Total Household Income</label><br>
-  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
+  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
-  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. $5,000" class="form-control"><br>
+  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control"><br>
   <label for="start budget">What month are you starting your budget?</label><br>
   <select name="month" ng-model="cp.budget.budget_start_month">
     <option value="1">January</option>
@@ -38,24 +39,24 @@
     <option value="2019">2019</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled">I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
-<button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
-<div class="modal fade" id="clientProfileForm" role="dialog">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">This is your Client Profile.</h4>
-      </div>
-      <div class="modal-body">
-        <p>Number of Adults: {{cp.numPeople}} </p>
-        <p>Annual Income: {{cp.budget.annual_salary}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <!-- <button onclick="window.location.href='#savingsgoals'" class="btn btn-default" data-dismiss="modal">Submit</button> -->
-        <button onclick="window.location.href='#savingsgoals'" ng-click="cp.postBudget()" class="btn btn-default" data-dismiss="modal">Submit</button>
+  <button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
+  <div class="modal fade" id="clientProfileForm" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">This is your Client Profile.</h4>
+        </div>
+        <div class="modal-body">
+          <p>Number of Adults: {{cp.numPeople}} </p>
+          <p>Annual Income: {{cp.budget.annual_salary}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
+          <button onclick="window.location.href='#savingsgoals'" ng-click="cp.postBudget()" class="btn btn-default" data-dismiss="modal">Submit</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div><br>
+</div>

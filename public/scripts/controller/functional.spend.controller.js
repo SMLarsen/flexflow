@@ -12,7 +12,6 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 
 	// toggles activeitem value for each item
 	self.toggleActive = function (item) {
-		console.log("toggle item ", item.activeitem);
 		if (item.activeitem === false) {
 			item.activeitem = true;
 		} else {

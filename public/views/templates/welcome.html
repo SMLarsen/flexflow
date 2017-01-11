@@ -18,7 +18,7 @@
 <h4>Flow Items</h4>
 <button class="btn btn-primary" type="button" ng-click="wc.getFlowItems()">getFlowItems</button>
 <button class="btn btn-default" type="button" ng-click="wc.postFlowItems()">postFlowItems</button>
-<button class="btn btn-danger" type="button" ng-click="wc.deleteFlowItems()">updateFlowItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.updateFlowItems()">updateFlowItems</button>
 <div ng-repeat="item in wc.flowItemArray">
   <input type="text" ng-model="item.item_month" placeholder="flow_month"/>
   <input type="text" ng-model="item.item_year" placeholder="flow_year"/>
@@ -40,7 +40,7 @@
 <h4>Functional Items</h4>
 <button class="btn btn-primary" type="button" ng-click="wc.getFunctionalItems()">getFunctionalItems</button>
 <button class="btn btn-default" type="button" ng-click="wc.postFunctionalItems()">postFunctionalItems</button>
-<button class="btn btn-danger" type="button" ng-click="wc.deleteFunctionalItems()">updateFunctionalItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.updateFunctionalItems()">updateFunctionalItems</button>
 <div ng-repeat="item in wc.functionalItemArray">
   <input type="text" ng-model="item.item_amount" placeholder="functional_amount"/>
   <input type="text" ng-model="item.item_name" placeholder="functional_name"/>
@@ -50,7 +50,7 @@
 <h4>Financial Items</h4>
 <button class="btn btn-primary" type="button" ng-click="wc.getFinancialItems()">getFinancialItems</button>
 <button class="btn btn-default" type="button" ng-click="wc.postFinancialItems()">postFinancialItems</button>
-<button class="btn btn-danger" type="button" ng-click="wc.deleteFinancialItems()">updateFinancialItems</button>
+<button class="btn btn-danger" type="button" ng-click="wc.updateFinancialItems()">updateFinancialItems</button>
 <div ng-repeat="item in wc.financialItemArray">
   <input type="text" ng-model="item.item_amount" placeholder="financial_amount"/>
   <input type="text" ng-model="item.item_name" placeholder="financial_name"/>

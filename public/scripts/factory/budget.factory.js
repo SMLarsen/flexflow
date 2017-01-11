@@ -88,7 +88,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
-        console.log('postFlowItems', month);
+        // console.log('postFlowItems', month);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -138,10 +138,57 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFlowItems
 
+
+    // function to delete flow items
+    deleteFlowItems = function(month) {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'DELETE',
+                    url: '/budget/flowitems/' + month + '/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        console.log('Flow items deleted successfully');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error deleting flow items for', currentEmail, 'and month:', month, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end deleteFlowItems
+    // function to update flow items (delete all for budgetID then add new items)
+
+    updateFlowItems = function(budgetArray) {
+        var month = budgetArray[0].item_month;
+        deleteFlowItems(month)
+            .then(function(response) {
+                    postFlowItems(budgetArray)
+                        .then(function(response) {
+                                console.log('Flow items replaced');
+                                return;
+                            },
+                            function(err) {
+                                console.log('Error replacing flow items for', currentEmail, ': ', err);
+                                return;
+                            });
+                },
+                function(err) {
+                    console.log('Replacement delete unsuccessful', err);
+                    return;
+                });
+    };
+
     //**************************** Flex Item Functions ******************************//
     // function to insert flex items
     postFlexItems = function(budgetArray) {
-        console.log('postFlexItems', budgetArray);
+        // console.log('postFlexItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -239,7 +286,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     //**************************** Functional Item Functions ******************************//
     // function to insert functional items
     postFunctionalItems = function(budgetArray) {
-        console.log('postFunctionalItems', budgetArray);
+        // console.log('postFunctionalItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -289,10 +336,55 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         }
     }; //end getFunctionalItems
 
+    // function to delete functional items
+    deleteFunctionalItems = function() {
+        var currentUser = authFactory.getCurrentUser();
+        var currentEmail = currentUser.email;
+        if (currentUser) {
+            return $http({
+                    method: 'DELETE',
+                    url: '/budget/functionalitems/' + currentEmail,
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        console.log('Functional items deleted successfully');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error deleting functional items for', currentEmail, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end deleteFunctionalItems
+
+    // function to update functional items (delete all for budgetID then add new items)
+    updateFunctionalItems = function(budgetArray) {
+        deleteFunctionalItems()
+            .then(function(response) {
+                    postFunctionalItems(budgetArray)
+                        .then(function(response) {
+                                console.log('Functional items replaced');
+                                return;
+                            },
+                            function(err) {
+                                console.log('Error replacing functional items for', currentEmail, ': ', err);
+                                return;
+                            });
+                },
+                function(err) {
+                    console.log('Replacement delete unsuccessful', err);
+                    return;
+                });
+    };
+
     //**************************** Financial Item Functions ******************************//
     // function to insert financial items
     postFinancialItems = function(budgetArray) {
-        console.log('postFinancialItems', budgetArray);
+        // console.log('postFinancialItems', budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -341,6 +433,51 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
             console.log('User not signed in');
         }
     }; //end getFinancialItems
+
+        // function to delete financial items
+        deleteFinancialItems = function() {
+            var currentUser = authFactory.getCurrentUser();
+            var currentEmail = currentUser.email;
+            if (currentUser) {
+                return $http({
+                        method: 'DELETE',
+                        url: '/budget/financialitems/' + currentEmail,
+                        headers: {
+                            id_token: authFactory.getIdToken()
+                        }
+                    })
+                    .then(function(response) {
+                            console.log('Financial items deleted successfully');
+                            return;
+                        },
+                        function(err) {
+                            console.log('Error deleting financial items for', currentEmail, ': ', err);
+                            return;
+                        });
+            } else {
+                console.log('User not signed in');
+            }
+        }; //end deleteFinancialItems
+
+    // function to update financial items (delete all for budgetID then add new items)
+    updateFinancialItems = function(budgetArray) {
+        deleteFinancialItems()
+            .then(function(response) {
+                    postFinancialItems(budgetArray)
+                        .then(function(response) {
+                                console.log('Financial items replaced');
+                                return;
+                            },
+                            function(err) {
+                                console.log('Error replacing financial items for', currentEmail, ': ', err);
+                                return;
+                            });
+                },
+                function(err) {
+                    console.log('Replacement delete unsuccessful', err);
+                    return;
+                });
+    };
 
     // ******************************** APIs ************************************//
     var publicApi = {

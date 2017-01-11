@@ -201,6 +201,34 @@ router.put("/flowitems/:email", function(req, res) {
     });
 });
 
+router.delete("/flowitems/:month/:email", function(req, res) {
+    var userEmail = req.params.email;
+    var month = req.params.month;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                var queryString = 'DELETE FROM flow_item WHERE budget_id = $1 AND item_month = $2';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID, month], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error deleting flow items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Financial items deleted', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
 // *********************************** FLEX ITEM routes **************************
 router.get("/flexitems/:email", function(req, res) {
     var userEmail = req.params.email;
@@ -350,6 +378,7 @@ router.post("/functionalitems/:email", function(req, res) {
                             queryString += ", '" + item.item_name + "'), ";
                         }
                         var lastItem = req.body[req.body.length - 1];
+                        console.log('lastItem',lastItem);
                         queryString += "(" + budgetID;
                         queryString += ", " + lastItem.item_amount;
                         queryString += ", '" + lastItem.item_name + "')";
@@ -369,6 +398,33 @@ router.post("/functionalitems/:email", function(req, res) {
                     }
                 }
             );
+    });
+});
+
+router.delete("/functionalitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                var queryString = 'DELETE FROM functional_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error deleting functional items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Functional items deleted', result.rows);
+                    }
+                });
+            }
+        });
     });
 });
 
@@ -444,5 +500,31 @@ router.post("/financialitems/:email", function(req, res) {
     });
 });
 
+router.delete("/financialitems/:email", function(req, res) {
+    var userEmail = req.params.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                var queryString = 'DELETE FROM financial_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error deleting financial items', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Financial items deleted', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
 
 module.exports = router;

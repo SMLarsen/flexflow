@@ -163,7 +163,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
     }; //end getFlowItemTotalsByMonth
 
     // function to get flow items totals for year
-    getFlowItemTotalsByYear = function() {
+    getFlowItemTotalByYear = function() {
         var currentUser = authFactory.getCurrentUser();
 
         if (currentUser) {
@@ -186,7 +186,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         } else {
             console.log('User not signed in');
         }
-    }; //end getFlowItemTotalsByYear
+    }; //end getFlowItemTotalByYear
 
     // function to delete flow items
     deleteFlowItems = function(month) {
@@ -211,8 +211,8 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
             console.log('User not signed in');
         }
     }; //end deleteFlowItems
-    // function to update flow items (delete all for budgetID then add new items)
 
+    // function to update flow items (delete all for budgetID then add new items)
     updateFlowItems = function(budgetArray) {
         var month = budgetArray[0].item_month;
         deleteFlowItems(month)

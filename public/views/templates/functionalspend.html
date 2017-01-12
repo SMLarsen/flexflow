@@ -4,13 +4,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Functional Spending Budget</h4>
-        <div class="modal-body" ng-repeat="item in fu.functionalItemArray">
-          <input type="number" ng-model="item.item_amount" placeholder="functional_amount" />
+        <h4 class="modal-title">Monthly Functional Spending</h4>
+        <div class="modal-body" ng-repeat="item in fu.itemArray">
           <input type="text" ng-model="item.item_name" placeholder="functional_name" />
+          <input type="number" ng-model="item.item_amount" placeholder="functional_amount" />
         </div>
         <div class="modal-footer">
-          <!--<button class="btn btn-danger" type="button" ng-click="fu.updateFunctionalItems()">updateFunctionalItems</button>-->
           <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
           <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()">Looks Good! Submit</button>
         </div>
@@ -23,17 +22,17 @@
   <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
   <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
   <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
-  </div>
-  
-<!--<br>
-<h4>Functional Items</h4>
-<button class="btn btn-primary" type="button" ng-click="fu.getFunctionalItems()">getFunctionalItems</button>
-<div ng-repeat="item in fu.functionalItemArray">
-  <input type="text" ng-model="item.item_amount" placeholder="functional_amount" />
-  <input type="text" ng-model="item.item_name" placeholder="functional_name" />
 </div>
-<br>-->
 <footer>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="5.6" aria-valuemin="0" aria-valuemax="100" style="width: 83.3%;">
+      15/18
+    </div>
+  </div>
   <button class="next" data-toggle="modal" data-target="#functionalData" ng-click="fu.postFunctionalItems()">Review Info/Next</button>
 </footer>
 
+  <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="number" id="yearly_salary" ng-model="input.newEmp.yearly_salary" name="yearly_salary" class="form-control" placeholder="Yearly Salary" required/>
+        </div>

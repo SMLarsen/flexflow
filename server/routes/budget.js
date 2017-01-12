@@ -21,7 +21,7 @@ router.get("/profile/:email", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('retrieved profile', result.rows[0]);
+                        //console.log('retrieved profile', result.rows[0]);
                     }
                 });
             }
@@ -114,7 +114,7 @@ router.get("/flowitems/:email", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Flow items retrieved', result.rows);
+                        //console.log('Flow items retrieved', result.rows);
                     }
                 });
             }

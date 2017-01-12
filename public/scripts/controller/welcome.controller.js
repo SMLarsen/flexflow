@@ -59,6 +59,11 @@
                     // console.log('WelcomeController flowItemArray', self.flowItemArray);
                 });
         };
+        //self.getFlowItems();
+        //console.log('here in self.flowItemArray');
+
+
+        // console.log(self.flowItemArray);
 
         // Dummy data for testing
         // var flowMonth = [{
@@ -138,6 +143,7 @@
         // ************************* flex items functions  ****************************
 
         self.getFlexItems = function() {
+          console.log("getFlexItems clicked");
             budgetFactory.getFlexItems()
                 .then(function(result) {
                     self.flexItemArray = result;
@@ -285,6 +291,34 @@
             budgetFactory.updateFinancialItems(self.financialItemArray);
         };
 
+        self.getFlowItemTotalsByMonth = function() {
+            budgetFactory.getFlowItemTotalsByMonth().then(function(result) {
+                self.flowTotalsByMonth = result;
+            });
+        };
+
+        self.getFlowItemTotalByYear = function() {
+            budgetFactory.getFlowItemTotalByYear().then(function(result) {
+                self.flowTotalByYear = result;
+            });
+        };
+
+        self.getFlexItemTotal = function() {
+            budgetFactory.getFlexItemTotal().then(function(result) {
+                self.flexItemTotal = result;
+            });
+        };
+
+        self.getFunctionalItemTotal = function() {
+            budgetFactory.getFunctionalItemTotal().then(function(result) {
+                self.functionalItemTotal = result;
+            });
+        };
+        self.getFinancialItemTotal = function() {
+            budgetFactory.getFinancialItemTotal().then(function(result) {
+                self.financialItemTotal = result;
+            });
+        };
 
     }]);
 

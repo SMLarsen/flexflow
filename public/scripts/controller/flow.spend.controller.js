@@ -54,6 +54,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.getFlowItems = function() {
     budgetFactory.getFlowItems()
     .then(function(result) {
+      console.log(result);
       self.flowCategories = result;
       setToggles();
     });
@@ -73,30 +74,28 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   // enters correct month and month index
   self.enterMonthFlowData = function(month, i) {
-    console.log(month);
     self.currentMonthData = month;
     self.currentMonth = month.month;
     self.currentMonthIndex = month.month_id;
-    console.log(self.currentMonthIndex);
     self.currentYear = month.year;
   } // end enterMonthFlowData
 
   // advances to the next month
   self.nextMonth = function() {
-    // postMonthFlowData();
-    // self.postFlowItems(self.newFlowBudget);
+    postMonthFlowData();
+    // self.updateFlowItems(self.newFlowBudget);
     // clearData();
-    // setToggles();
+    setToggles();
     self.monthBudgetData = [];
     setNextMonthData();
   } // end nextMonth
 
   // retreats to previous month
   self.prevMonth = function() {
-    // postMonthFlowData();
-    // self.postFlowItems(self.newFlowBudget);
+    postMonthFlowData();
+    // self.updateFlowItems(self.newFlowBudget);
     // clearData();
-    // setToggles();
+    setToggles();
     self.monthBudgetData = [];
     setPrevMonthData();
   } // end prevMonth
@@ -154,7 +153,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
         item_amount: parseInt(self.flowCategories[i].item_amount)
       };
       self.newFlowBudget[i] = monthlyBudgetCategoryData;
-      console.log(self.newFlowBudget);
     }
   } // end postMonthFlowData
 

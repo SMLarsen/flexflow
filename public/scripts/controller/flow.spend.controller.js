@@ -122,6 +122,16 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   } // end toggleActive
 
+  self.addCategory = function() {
+    self.flowCategories.push({
+      month: self.currentMonthData.month,
+      year: self.currentMonthData.month,
+      month_id: self.currentMonthData.month_id,
+      item_amount: 0,
+      item_name: 'New Category'
+    });
+  }
+
   function clearData() {
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];

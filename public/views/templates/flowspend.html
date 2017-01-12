@@ -12,9 +12,14 @@
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
-          <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
-          <span ng-hide="category.activeCategory">{{category.item_name}}</span>
-          <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
+          <label for="category.item_name" ng-hide="$index >= 9" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
+          <span ng-hide="category.activeCategory || $index >= 9">{{category.item_name}}</span>
+          <input placeholder="eg. 150" ng-show="category.activeCategory" ng-hide="$index >= 9" name="category.item_name" ng-model="category.item_amount"/>
+          <input placeholder="New Category" ng-show="$index >= 9" name="category.item_name" ng-model="category.item_name"/>
+          <input placeholder="eg. 150" ng-show="$index >= 9" name="category.item_amount" ng-model="category.item_amount"/>
+        </div>
+        <div id="addedCategories">
+          <button ng-click="fl.addCategory()">+</button>
         </div>
       </div>
       <div class="modal-footer">

@@ -48,6 +48,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.currentMonthIndex = null;
   self.monthlyBudgetData = [];
   self.newFlowBudget = [];
+  self.newCategories = []
+  self.newCategory = {
+    item_name: null,
+    item_amount: null
+  };
   var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
 
@@ -62,6 +67,20 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
     budgetFactory.updateFlowItems(self.flowCategories);
+  };
+
+  self.postFlowItems = function() {
+    console.log('post flow items clicked');
+    budgetFactory.postFlowItems(self.newCategories)
+    .then(function(result) {
+      console.log('Flow items inserted');
+      self.getFlowItems();
+      return;
+    },
+    function(err) {
+      console.log('Error inserting flow items for', currentUser.email, ': ', err);
+      return;
+    });
   };
 
 
@@ -99,7 +118,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     setPrevMonthData();
     pullCurrentMonthData();
     setToggles();
-    console.log(self.flowCategories);
   } // end prevMonth
 
   // reverts to previous flex spending page
@@ -150,8 +168,8 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       } else {
         category.activeCategory = true;
       }
-  }
-} // end setToggles
+    }
+  } // end setToggles
 
   // restructuring monthly flow data for database
   function postMonthFlowData() {
@@ -248,6 +266,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   } // end setPrevMonthData
 
+  // function to pull data from returned database array and push it onto array tied to DOM
   function pullCurrentMonthData() {
     self.flowCategories = [];
     for (var i = 0; i < self.monthlyBudgetData.length; i++) {
@@ -256,14 +275,23 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       }
     }
     resetZeroValues();
-  }
+  } // end pullCurrentMonthData
 
+  // function to ensure zero values show up as placeholder in inputs
   function resetZeroValues() {
     for (var i = 0; i < self.flowCategories.length; i++) {
       if(self.flowCategories[i].item_amount == 0) {
         self.flowCategories[i].item_amount = null;
       }
     }
+  } // end resetZeroValues
+
+  self.addBudgetItem = function(){
+    self.newCategory.item_month = self.currentMonthData.month_id;
+    self.newCategory.item_year = self.currentMonthData.year;
+    console.log(self.newCategory);
+    self.newCategories.push(self.newCategory);
+    self.postFlowItems();
   }
 
 }]); //end flow controller

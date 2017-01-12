@@ -291,6 +291,34 @@
             budgetFactory.updateFinancialItems(self.financialItemArray);
         };
 
+        self.getFlowItemTotalsByMonth = function() {
+            budgetFactory.getFlowItemTotalsByMonth().then(function(result) {
+                self.flowTotalsByMonth = result;
+            });
+        };
+
+        self.getFlowItemTotalByYear = function() {
+            budgetFactory.getFlowItemTotalByYear().then(function(result) {
+                self.flowTotalByYear = result;
+            });
+        };
+
+        self.getFlexItemTotal = function() {
+            budgetFactory.getFlexItemTotal().then(function(result) {
+                self.flexItemTotal = result;
+            });
+        };
+
+        self.getFunctionalItemTotal = function() {
+            budgetFactory.getFunctionalItemTotal().then(function(result) {
+                self.functionalItemTotal = result;
+            });
+        };
+        self.getFinancialItemTotal = function() {
+            budgetFactory.getFinancialItemTotal().then(function(result) {
+                self.financialItemTotal = result;
+            });
+        };
 
     }]);
 

@@ -13,7 +13,7 @@ app.controller('ClientProfileController', ['$http', 'AuthFactory', 'TemplateFact
   var buildFlexArray = function(number){
     self.flexArray = [];
     for (var i = 0; i < number; i++) {
-      self.flexArray.push({flex_name: null, flex_amount: 0, temp_id: i});
+      self.flexArray.push({flex_name: null, flex_amount: null, temp_id: i});
     }
   }
 

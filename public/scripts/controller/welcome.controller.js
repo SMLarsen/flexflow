@@ -59,6 +59,11 @@
                     // console.log('WelcomeController flowItemArray', self.flowItemArray);
                 });
         };
+        //self.getFlowItems();
+        //console.log('here in self.flowItemArray');
+
+
+        // console.log(self.flowItemArray);
 
         // Dummy data for testing
         // var flowMonth = [{
@@ -138,6 +143,7 @@
         // ************************* flex items functions  ****************************
 
         self.getFlexItems = function() {
+          console.log("getFlexItems clicked");
             budgetFactory.getFlexItems()
                 .then(function(result) {
                     self.flexItemArray = result;

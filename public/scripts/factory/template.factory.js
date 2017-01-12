@@ -227,7 +227,6 @@ app.factory("TemplateFactory", function($http) {
           })
           .then(function(response) {
                   categoryTemplate = response.data;
-                  console.log('Categories', response.data);
                   return;
               },
               function(err) {
@@ -268,7 +267,6 @@ app.factory("TemplateFactory", function($http) {
     getItemTemplate = function(category) {
         var categoryID = 0;
         for (var i = 0; i < categoryTemplate.length; i++) {
-          console.log(categoryTemplate[i].category_name);
             if (categoryTemplate[i].category_name === category) {
                 categoryID = categoryTemplate[i].id;
             }

@@ -12,14 +12,14 @@
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
-          <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
+          <button ng-click="fl.toggleActive(category)">{{category.item_name}}</button>
           <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
-        <button type="button" class="btn btn-default" ng-click="fl.nextMonth(fl.currentMonthData)">Next Month</button>
+        <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
       </div>
     </div>
   </div>

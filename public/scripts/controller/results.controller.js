@@ -2,6 +2,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', fu
     console.log('Results controller started');
     var self = this;
     var budgetFactory = BudgetFactory;
+    var authFactory = AuthFactory;
 
     budgetFactory.getFlowItemTotalByYear().then(function(results) {
         self.flowTotal = results.sum / 12;
@@ -25,6 +26,8 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', fu
 
     self.logOut = function() {
         console.log('logout clicked');
+        authFactory.logOut();
+        window.location = '/#/home';
     };
 
 }]);

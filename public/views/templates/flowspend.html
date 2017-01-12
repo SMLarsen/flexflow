@@ -12,8 +12,8 @@
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
-          <button ng-click="fl.toggleActive(category)">{{category.item_name}}</button>
-          <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
+          <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
+          <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
       </div>

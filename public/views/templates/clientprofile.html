@@ -13,9 +13,9 @@
     <input type="text" ng-model="person.flex_name" placeholder="e.g. Bob" class="form-control">
   </div><br>
   <label for="total income">Total Household Income</label><br>
-  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. $100,000" class="form-control"><br>
+  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
-  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. $5,000" class="form-control"><br>
+  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control"><br>
   <label for="start budget">What month are you starting your budget?</label><br>
   <select name="month" ng-model="cp.budget.budget_start_month">
     <option value="1">January</option>
@@ -35,6 +35,7 @@
     <option value="2017">2017</option>
     <option value="2018">2018</option>
     <option value="2019">2019</option>
+    <option value="2020">2020</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled">I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
   <button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
@@ -47,7 +48,7 @@
         </div>
         <div class="modal-body">
           <p>Number of Adults: {{cp.numPeople}} </p>
-          <p>Annual Income: {{cp.budget.annual_salary}}</p>
+          <p>Annual Income: ${{cp.budget.annual_salary}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>

@@ -85,7 +85,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // advances to the next month
   self.nextMonth = function() {
     postMonthFlowData();
-    self.monthBudgetData = [];
     setNextMonthData();
     pullCurrentMonthData();
     setToggles();
@@ -95,8 +94,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // retreats to previous month
   self.prevMonth = function() {
     postMonthFlowData();
-    setToggles();
-    self.monthBudgetData = [];
     setPrevMonthData();
     pullCurrentMonthData();
     setToggles();
@@ -119,6 +116,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       category.activeCategory = true;
     } else {
       category.activeCategory = false;
+      category.item_amount = 0;
     }
   } // end toggleActive
 

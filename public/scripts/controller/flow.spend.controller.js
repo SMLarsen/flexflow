@@ -116,7 +116,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       category.activeCategory = true;
     } else {
       category.activeCategory = false;
-      category.item_amount = 0;
+      category.item_amount = null;
     }
   } // end toggleActive
 
@@ -133,7 +133,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   function setToggles(){
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
-      if(category.item_amount === undefined || category.item_amount === 0) {
+      if(category.item_amount === undefined || category.item_amount === 0 || category.item_amount === null) {
         category.activeCategory  = false;
       } else {
         category.activeCategory = true;
@@ -144,7 +144,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // restructuring monthly flow data for database
   function postMonthFlowData() {
     for (var i = 0; i < self.flowCategories.length; i++) {
-      if(self.flowCategories[i].item_amount === undefined) {
+      if(self.flowCategories[i].item_amount === undefined || self.flowCategories[i].item_amount === null) {
         self.flowCategories[i].item_amount = 0;
       }
       var monthlyBudgetCategoryData = {
@@ -241,6 +241,15 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     for (var i = 0; i < self.monthlyBudgetData.length; i++) {
       if(self.monthlyBudgetData[i].item_month == self.currentMonthData.month_id) {
         self.flowCategories.push(self.monthlyBudgetData[i]);
+      }
+    }
+    resetZeroValues();
+  }
+
+  function resetZeroValues() {
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      if(self.flowCategories[i].item_amount == 0) {
+        self.flowCategories[i].item_amount = null;
       }
     }
   }

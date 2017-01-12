@@ -12,7 +12,7 @@
         <div class="modal-footer">
           <!--<button class="btn btn-danger" type="button" ng-click="fu.updateFunctionalItems()">updateFunctionalItems</button>-->
           <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-          <button class="btn btn-default" type="button">Looks Good! Submit</button>
+          <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()">Looks Good! Submit</button>
         </div>
       </div>
     </div>
@@ -23,7 +23,8 @@
   <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
   <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
   <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
-</div>
+  </div>
+  
 <!--<br>
 <h4>Functional Items</h4>
 <button class="btn btn-primary" type="button" ng-click="fu.getFunctionalItems()">getFunctionalItems</button>
@@ -35,3 +36,4 @@
 <footer>
   <button class="next" data-toggle="modal" data-target="#functionalData" ng-click="fu.postFunctionalItems()">Review Info/Next</button>
 </footer>
+

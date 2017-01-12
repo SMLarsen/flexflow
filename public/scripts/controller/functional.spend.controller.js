@@ -6,7 +6,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	var templateFactory = TemplateFactory;
 	self.itemArray = templateFactory.getItemTemplate("Functional");
 	var budgetFactory = BudgetFactory;
-	var functionalItemArray = [];
+	self.functionalItemArray = [];
 
 	console.log("functional itemArray and functionalItemArray", self.itemArray, budgetFactory);
 
@@ -60,6 +60,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 			.then(function (result) {
 				self.functionalItemArray = result;
 			});
+			window.location = '/#/financialspend'
 	};
 
 }]);

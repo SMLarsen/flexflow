@@ -18,4 +18,13 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', fu
     budgetFactory.getFinancialItemTotal().then(function(results) {
         self.financialTotal = results.sum;
     });
+
+    self.scheduleMeeting = function() {
+        console.log('scheduleMeeting clicked');
+    };
+
+        self.logOut = function() {
+            console.log('logout clicked');
+        };
+
 }]);

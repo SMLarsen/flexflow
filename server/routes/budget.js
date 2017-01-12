@@ -145,7 +145,7 @@ router.get("/flowitems/totalbymonth", function(req, res) {
                         console.log('Error getting flow items monthly totals', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows);
+                        res.send(result.rows[0]);
                         console.log('Flow items monthly totals retrieved', result.rows);
                     }
                 });
@@ -174,7 +174,7 @@ router.get("/flowitems/totalbyyear", function(req, res) {
                         console.log('Error getting flow items yearly total', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows);
+                        res.send(result.rows[0]);
                         console.log('Flow items yearly total retrieved', result.rows);
                     }
                 });
@@ -342,7 +342,7 @@ router.get("/flexitems/total", function(req, res) {
                         console.log('Error getting flex items monthly total', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows);
+                        res.send(result.rows[0]);
                         console.log('Flex items monthly total retrieved', result.rows);
                     }
                 });
@@ -473,7 +473,7 @@ router.get("/functionalitems/total", function(req, res) {
                         console.log('Error getting functional items monthly total', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows);
+                        res.send(result.rows[0]);
                         console.log('Functional items monthly total retrieved', result.rows);
                     }
                 });
@@ -605,7 +605,7 @@ router.get("/financialitems/total", function(req, res) {
                         console.log('Error getting financial items monthly total', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows);
+                        res.send(result.rows[0]);
                         console.log('Financial items monthly total retrieved', result.rows);
                     }
                 });

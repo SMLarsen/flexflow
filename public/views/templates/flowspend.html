@@ -1,5 +1,5 @@
 <h1>Your Flow Spending</h1>
-<button ng-repeat="month in fl.months" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month}}</button>
+<button ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} {{month.year}}</button>
 
 
 
@@ -8,18 +8,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{fl.currentMonth}}</h4>
+        <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
           <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
-          <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
+          <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
         <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <button class="btn" ng-click="fl.prevPage()">Back</button>
+  <button id="continue" class="btn" data-toggle="modal" data-target="#submitForm">Continue</button>
+</div>
+
+<div class="modal fade" id="submitForm" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Flow Budget</h4>
+      </div>
+      <div class="modal-body">
+        <p>Flow Budget Info Here Pls</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
+        <button type="button" class="btn btn-default" ng-click="fl.nextPage()" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

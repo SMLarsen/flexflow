@@ -5,5 +5,15 @@ app.controller('FlexSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
-  
+
+  budgetFactory.getFlexItems().then(function(result){
+    self.flexArray = result;
+  });
+
+  self.submitFlex = function(){
+    console.log(self.flexArray);
+    budgetFactory.updateFlexItems(self.flexArray);
+    window.location = '/#/flowspend';
+  }
+
 }]);

@@ -61,7 +61,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
-    budgetFactory.updateFlowItems(self.flowItemArray);
+    budgetFactory.updateFlowItems(self.flowCategories);
   };
 
 
@@ -85,6 +85,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // advances to the next month
   self.nextMonth = function() {
     postMonthFlowData();
+    self.updateFlowItems();
     setNextMonthData();
     pullCurrentMonthData();
     setToggles();
@@ -94,6 +95,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // retreats to previous month
   self.prevMonth = function() {
     postMonthFlowData();
+    self.updateFlowItems();
     setPrevMonthData();
     pullCurrentMonthData();
     setToggles();

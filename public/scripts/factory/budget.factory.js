@@ -14,7 +14,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/profile/' + currentUser.email,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -40,7 +40,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/profile/' + currentEmail,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -66,7 +66,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'PUT',
-                    url: '/budget/profile/' + currentUser.email,
+                    url: '/budget/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -93,7 +93,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flowitems/' + currentUser.email,
+                    url: '/budget/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -119,7 +119,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/' + currentEmail,
+                    url: '/budget/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -146,7 +146,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flowitems/' + month + '/' + currentEmail,
+                    url: '/budget/flowitems/' + month,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -193,7 +193,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flexitems/' + currentUser.email,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -219,7 +219,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flexitems/' + currentEmail,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -245,7 +245,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flexitems/' + currentEmail,
+                    url: '/budget/flexitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -291,7 +291,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/functionalitems/' + currentUser.email,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -317,7 +317,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/functionalitems/' + currentEmail,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -343,7 +343,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/functionalitems/' + currentEmail,
+                    url: '/budget/functionalitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -389,7 +389,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/financialitems/' + currentUser.email,
+                    url: '/budget/financialitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -415,7 +415,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/financialitems/' + currentEmail,
+                    url: '/budget/financialitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -441,7 +441,7 @@ app.factory("BudgetFactory", function($http, AuthFactory) {
             if (currentUser) {
                 return $http({
                         method: 'DELETE',
-                        url: '/budget/financialitems/' + currentEmail,
+                        url: '/budget/financialitems',
                         headers: {
                             id_token: authFactory.getIdToken()
                         }

@@ -127,8 +127,8 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       month: self.currentMonthData.month,
       year: self.currentMonthData.month,
       month_id: self.currentMonthData.month_id,
-      item_amount: 0,
-      item_name: 'New Category'
+      item_amount: null,
+      item_name: null
     });
   }
 

@@ -11,7 +11,7 @@
         <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="category in fl.flowCategories" ng-show="category.item_month === fl.currentMonthData.month_id">
+        <div ng-repeat="category in fl.flowCategories">
           <button ng-click="fl.toggleActive(category)">{{category.item_name}}</button>
           <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>

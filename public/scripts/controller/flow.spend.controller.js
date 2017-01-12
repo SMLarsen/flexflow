@@ -46,7 +46,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.startingYear = null;
   self.currentMonth = null;
   self.currentMonthIndex = null;
-  self.monthBudgetData = [];
+  self.monthlyBudgetData = [];
   self.newFlowBudget = [];
   var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
@@ -55,8 +55,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     budgetFactory.getFlowItems()
     .then(function(result) {
       console.log(result);
-      self.flowCategories = result;
-      setToggles();
+      self.monthlyBudgetData = result;
     });
   };
 
@@ -78,26 +77,30 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     self.currentMonth = month.month;
     self.currentMonthIndex = month.month_id;
     self.currentYear = month.year;
+    pullCurrentMonthData();
+    setToggles();
+    console.log(self.flowCategories);
   } // end enterMonthFlowData
 
   // advances to the next month
   self.nextMonth = function() {
     postMonthFlowData();
-    // self.updateFlowItems(self.newFlowBudget);
-    // clearData();
-    setToggles();
     self.monthBudgetData = [];
     setNextMonthData();
+    pullCurrentMonthData();
+    setToggles();
+    console.log(self.flowCategories);
   } // end nextMonth
 
   // retreats to previous month
   self.prevMonth = function() {
     postMonthFlowData();
-    // self.updateFlowItems(self.newFlowBudget);
-    // clearData();
     setToggles();
     self.monthBudgetData = [];
     setPrevMonthData();
+    pullCurrentMonthData();
+    setToggles();
+    console.log(self.flowCategories);
   } // end prevMonth
 
   // reverts to previous flex spending page
@@ -234,5 +237,14 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       }
     }
   } // end setPrevMonthData
+
+  function pullCurrentMonthData() {
+    self.flowCategories = [];
+    for (var i = 0; i < self.monthlyBudgetData.length; i++) {
+      if(self.monthlyBudgetData[i].item_month == self.currentMonthData.month_id) {
+        self.flowCategories.push(self.monthlyBudgetData[i]);
+      }
+    }
+  }
 
 }]); //end flow controller

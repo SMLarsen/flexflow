@@ -71,10 +71,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   getBudgetData();
 
   // // getting flow items
-  // self.getFlowItems();
-
-  // setting up flowCategories
-  setUpFlow(newUser);
+  self.getFlowItems();
 
   // enters correct month and month index
   self.enterMonthFlowData = function(month, i) {
@@ -245,17 +242,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   //     self.flowItemArray[i]
   //   }
   // }
-
-  // set stage if new or returning user
-  function setUpFlow(newUser) {
-    if(newUser === true) {
-      self.flowCategories = templateFactory.getItemTemplate("Flow");
-      console.log(self.flowCategories);
-    } else {
-      self.getFlowItems();
-      console.log(self.flowCategories);
-    }
-  }
 
 
 

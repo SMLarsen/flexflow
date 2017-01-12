@@ -8,7 +8,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{fl.currentMonth}} {{fl.currentYear}}</h4>
+        <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
@@ -19,7 +19,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
-        <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
+        <button type="button" class="btn btn-default" ng-click="fl.nextMonth(fl.currentMonthData)">Next Month</button>
       </div>
     </div>
   </div>

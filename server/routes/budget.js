@@ -322,6 +322,35 @@ router.get("/flexitems", function(req, res) {
     });
 });
 
+// Route: GET flex monthly total for a budget
+router.get("/flexitems/total", function(req, res) {
+    var userEmail = req.decodedToken.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT SUM(flex_amount) FROM flex_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting flex items monthly total', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Flex items monthly total retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
 // Route: Insert flex items for a budget
 router.post("/flexitems", function(req, res) {
     var userEmail = req.decodedToken.email;
@@ -417,6 +446,35 @@ router.get("/functionalitems", function(req, res) {
                     } else {
                         res.send(result.rows);
                         console.log('Functional items retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
+// Route: GET functional monthly total for a budget
+router.get("/functionalitems/total", function(req, res) {
+    var userEmail = req.decodedToken.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT SUM(item_amount) FROM functional_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting functional items monthly total', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Functional items monthly total retrieved', result.rows);
                     }
                 });
             }
@@ -520,6 +578,35 @@ router.get("/financialitems", function(req, res) {
                     } else {
                         res.send(result.rows);
                         console.log('Financial items retrieved', result.rows);
+                    }
+                });
+            }
+        });
+    });
+});
+
+// Route: GET financial monthly total for a budget
+router.get("/financialitems/total", function(req, res) {
+    var userEmail = req.decodedToken.email;
+    pg.connect(connectionString, function(err, client, done) {
+        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting budgetID:', err);
+                res.sendStatus(500);
+            } else {
+                var budgetID = result.rows[0].id;
+                // console.log('results:', result.rows[0]);
+                var queryString = 'SELECT SUM(item_amount) FROM financial_item WHERE budget_id = $1';
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log('Error getting financial items monthly total', err);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log('Financial items monthly total retrieved', result.rows);
                     }
                 });
             }

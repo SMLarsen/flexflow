@@ -64,7 +64,7 @@ router.post("/profile", function(req, res) {
 // Route: Update budget profile for a user
 router.put("/profile", function(req, res) {
     var userEmail = req.decodedToken.email;
-    console.log('email:', userEmail, 'req:', req.body);
+    // console.log('email:', userEmail, 'req:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
             done();
@@ -109,7 +109,7 @@ router.get("/flowitems", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT item_month, item_year, item_amount, item_name FROM flow_item WHERE budget_id = $1 ORDER BY item_year, item_month';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -138,7 +138,7 @@ router.get("/flowitems/totalbymonth", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT item_year, item_month, SUM(item_amount) FROM flow_item WHERE budget_id = $1 GROUP BY item_year, item_month';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -146,7 +146,7 @@ router.get("/flowitems/totalbymonth", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('Flow items monthly totals retrieved', result.rows);
+                        console.log('Flow items monthly totals retrieved');
                     }
                 });
             }
@@ -167,7 +167,7 @@ router.get("/flowitems/totalbyyear", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT SUM(item_amount) FROM flow_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -175,7 +175,7 @@ router.get("/flowitems/totalbyyear", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('Flow items yearly total retrieved', result.rows);
+                        console.log('Flow items yearly total retrieved');
                     }
                 });
             }
@@ -233,7 +233,7 @@ router.post("/flowitems", function(req, res) {
 // Route: Delete flow items for a budget
 router.put("/flowitems", function(req, res) {
     var userEmail = req.decodedToken.email;
-    console.log('email:', userEmail, 'req:', req.body);
+    // console.log('email:', userEmail, 'req:', req.body);
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT id FROM users WHERE email = $1', [userEmail], function(err, result) {
             done();
@@ -275,7 +275,7 @@ router.delete("/flowitems/:month", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 var queryString = 'DELETE FROM flow_item WHERE budget_id = $1 AND item_month = $2';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID, month], function(err, result) {
                     done();
                     if (err) {
@@ -283,7 +283,7 @@ router.delete("/flowitems/:month", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Financial items deleted', result.rows);
+                        console.log('Financial items deleted');
                     }
                 });
             }
@@ -306,7 +306,7 @@ router.get("/flexitems", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT flex_amount, flex_name FROM flex_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -314,7 +314,7 @@ router.get("/flexitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Flex items retrieved', result.rows);
+                        console.log('Flex items retrieved');
                     }
                 });
             }
@@ -335,7 +335,7 @@ router.get("/flexitems/total", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT SUM(flex_amount) FROM flex_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -343,7 +343,7 @@ router.get("/flexitems/total", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('Flex items monthly total retrieved', result.rows);
+                        console.log('Flex items monthly total retrieved');
                     }
                 });
             }
@@ -375,7 +375,7 @@ router.post("/flexitems", function(req, res) {
                         queryString += "(" + budgetID;
                         queryString += ", " + lastItem.flex_amount;
                         queryString += ", '" + lastItem.flex_name + "')";
-                        console.log('queryString', queryString);
+                        // console.log('queryString', queryString);
                         client.query(queryString,
                             function(err, result) {
                                 done();
@@ -406,7 +406,7 @@ router.delete("/flexitems", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 var queryString = 'DELETE FROM flex_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -414,7 +414,7 @@ router.delete("/flexitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Flex items deleted', result.rows);
+                        console.log('Flex items deleted');
                     }
                 });
             }
@@ -437,7 +437,7 @@ router.get("/functionalitems", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT item_amount, item_name FROM functional_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -445,7 +445,7 @@ router.get("/functionalitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Functional items retrieved', result.rows);
+                        console.log('Functional items retrieved');
                     }
                 });
             }
@@ -466,7 +466,7 @@ router.get("/functionalitems/total", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT SUM(item_amount) FROM functional_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -474,7 +474,7 @@ router.get("/functionalitems/total", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('Functional items monthly total retrieved', result.rows);
+                        console.log('Functional items monthly total retrieved');
                     }
                 });
             }
@@ -507,7 +507,7 @@ router.post("/functionalitems", function(req, res) {
                         queryString += "(" + budgetID;
                         queryString += ", " + lastItem.item_amount;
                         queryString += ", '" + lastItem.item_name + "')";
-                        console.log('queryString', queryString);
+                        // console.log('queryString', queryString);
                         client.query(queryString,
                             function(err, result) {
                                 done();
@@ -546,7 +546,7 @@ router.delete("/functionalitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Functional items deleted', result.rows);
+                        console.log('Functional items deleted');
                     }
                 });
             }
@@ -569,7 +569,7 @@ router.get("/financialitems", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT item_amount, item_name FROM financial_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -577,7 +577,7 @@ router.get("/financialitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Financial items retrieved', result.rows);
+                        console.log('Financial items retrieved');
                     }
                 });
             }
@@ -598,7 +598,7 @@ router.get("/financialitems/total", function(req, res) {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
                 var queryString = 'SELECT SUM(item_amount) FROM financial_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
+                // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
@@ -606,7 +606,7 @@ router.get("/financialitems/total", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows[0]);
-                        console.log('Financial items monthly total retrieved', result.rows);
+                        console.log('Financial items monthly total retrieved');
                     }
                 });
             }
@@ -677,7 +677,7 @@ router.delete("/financialitems", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Financial items deleted', result.rows);
+                        console.log('Financial items deleted');
                     }
                 });
             }

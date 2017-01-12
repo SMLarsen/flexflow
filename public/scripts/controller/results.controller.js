@@ -23,8 +23,8 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', fu
         console.log('scheduleMeeting clicked');
     };
 
-        self.logOut = function() {
-            console.log('logout clicked');
-        };
+    self.logOut = function() {
+        console.log('logout clicked');
+    };
 
 }]);

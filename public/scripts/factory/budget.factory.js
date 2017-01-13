@@ -646,6 +646,34 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     return;
                 });
     };
+    //**************************** AddiontalInfo Item Functions ******************************//
+    // function to insert financial items
+    postAdditionalInfo = function(budgetArray) {
+      //console.log("budgetArray: ", budgetArray);
+        var currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'POST',
+                    url: '/budget/comments',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    },
+                    data: budgetArray
+                })
+                .then(function(response) {
+                        // console.log('Profile updated');
+                        return;
+                    },
+                    function(err) {
+                        console.log('Error adding budget items for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end postFinancialItems
+
+
 
     // ******************************** APIs ************************************//
     var publicApi = {
@@ -723,7 +751,12 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         getFunctionalItemTotal: function() {
             return getFunctionalItemTotal();
+        },
+        postAdditionalInfo: function(budgetArray) {
+            return postAdditionalInfo(budgetArray);
         }
+
+
     };
 
     return publicApi;

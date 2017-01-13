@@ -34,7 +34,7 @@ router.get("/privateData", function(req, res) {
                                         } else {
                                             var currentUser = result.rows[0];
                                             currentUser.newUser = true;
-                                            console.log('new User:', currentUser);
+                                            //console.log('new User:', currentUser);
                                             res.send(currentUser);
                                         }
                                     });

@@ -1,20 +1,35 @@
-<h1>results</h1>
-<div>
-  <h4>Flow</h4>
-  <span>{{rc.flowTotal | currency:"USD$":0}}</span>
-
+<h1>Results</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Flex</h3>
+  </div>
+  <div class="panel-body">
+    {{rc.flexTotal | currency:"USD $":0}}
+  </div>
 </div>
-<div>
-  <h4>Flex</h4>
-  <span>{{rc.flexTotal | currency:"USD$":0}}</span>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Flow</h3>
+  </div>
+  <div class="panel-body">
+    {{rc.flowTotal | currency:"USD $":0}}
+  </div>
 </div>
-<div>
-  <h4>Functional</h4>
-  <span>{{rc.functionalTotal | currency:"USD$":0}}</span>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Functional</h3>
+    </div>
+  <div class="panel-body">
+    {{rc.functionalTotal | currency:"USD $":0}}
+  </div>
 </div>
-<div>
-  <h4>Financial</h4>
-  <span>{{rc.financialTotal | currency:"USD$":0}}</span>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Financial</h3>
+    </div>
+  <div class="panel-body">
+    {{rc.financialTotal | currency:"USD $":0}}
+  </div>
 </div>
 <button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
 <button class="btn btn-default" ng-click="rc.logOut()" type="button" name="button">Log Out</button>

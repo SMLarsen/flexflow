@@ -83,7 +83,6 @@ app.factory("TemplateFactory", function($http) {
     getItemTemplate = function(category) {
         var categoryID = 0;
         for (var i = 0; i < categoryTemplate.length; i++) {
-            console.log(categoryTemplate[i].category_name);
             if (categoryTemplate[i].category_name === category) {
                 categoryID = categoryTemplate[i].id;
             }

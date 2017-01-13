@@ -51,7 +51,7 @@
         <h4 class="modal-title">Your Flow Budget</h4>
       </div>
       <div class="modal-body">
-        <p>Flow Budget Info Here Pls</p>
+        <p ng-repeat="month in fl.budgetMonths"><b>{{month.month}}:</b> ${{month.month_total}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
@@ -63,5 +63,5 @@
 
 <div class="nav_button_container">
   <button class="btn" ng-click="fl.prevPage()">Prev</button>
-  <button class="btn" data-toggle="modal" data-target="#submitForm">Next</button>
+  <button ng-click="self.findCategoryTotals()" class="btn" data-toggle="modal" data-target="#submitForm">Next</button>
 </div>

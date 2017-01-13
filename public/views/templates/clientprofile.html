@@ -10,7 +10,7 @@
 <div class="client_names">
   <label for="names">Name(s)</label><br>
   <div ng-repeat="person in cp.flexArray">
-    <input type="text" ng-model="person.flex_name" placeholder="e.g. Bob" class="form-control">
+    <input type="text" ng-model="person.item_name" placeholder="e.g. Bob" class="form-control">
   </div><br>
   <label for="total income">Total Household Income</label><br>
   <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
@@ -32,10 +32,7 @@
     <option value="12">December</option>
   </select>
   <select name="year" ng-model="cp.budget.budget_start_year">
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
-    <option value="2019">2019</option>
-    <option value="2020">2020</option>
+    <option ng-repeat="year in cp.nextFiveYears">{{year}}</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled">I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
   <button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>

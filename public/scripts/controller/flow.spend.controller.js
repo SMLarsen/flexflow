@@ -1,43 +1,55 @@
-app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function($http, AuthFactory, TemplateFactory, BudgetFactory) {
+app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) {
   console.log('Flow Spend controller started');
   var self = this;
   var allMonths = [
     {month: 'January',
     year: 0,
-    month_id: 1},
+    month_id: 1,
+    month_total: null},
     {month: 'February',
     year: 0,
-    month_id: 2},
+    month_id: 2,
+    month_total: null},
     {month: 'March',
     year: 0,
-    month_id: 3},
+    month_id: 3,
+    month_total: null},
     {month: 'April',
     year: 0,
-    month_id: 4},
+    month_id: 4,
+    month_total: null},
     {month: 'May',
     year: 0,
-    month_id: 5},
+    month_id: 5,
+    month_total: null},
     {month: 'June',
     year: 0,
-    month_id: 6},
+    month_id: 6,
+    month_total: null},
     {month: 'July',
     year: 0,
-    month_id: 7},
+    month_id: 7,
+    month_total: null},
     {month: 'August',
     year: 0,
-    month_id: 8},
+    month_id: 8,
+    month_total: null},
     {month: 'September',
     year: 0,
-    month_id: 9},
+    month_id: 9,
+    month_total: null},
     {month: 'October',
     year: 0,
-    month_id: 10},
+    month_id: 10,
+    month_total: null},
     {month: 'November',
     year: 0,
-    month_id: 11},
+    month_id: 11,
+    month_total: null},
     {month: 'December',
     year: 0,
-    month_id: 12},
+    month_id: 12,
+    month_total: null},
   ];
   self.budgetMonths = [];
   self.startingMonthID = 0;
@@ -48,7 +60,11 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   self.currentMonthIndex = null;
   self.monthlyBudgetData = [];
   self.newFlowBudget = [];
-  var templateFactory = TemplateFactory;
+  self.newCategories = []
+  self.newCategory = {
+    item_name: null,
+    item_amount: null
+  };
   var budgetFactory = BudgetFactory;
 
   self.getFlowItems = function() {
@@ -56,12 +72,30 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     .then(function(result) {
       console.log(result);
       self.monthlyBudgetData = result;
+      findMonthTotals();
     });
   };
 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
-    budgetFactory.updateFlowItems(self.flowItemArray);
+    budgetFactory.updateFlowItems(self.flowCategories)
+    .then(function(){
+      self.getFlowItems();
+    });
+  };
+
+  self.postFlowItems = function() {
+    console.log('post flow items clicked');
+    budgetFactory.postFlowItems(self.newCategories)
+    .then(function(result) {
+      console.log('Flow items inserted');
+      self.getFlowItems();
+      return;
+    },
+    function(err) {
+      console.log('Error inserting flow items for', currentUser.email, ': ', err);
+      return;
+    });
   };
 
 
@@ -85,6 +119,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // advances to the next month
   self.nextMonth = function() {
     postMonthFlowData();
+    self.updateFlowItems();
     setNextMonthData();
     pullCurrentMonthData();
     setToggles();
@@ -94,10 +129,10 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   // retreats to previous month
   self.prevMonth = function() {
     postMonthFlowData();
+    self.updateFlowItems();
     setPrevMonthData();
     pullCurrentMonthData();
     setToggles();
-    console.log(self.flowCategories);
   } // end prevMonth
 
   // reverts to previous flex spending page
@@ -116,9 +151,19 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
       category.activeCategory = true;
     } else {
       category.activeCategory = false;
-      category.item_amount = 0;
+      category.item_amount = null;
     }
   } // end toggleActive
+
+  self.addCategory = function() {
+    self.flowCategories.push({
+      month: self.currentMonthData.month,
+      year: self.currentMonthData.month,
+      month_id: self.currentMonthData.month_id,
+      item_amount: null,
+      item_name: null
+    });
+  }
 
   function clearData() {
     for (var i = 0; i < self.flowCategories.length; i++) {
@@ -133,18 +178,18 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
   function setToggles(){
     for (var i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
-      if(category.item_amount === undefined || category.item_amount === 0) {
+      if(category.item_amount === undefined || category.item_amount === 0 || category.item_amount === null) {
         category.activeCategory  = false;
       } else {
         category.activeCategory = true;
       }
-  }
-} // end setToggles
+    }
+  } // end setToggles
 
   // restructuring monthly flow data for database
   function postMonthFlowData() {
     for (var i = 0; i < self.flowCategories.length; i++) {
-      if(self.flowCategories[i].item_amount === undefined) {
+      if(self.flowCategories[i].item_amount === undefined || self.flowCategories[i].item_amount === null) {
         self.flowCategories[i].item_amount = 0;
       }
       var monthlyBudgetCategoryData = {
@@ -236,6 +281,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     }
   } // end setPrevMonthData
 
+  // function to pull data from returned database array and push it onto array tied to DOM
   function pullCurrentMonthData() {
     self.flowCategories = [];
     for (var i = 0; i < self.monthlyBudgetData.length; i++) {
@@ -243,6 +289,41 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
         self.flowCategories.push(self.monthlyBudgetData[i]);
       }
     }
+    resetZeroValues();
+  } // end pullCurrentMonthData
+
+  // function to ensure zero values show up as placeholder in inputs
+  function resetZeroValues() {
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      if(self.flowCategories[i].item_amount == 0) {
+        self.flowCategories[i].item_amount = null;
+      }
+    }
+  } // end resetZeroValues
+
+  self.addBudgetItem = function(){
+    self.newCategory.item_month = self.currentMonthData.month_id;
+    self.newCategory.item_year = self.currentMonthData.year;
+    console.log(self.newCategory);
+    self.newCategories.push(self.newCategory);
+    self.postFlowItems();
+    self.newCategories = [];
   }
+
+  function findMonthTotals() {
+    for (var i = 0; i < self.monthlyBudgetData.length; i++) {
+      for (var x = 0; x < self.budgetMonths.length; x++) {
+        if(self.monthlyBudgetData[i].item_month === self.budgetMonths[x].month_id) {
+          self.budgetMonths[x].month_total += self.monthlyBudgetData[i].item_amount;
+        }
+      }
+    }
+
+    for (var i = 0; i < self.budgetMonths.length; i++) {
+      if(self.budgetMonths[i].month_total === 0) {
+        self.budgetMonths[i].month_total = null;
+      }
+    }
+  } // end findMonthTotals
 
 }]); //end flow controller

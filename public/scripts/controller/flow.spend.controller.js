@@ -119,6 +119,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   // advances to the next month
   self.nextMonth = function() {
+    setInactiveValuesToZero();
     structureMonthFlowData();
     self.updateFlowItems();
     setNextMonthData();
@@ -129,6 +130,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   // retreats to previous month
   self.prevMonth = function() {
+    setInactiveValuesToZero();
     structureMonthFlowData();
     self.updateFlowItems();
     setPrevMonthData();
@@ -320,5 +322,13 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       }
     }
   } // end findMonthTotals
+
+  function setInactiveValuesToZero() {
+    for (var i = 0; i < self.flowCategories.length; i++) {
+      if(self.flowCategories[i].activeCategory === false) {
+        self.flowCategories[i].item_amount = 0;
+      }
+    }
+  }
 
 }]); //end flow controller

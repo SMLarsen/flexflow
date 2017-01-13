@@ -1,6 +1,10 @@
 app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     console.log('BudgetFactory started');
 
+    var FLEX = 2;
+    var FUNCTIONAL = 3;
+    var FINANCIAL = 4;
+
     var authFactory = AuthFactory;
     var templateFactory = TemplateFactory;
     var flowItemArray = templateFactory.templateData.flowTemplateItems;
@@ -14,6 +18,60 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     var flowItems = [];
 
     //**************************** Budget Functions ******************************//
+
+    // Function to build empty budget
+    buildEmptyBudget = function(itemMonth, itemYear) {
+        // Build flow items (id = 1)
+        itemMonth = parseInt(itemMonth);
+        itemYear = parseInt(itemYear);
+        for (var m = 1; m === flowItemArray.length; m++) {
+            flowItemArray[m].item_sort_sequence = m;
+        }
+        for (var l = 0; l < 12; l++) {
+            for (var k = 0; k < flowItemArray.length; k++) {
+                newFlowItem = {};
+                newFlowItem.item_amount = 0;
+                newFlowItem.budget_template_category_id = 1;
+                newFlowItem.item_month = itemMonth;
+                newFlowItem.item_year = itemYear;
+                newFlowItem.item_name = flowItemArray[k].item_name;
+                newFlowItem.item_sort_sequence = flowItemArray[k].item_sort_sequence;
+                newFlowItemArray.push(newFlowItem);
+            }
+            itemMonth++;
+            if (itemMonth > 12) {
+                itemMonth = 1;
+                itemYear++;
+            }
+        }
+        postFlowItems(newFlowItemArray);
+        // console.log('empty flow budget:', newFlowItemArray);
+
+        // Build financial items (id = 4)
+        for (var i = 0; i < financialItemArray.length; i++) {
+            newFinancialItem = {};
+            newFinancialItem.item_amount = 0;
+            newFinancialItem.budget_template_category_id = FINANCIAL;
+            newFinancialItem.item_name = financialItemArray[i].item_name;
+            newFinancialItem.item_sort_sequence = financialItemArray[i].item_sort_sequence;
+            newFinancialItemArray.push(newFinancialItem);
+        }
+        // console.log('empty financial budget:', newFinancialItemArray);
+        postBudgetItems(newFinancialItemArray, FINANCIAL);
+
+        // Build functional items (id = 3)
+        for (var j = 0; j < functionalItemArray.length; j++) {
+            newFunctionalItem = {};
+            newFunctionalItem.item_amount = 0;
+            newFunctionalItem.budget_template_category_id = FUNCTIONAL;
+            newFunctionalItem.item_name = functionalItemArray[j].item_name;
+            newFunctionalItem.item_sort_sequence = functionalItemArray[j].item_sort_sequence;
+            newFunctionalItemArray.push(newFunctionalItem);
+        }
+        // console.log('empty functional budget:', newFunctionalItemArray);
+        postBudgetItems(newFunctionalItemArray, FUNCTIONAL);
+    };
+
     // function to insert budget profile
     postBudget = function(profile) {
         console.log('postBudget');
@@ -92,50 +150,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             console.log('User not signed in');
         }
     }; //end updateBudget
-
-    // Function to build empty budget
-    buildEmptyBudget = function(itemMonth, itemYear) {
-        // Build flow items
-        itemMonth = parseInt(itemMonth);
-        itemYear = parseInt(itemYear);
-        for (var l = 0; l < 12; l++) {
-            for (var k = 0; k < flowItemArray.length; k++) {
-                newFlowItem = {};
-                newFlowItem.item_amount = 0;
-                newFlowItem.item_month = itemMonth;
-                newFlowItem.item_year = itemYear;
-                newFlowItem.item_name = flowItemArray[k].item_name;
-                newFlowItemArray.push(newFlowItem);
-            }
-            itemMonth++;
-            if (itemMonth > 12) {
-                itemMonth = 1;
-                itemYear++;
-            }
-        }
-        postFlowItems(newFlowItemArray);
-        // console.log('empty flow budget:', newFlowItemArray);
-
-        // Build financial items
-        for (var i = 0; i < financialItemArray.length; i++) {
-            newFinancialItem = {};
-            newFinancialItem.item_amount = 0;
-            newFinancialItem.item_name = financialItemArray[i].item_name;
-            newFinancialItemArray.push(newFinancialItem);
-        }
-        // console.log('empty financial budget:', newFinancialItemArray);
-        postFinancialItems(newFinancialItemArray);
-
-        // Build functional items
-        for (var j = 0; j < functionalItemArray.length; j++) {
-          newFunctionalItem = {};
-          newFunctionalItem.item_amount = 0;
-          newFunctionalItem.item_name = functionalItemArray[j].item_name;
-          newFunctionalItemArray.push(newFunctionalItem);
-        }
-        // console.log('empty functional budget:', newFunctionalItemArray);
-        postFunctionalItems(newFunctionalItemArray);
-    };
 
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
@@ -268,7 +282,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // function to update flow items (delete all for budgetID then add new items)
     updateFlowItems = function(budgetArray) {
         var month = budgetArray[0].item_month;
-        deleteFlowItems(month)
+        return deleteFlowItems(month)
             .then(function(response) {
                     postFlowItems(budgetArray)
                         .then(function(response) {
@@ -286,15 +300,17 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 });
     };
 
-    //**************************** Flex Item Functions ******************************//
-    // function to insert flex items
-    postFlexItems = function(budgetArray) {
-        // console.log('postFlexItems', budgetArray);
+    //**************************** Budget Item Functions ******************************//
+    // function to insert budget items
+    postBudgetItems = function(budgetArray, categoryID) {
+        for (var i = 0; i < budgetArray.length; i++) {
+            budgetArray[i].budget_template_category_id = categoryID;
+        }
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flexitems',
+                    url: '/budget/items',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -305,339 +321,99 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error updating flow items for', currentUser.email, ': ', err);
+                        console.log('Error updating budget items for', currentUser.email, ': ', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end postFlexItems
+    }; //end postBudgetItems
 
     // function to get flow items
-    getFlexItems = function() {
+    getBudgetItems = function(categoryID) {
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flexitems',
+                    url: '/budget/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
-                        flexItems = response.data;
+                        budgetItems = response.data;
                         // console.log('Profile returned:', response.data);
-                        return flexItems;
+                        return budgetItems;
                     },
                     function(err) {
-                        console.log('Error getting flex item for', err);
+                        console.log('Error getting budget item for', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end getFlexItems
+    }; //end getBudgetItems
 
-    // function to get flex items totals for year
-    getFlexItemTotal = function() {
+    // function to get budget items totals for year
+    getBudgetItemTotal = function(categoryID) {
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flexitems/total',
+                    url: '/budget/items/total/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
-                        flexItemTotal = response.data;
-                        console.log('flexItemTotal', flexItemTotal);
-                        return flexItemTotal;
+                        budgetItemTotal = response.data;
+                        console.log('budgetItemTotal', budgetItemTotal);
+                        return budgetItemTotal;
                     },
                     function(err) {
-                        console.log('Error getting flex item totals for', err);
+                        console.log('Error getting budget item totals for', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end getFlexItemTotal
+    }; //end getBudgetItemTotal
 
-    // function to delete flex items
-    deleteFlexItems = function() {
+    // function to delete budget items
+    deleteBudgetItems = function(categoryID) {
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flexitems',
+                    url: '/budget/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
-                        console.log('Flex items deleted successfully');
+                        console.log('Budget items deleted successfully');
                         return;
                     },
                     function(err) {
-                        console.log('Error deleting flex items for', err);
+                        console.log('Error deleting budget items for', err);
                         return;
                     });
         } else {
             console.log('User not signed in');
         }
-    }; //end deleteFlexItems
+    }; //end deleteBudgetItems
 
-    // function to update flex items (delete all for budgetID then add new items)
-    updateFlexItems = function(budgetArray) {
-        deleteFlexItems()
+    // function to update budget items (delete all for budgetID then add new items)
+    updateBudgetItems = function(budgetArray, categoryID) {
+        return deleteBudgetItems(categoryID)
             .then(function(response) {
-                    postFlexItems(budgetArray)
+                    postBudgetItems(budgetArray, categoryID)
                         .then(function(response) {
-                                console.log('Flex items replaced');
+                                console.log('Budget items replaced');
                                 return;
                             },
                             function(err) {
-                                console.log('Error replacing flext items for', err);
-                                return;
-                            });
-                },
-                function(err) {
-                    console.log('Replacement delete unsuccessful', err);
-                    return;
-                });
-    };
-
-    //**************************** Functional Item Functions ******************************//
-    // function to insert functional items
-    postFunctionalItems = function(budgetArray) {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'POST',
-                    url: '/budget/functionalitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    },
-                    data: budgetArray
-                })
-                .then(function(response) {
-                        // console.log('Profile updated');
-                        return;
-                    },
-                    function(err) {
-                        console.log('Error updating functional items for', currentUser.email, ': ', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end postFunctionalItems
-
-    // function to get functional items
-    getFunctionalItems = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'GET',
-                    url: '/budget/functionalitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        functionalItems = response.data;
-                        // console.log('Profile returned:', response.data);
-                        return functionalItems;
-                    },
-                    function(err) {
-                        console.log('Error getting functional item for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end getFunctionalItems
-
-    // function to get functional items totals for year
-    getFunctionalItemTotal = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'GET',
-                    url: '/budget/functionalitems/total',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        functionalItemTotal = response.data;
-                        console.log('functionalItemTotal', functionalItemTotal);
-                        return functionalItemTotal;
-                    },
-                    function(err) {
-                        console.log('Error getting functional item totals for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end getFunctionalItemTotal
-
-    // function to delete functional items
-    deleteFunctionalItems = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'DELETE',
-                    url: '/budget/functionalitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        console.log('Functional items deleted successfully');
-                        return;
-                    },
-                    function(err) {
-                        console.log('Error deleting functional items for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end deleteFunctionalItems
-
-    // function to update functional items (delete all for budgetID then add new items)
-    updateFunctionalItems = function(budgetArray) {
-        deleteFunctionalItems()
-            .then(function(response) {
-                    postFunctionalItems(budgetArray)
-                        .then(function(response) {
-                                console.log('Functional items replaced');
-                                return;
-                            },
-                            function(err) {
-                                console.log('Error replacing functional items for', err);
-                                return;
-                            });
-                },
-                function(err) {
-                    console.log('Replacement delete unsuccessful', err);
-                    return;
-                });
-    };
-
-    //**************************** Financial Item Functions ******************************//
-    // function to insert financial items
-    postFinancialItems = function(budgetArray) {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'POST',
-                    url: '/budget/financialitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    },
-                    data: budgetArray
-                })
-                .then(function(response) {
-                        // console.log('Profile updated');
-                        return;
-                    },
-                    function(err) {
-                        console.log('Error updating financial items for', currentUser.email, ': ', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end postFinancialItems
-
-    // function to get financial items
-    getFinancialItems = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'GET',
-                    url: '/budget/financialitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        financialItems = response.data;
-                        // console.log('Profile returned:', response.data);
-                        return financialItems;
-                    },
-                    function(err) {
-                        console.log('Error getting financial item for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end getFinancialItems
-
-    // function to get financial items totals for year
-    getFinancialItemTotal = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'GET',
-                    url: '/budget/financialitems/total',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        financialItemTotal = response.data;
-                        console.log('financialItemTotal', financialItemTotal);
-                        return financialItemTotal;
-                    },
-                    function(err) {
-                        console.log('Error getting financial item totals for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end getFinancialItemTotal
-
-    // function to delete financial items
-    deleteFinancialItems = function() {
-        var currentUser = authFactory.getCurrentUser();
-        if (currentUser) {
-            return $http({
-                    method: 'DELETE',
-                    url: '/budget/financialitems',
-                    headers: {
-                        id_token: authFactory.getIdToken()
-                    }
-                })
-                .then(function(response) {
-                        console.log('Financial items deleted successfully');
-                        return;
-                    },
-                    function(err) {
-                        console.log('Error deleting financial items for', err);
-                        return;
-                    });
-        } else {
-            console.log('User not signed in');
-        }
-    }; //end deleteFinancialItems
-
-    // function to update financial items (delete all for budgetID then add new items)
-    updateFinancialItems = function(budgetArray) {
-        deleteFinancialItems()
-            .then(function(response) {
-                    postFinancialItems(budgetArray)
-                        .then(function(response) {
-                                console.log('Financial items replaced');
-                                return;
-                            },
-                            function(err) {
-                                console.log('Error replacing financial items for', err);
+                                console.log('Error replacing budget items for', err);
                                 return;
                             });
                 },
@@ -649,7 +425,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** AddiontalInfo Item Functions ******************************//
     // function to insert financial items
     postAdditionalInfo = function(budgetArray) {
-      //console.log("budgetArray: ", budgetArray);
+        //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -703,39 +479,39 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         // update flex item
         updateFlexItems: function(budgetArray) {
-            return updateFlexItems(budgetArray);
+            return updateBudgetItems(budgetArray, FLEX);
         },
         // get flex item
         getFlexItems: function() {
-            return getFlexItems();
+            return getBudgetItems(FLEX);
         },
         // insert flex item
         postFlexItems: function(budgetArray) {
-            return postFlexItems(budgetArray);
+            return postBudgetItems(budgetArray, FLEX);
         },
         // update financial item
         updateFinancialItems: function(budgetArray) {
-            return updateFinancialItems(budgetArray);
+            return updateBudgetItems(budgetArray, FINANCIAL);
         },
         // get financial item
         getFinancialItems: function() {
-            return getFinancialItems();
+            return getBudgetItems(FINANCIAL);
         },
         // insert financial item
         postFinancialItems: function(budgetArray) {
-            return postFinancialItems(budgetArray);
+            return postBudgetItems(budgetArray, FINANCIAL);
         },
         // update functional item
         updateFunctionalItems: function(budgetArray) {
-            return updateFunctionalItems(budgetArray);
+            return updateBudgetItems(budgetArray, FUNCTIONAL);
         },
         // get functional item
         getFunctionalItems: function() {
-            return getFunctionalItems();
+            return getBudgetItems(FUNCTIONAL);
         },
         // insert functional item
         postFunctionalItems: function(budgetArray) {
-            return postFunctionalItems(budgetArray);
+            return postBudgetItems(budgetArray, FUNCTIONAL);
         },
         getFlowItemTotalsByMonth: function() {
             return getFlowItemTotalsByMonth();
@@ -744,18 +520,17 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             return getFlowItemTotalByYear();
         },
         getFlexItemTotal: function() {
-            return getFlexItemTotal();
+            return getBudgetItemTotal(FLEX);
         },
         getFinancialItemTotal: function() {
-            return getFinancialItemTotal();
+            return getBudgetItemTotal(FINANCIAL);
         },
         getFunctionalItemTotal: function() {
-            return getFunctionalItemTotal();
+            return getBudgetItemTotal(FUNCTIONAL);
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
         }
-
 
     };
 

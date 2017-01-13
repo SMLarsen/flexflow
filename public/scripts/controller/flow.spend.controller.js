@@ -53,7 +53,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   ];
   self.budgetMonths = [];
   self.startingMonthID = 0;
-  self.monthID = 0;
   self.startingMonth = '';
   self.startingYear = null;
   self.currentMonth = null;
@@ -153,7 +152,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       category.activeCategory = true;
     } else {
       category.activeCategory = false;
-      category.item_amount = null;
     }
   } // end toggleActive
 
@@ -166,15 +164,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       item_name: null
     });
   }
-
-  function clearData() {
-    for (var i = 0; i < self.flowCategories.length; i++) {
-      var category = self.flowCategories[i];
-      if(category.item_amount != undefined) {
-        category.item_amount = undefined;
-      }
-    }
-  } // end clearData
 
   // removes all active values in individual flow categories
   function setToggles(){
@@ -304,12 +293,16 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   } // end resetZeroValues
 
   self.addBudgetItem = function(){
-    self.newCategory.item_month = self.currentMonthData.month_id;
-    self.newCategory.item_year = self.currentMonthData.year;
-    console.log(self.newCategory);
-    self.newCategories.push(self.newCategory);
-    self.postFlowItems();
-    self.newCategories = [];
+    if(self.newCategory.item_name || self.newCategory.item_amount === null) {
+      alert('Please enter an additional category before submitting.');
+    } else {
+      self.newCategory.item_month = self.currentMonthData.month_id;
+      self.newCategory.item_year = self.currentMonthData.year;
+      console.log(self.newCategory);
+      self.newCategories.push(self.newCategory);
+      self.postFlowItems();
+      self.newCategories = [];
+    }
   }
 
   function findMonthTotals() {

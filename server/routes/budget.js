@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
@@ -92,9 +90,6 @@ router.put("/profile", function (req, res) {
         });
     });
 });
-
-
-
 // *********************************** FLOw ITEM routes **************************
 // Route: GET flow items for a budget
 router.get("/flowitems", function (req, res) {
@@ -651,8 +646,8 @@ router.delete("/financialitems", function (req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 var queryString = 'DELETE FROM financial_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
+                console.log('queryString:', queryString);
+                client.query(queryString, [budgetID], function (err, result) {
                     done();
                     if (err) {
                         console.log('Error deleting financial items', err);
@@ -666,60 +661,4 @@ router.delete("/financialitems", function (req, res) {
         });
     });
 });
-
-// *********************************** Comment routes ************************** //
-// Route: Get comment items for a budget
-router.get("/comments", function(req, res) {
-  const userEmail = req.decodedToken.email;
-  pg.connect(connectionString, function(err, client, done) {
-    client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-      done();
-      if(err) {
-        console.log('Error getting budgetID:', err);
-        res.sendStatus(500);
-      } else {
-        let budgetID = result.rows[0].id;
-        var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';
-        client.query(queryString, [budgetID], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting financial items', err);
-                res.sendStatus(500);
-            } else {
-                res.send(result.rows);
-                console.log('Comment items retrieved');
-            }
-        }); // end inside client.query
-      }
-    }); // end outer client.query
-  }); // end pg.connect
-}); // end route.get
-
-router.post("/comments", function(req, res) {
-  var userEmail = req.decodedToken.email;
-  pg.connect(connectionString, function(err, client, done) {
-    client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-      done();
-      if(err){
-        console.log('Error getting budgetID:', err);
-        res.sendStatus(500);
-      } else {
-        let budgetID = result.rows[0].id;
-        client.query('INSERT INTO budget_comment (budget_id, budget_comment) VALUES($1, $2)', [budgetID, req.body.budget_comment], function(err, result) {
-          done();
-          if(err){
-            console.log('Error Inserting comment', err);
-            res.sendStatus(500);
-          } else {
-            res.sendStatus(201);
-            //console.log('Comment inserted');
-          }
-        }); // end inner client.query
-      }
-    }); // end outer client.query
-
-  }); // end pg.connect
-}); // end route.post
-
-
 module.exports = router;

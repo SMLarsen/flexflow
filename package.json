@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/app.js",
-    "test": "nodemon server/app.js"
+    "test": "nodemon server/app.js",
+    "sass": "node-sass -w public/sass/stylesheet.scss -o public/css/"
   },
   "author": "FlexFlow Team",
   "license": "MIT",
@@ -13,6 +14,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "firebase-admin": "^4.0.3",
+    "node-sass": "^4.3.0",
     "path": "^0.12.7",
     "pg": "^6.1.2"
   }

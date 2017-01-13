@@ -4,40 +4,52 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   var allMonths = [
     {month: 'January',
     year: 0,
-    month_id: 1},
+    month_id: 1,
+    month_total: null},
     {month: 'February',
     year: 0,
-    month_id: 2},
+    month_id: 2,
+    month_total: null},
     {month: 'March',
     year: 0,
-    month_id: 3},
+    month_id: 3,
+    month_total: null},
     {month: 'April',
     year: 0,
-    month_id: 4},
+    month_id: 4,
+    month_total: null},
     {month: 'May',
     year: 0,
-    month_id: 5},
+    month_id: 5,
+    month_total: null},
     {month: 'June',
     year: 0,
-    month_id: 6},
+    month_id: 6,
+    month_total: null},
     {month: 'July',
     year: 0,
-    month_id: 7},
+    month_id: 7,
+    month_total: null},
     {month: 'August',
     year: 0,
-    month_id: 8},
+    month_id: 8,
+    month_total: null},
     {month: 'September',
     year: 0,
-    month_id: 9},
+    month_id: 9,
+    month_total: null},
     {month: 'October',
     year: 0,
-    month_id: 10},
+    month_id: 10,
+    month_total: null},
     {month: 'November',
     year: 0,
-    month_id: 11},
+    month_id: 11,
+    month_total: null},
     {month: 'December',
     year: 0,
-    month_id: 12},
+    month_id: 12,
+    month_total: null},
   ];
   self.budgetMonths = [];
   self.startingMonthID = 0;
@@ -60,6 +72,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
     .then(function(result) {
       console.log(result);
       self.monthlyBudgetData = result;
+      findMonthTotals();
     });
   };
 
@@ -293,5 +306,21 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
     self.postFlowItems();
     self.newCategories = [];
   }
+
+  function findMonthTotals() {
+    for (var i = 0; i < self.monthlyBudgetData.length; i++) {
+      for (var x = 0; x < self.budgetMonths.length; x++) {
+        if(self.monthlyBudgetData[i].item_month === self.budgetMonths[x].month_id) {
+          self.budgetMonths[x].month_total += self.monthlyBudgetData[i].item_amount;
+        }
+      }
+    }
+
+    for (var i = 0; i < self.budgetMonths.length; i++) {
+      if(self.budgetMonths[i].month_total === 0) {
+        self.budgetMonths[i].month_total = null;
+      }
+    }
+  } // end findMonthTotals
 
 }]); //end flow controller

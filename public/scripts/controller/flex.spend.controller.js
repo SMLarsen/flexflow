@@ -14,6 +14,6 @@ app.controller('FlexSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     console.log(self.flexArray);
     budgetFactory.updateFlexItems(self.flexArray);
     window.location = '/#/flowspend';
-  }
+  };
 
 }]);

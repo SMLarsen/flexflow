@@ -342,7 +342,7 @@ router.get("/items/:categoryID", function(req, res) {
 
 // Route: GET total for a budget category
 router.get("/items/total/:categoryID", function(req, res) {
-  var categoryID = req.params.categoryID;
+    var categoryID = req.params.categoryID;
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
@@ -356,7 +356,7 @@ router.get("/items/total/:categoryID", function(req, res) {
                 var queryString = 'SELECT SUM(item_amount) FROM budget_item ';
                 queryString += 'WHERE budget_id = $1 ';
                 queryString += 'AND budget_template_category_id = $2';
-// console.log('queryString:', queryString);
+                console.log('queryString:', queryString);
                 client.query(queryString, [budgetID, categoryID], function(err, result) {
                     done();
                     if (err) {
@@ -372,8 +372,8 @@ router.get("/items/total/:categoryID", function(req, res) {
     });
 });
 
-// Route: Insert flex items for a budget
-router.post("/flexitems", function(req, res) {
+// Route: Insert budget items for a budget category
+router.post("/items", function(req, res) {
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
@@ -384,24 +384,30 @@ router.post("/flexitems", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 // console.log('body:', req.body);
-                var queryString = 'INSERT INTO flex_item (budget_id, flex_amount, flex_name) VALUES ';
+                var queryString = 'INSERT INTO budget_item (budget_id, budget_template_category_id, item_name, item_amount, item_sort_sequence) VALUES ';
                 if (req.body.length === 1) {
                     var oneItem = req.body[req.body.length - 1];
                     queryString += "(" + budgetID;
-                    queryString += ", " + oneItem.flex_amount;
-                    queryString += ", '" + oneItem.flex_name + "')";
+                    queryString += ", " + oneItem.budget_template_category_id;
+                    queryString += ", " + oneItem.item_name;
+                    queryString += ", " + oneItem.item_amount;
+                    queryString += ", " + oneItem.item_sort_sequence + "')";
                 } else {
                     for (var i = 0; i < req.body.length - 1; i++) {
                         var item = req.body[i];
                         // replace real values with $values
                         queryString += "(" + budgetID;
-                        queryString += ", " + item.flex_amount;
-                        queryString += ", '" + item.flex_name + "'), ";
+                        queryString += ", " + item.budget_template_category_id;
+                        queryString += ", " + item.item_name;
+                        queryString += ", " + item.item_amount;
+                        queryString += ", " + item.item_sort_sequence + "')";
                     }
                     var lastItem = req.body[req.body.length - 1];
                     queryString += "(" + budgetID;
-                    queryString += ", " + lastItem.flex_amount;
-                    queryString += ", '" + lastItem.flex_name + "')";
+                    queryString += ", " + lastItem.budget_template_category_id;
+                    queryString += ", " + lastItem.lastItem_name;
+                    queryString += ", " + lastItem.item_amount;
+                    queryString += ", " + lastItem.item_sort_sequence + "')";
 
                 }
                 // console.log('queryString', queryString);
@@ -409,11 +415,11 @@ router.post("/flexitems", function(req, res) {
                     function(err, result) {
                         done();
                         if (err) {
-                            console.log('Error Inserting flexitems', err);
+                            console.log('Error Inserting budget items', err);
                             res.sendStatus(500);
                         } else {
                             res.sendStatus(201);
-                            console.log('Flex items inserted');
+                            console.log('Budget items inserted');
                         }
                     }
                 );
@@ -423,7 +429,7 @@ router.post("/flexitems", function(req, res) {
 });
 
 // Route: Delete flex items for a budget
-router.delete("/flexitems", function(req, res) {
+router.delete("/items", function(req, res) {
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
@@ -433,16 +439,16 @@ router.delete("/flexitems", function(req, res) {
                 res.sendStatus(500);
             } else {
                 var budgetID = result.rows[0].id;
-                var queryString = 'DELETE FROM flex_item WHERE budget_id = $1';
+                var queryString = 'DELETE FROM budget_item WHERE budget_id = $1';
                 // console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
-                        console.log('Error deleting flex items', err);
+                        console.log('Error deleting budget items', err);
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Flex items deleted');
+                        console.log('Budget items deleted');
                     }
                 });
             }

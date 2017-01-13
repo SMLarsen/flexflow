@@ -75,6 +75,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
     budgetFactory.getFlowItems()
     .then(function(result) {
       console.log(result);
+      self.monthlyBudgetData = [];
       self.monthlyBudgetData = result;
       findMonthTotals();
     });

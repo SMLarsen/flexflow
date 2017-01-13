@@ -4,7 +4,6 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 	var self = this;
 	self.newFinancialBudget = {};
 	var budgetFactory = BudgetFactory;
-	// self.itemArray = budgetFactory.getFinancialItems();
 
 	budgetFactory.getFinancialItems().then(function (result) {
 		self.itemArray = result;

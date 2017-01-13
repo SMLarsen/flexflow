@@ -15,8 +15,8 @@ app.controller('SavingsGoalsController', ['BudgetFactory', function(BudgetFactor
   function getSavings() {
     budgetFactory.getBudget().then(function(response){
       self.budget = response;
-      self.savings = self.budget.annual_salary * .20;
-      self.monthSavings = self.savings / 12;
+      self.savings = parseInt(self.budget.annual_salary) * .20;
+      self.monthSavings = parseInt(self.savings) / 12;
     });
   }; // End: getSavings
 

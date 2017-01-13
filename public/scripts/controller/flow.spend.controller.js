@@ -292,6 +292,7 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     console.log(self.newCategory);
     self.newCategories.push(self.newCategory);
     self.postFlowItems();
+    self.newCategories = [];
   }
 
 }]); //end flow controller

@@ -2,6 +2,7 @@ DROP TABLE functional_item;
 DROP TABLE financial_item;
 DROP TABLE flex_item;
 DROP TABLE flow_item;
+DROP TABLE budget_comment;
 DROP TABLE budget;
 DROP TABLE users;
 DROP TABLE budget_category;
@@ -37,6 +38,21 @@ VALUES (1, 01, 2017, 5000, 100000, true),
 ;
 
 SELECT * FROM budget;
+
+CREATE TABLE budget_comment (
+    id serial PRIMARY KEY,
+    budget_id INTEGER REFERENCES budget,
+    budget_comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO budget_comment (budget_id, budget_comment)
+VALUES (1, 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto.'),
+(1, 'Vis enim graeco ei.'),
+(2, 'Ad mea ludus albucius oporteat, ex eros')
+;
+
+SELECT * FROM budget_comment;
 
 CREATE TABLE flow_item (
     id serial PRIMARY KEY,

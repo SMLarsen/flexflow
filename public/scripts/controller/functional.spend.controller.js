@@ -38,4 +38,12 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 		console.log("update functional clicked");
 		budgetFactory.updateFunctionalItems(self.itemArray);
 	};
+
+	
+
 }]);
+
+this.addInput = function() {
+    var newInput = this.choices.length+1;
+    $scope.choices.push({'id':'choice'+newItemNo});
+  };

@@ -4,7 +4,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	var self = this;
 	self.newFunctionalBudget = {};
 	var budgetFactory = BudgetFactory;
-	// self.itemArray = budgetFactory.getFunctionalItems();
+
 
 	budgetFactory.getFunctionalItems().then(function (result) {
 		self.itemArray = result;

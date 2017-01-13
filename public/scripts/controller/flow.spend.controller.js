@@ -1,4 +1,4 @@
-app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function($http, AuthFactory, TemplateFactory, BudgetFactory) {
+app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) {
   console.log('Flow Spend controller started');
   var self = this;
   var allMonths = [
@@ -53,7 +53,6 @@ app.controller('FlowSpendController', ['$http', 'AuthFactory', 'TemplateFactory'
     item_name: null,
     item_amount: null
   };
-  var templateFactory = TemplateFactory;
   var budgetFactory = BudgetFactory;
 
   self.getFlowItems = function() {

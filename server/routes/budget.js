@@ -141,15 +141,18 @@ router.get("/flowitems/totalbymonth", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT item_year, item_month, SUM(item_amount) FROM flow_item WHERE budget_id = $1 GROUP BY item_year, item_month';
-                // console.log('queryString:', queryString);
+                var queryString = 'SELECT item_year, item_month, SUM(item_amount) ';
+                queryString += 'FROM budget_flow_item ';
+                queryString += 'WHERE budget_id = $1 ';
+                queryString += 'GROUP BY item_year, item_month';
+                console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {
                         console.log('Error getting flow items monthly totals', err);
                         res.sendStatus(500);
                     } else {
-                        res.send(result.rows[0]);
+                        res.send(result.rows);
                         console.log('Flow items monthly totals retrieved');
                     }
                 });
@@ -170,8 +173,10 @@ router.get("/flowitems/totalbyyear", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT SUM(item_amount) FROM flow_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
+                var queryString = 'SELECT SUM(item_amount) ';
+                queryString += 'FROM budget_flow_item ';
+                queryString += 'WHERE budget_id = $1';
+                console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {

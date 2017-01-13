@@ -268,12 +268,12 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // function to update flow items (delete all for budgetID then add new items)
     updateFlowItems = function(budgetArray) {
         var month = budgetArray[0].item_month;
-        deleteFlowItems(month)
+        return deleteFlowItems(month)
             .then(function(response) {
                     postFlowItems(budgetArray)
                         .then(function(response) {
                                 console.log('Flow items replaced');
-                                return;
+                                return ;
                             },
                             function(err) {
                                 console.log('Error replacing flow items for', err);

@@ -5,8 +5,8 @@ DROP TABLE flow_item;
 DROP TABLE budget_comment;
 DROP TABLE budget;
 DROP TABLE users;
-DROP TABLE budget_category;
-DROP TABLE budget_item;
+DROP TABLE budget_template_item;
+DROP TABLE budget_template_category;
 
 
 CREATE TABLE users (
@@ -353,24 +353,24 @@ SELECT * FROM functional_item
 WHERE budget_id = 1
 ;
 
-CREATE TABLE budget_category(
+CREATE TABLE budget_template_category(
     id serial PRIMARY KEY,
     category_name VARCHAR(20) UNIQUE NOT NULL,
     category_text TEXT
 );
 
-INSERT INTO budget_category (category_name, category_text)
+INSERT INTO budget_template_category (category_name, category_text)
 VALUES ('Flow', 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'),
 ('Flex', 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'),
 ('Financial', 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'),
 ('Functional', 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.')
 ;
 
-SELECT * FROM budget_category;
+SELECT * FROM budget_template_category;
 
-CREATE TABLE budget_item(
+CREATE TABLE budget_template_item(
     id serial PRIMARY KEY,
-    budget_category_id INTEGER REFERENCES budget_category,
+    budget_category_id INTEGER REFERENCES budget_template_category,
     item_name VARCHAR(30) NOT NULL,
     item_text TEXT,
     item_placeholder_text TEXT,
@@ -379,7 +379,7 @@ CREATE TABLE budget_item(
 );
 
 
-INSERT INTO budget_item (budget_category_id, item_name, item_text, item_placeholder_text, item_img_src, item_sort_sequence)
+INSERT INTO budget_template_item (budget_category_id, item_name, item_text, item_placeholder_text, item_img_src, item_sort_sequence)
 VALUES (1, 'Holidays', 'appareat dignissim ex vix', 'Holidays', 'img1.jpg', 0),
 (1, 'Birthdays', 'appareat dignissim ex vix', 'Birthdays', 'img2.jpg', 1),
 (1, 'Stuff for Kids', 'appareat dignissim ex vix', 'Stuff for Kids', 'img3.jpg',2),
@@ -405,17 +405,17 @@ VALUES (1, 'Holidays', 'appareat dignissim ex vix', 'Holidays', 'img1.jpg', 0),
 (3, 'Emergency Cash', 'appareat dignissim ex vix', 'Emergency Cash', 'img22.jpg', 2)
 ;
 
-select * from budget_item
+select * from budget_template_item
 ORDER BY budget_category_id, item_sort_sequence
 ;
 
-SELECT budget_category.category_name, budget_item.*
-FROM budget_category, budget_item
-WHERE budget_category.id = budget_category_id
+SELECT budget_template_category.category_name, budget_template_item.*
+FROM budget_template_category, budget_template_item
+WHERE budget_template_category.id = budget_category_id
 ORDER BY budget_category_id, item_sort_sequence
 ;
 
-SELECT * FROM budget_item
+SELECT * FROM budget_template_item
 WHERE budget_category_id = 1
 ORDER BY item_sort_sequence
 ;

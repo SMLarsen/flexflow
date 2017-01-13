@@ -5,8 +5,8 @@
   <form>
     <div class="form-group">
       <label for="comment">Comment:</label>
-      <textarea class="form-control" rows="5" id="comment"></textarea>
+      <textarea class="form-control" rows="5" id="comment" ng-model="ai.comment"></textarea>
     </div>
-    <button type="button" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-primary" ng-click="ai.postAdditionalInfo()">Submit</button>
   </form>
 </div>

@@ -10,6 +10,14 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
   self.numPeople = 0;
 
+  var currentTime = new Date();
+
+  var year = currentTime.getFullYear();
+  self.nextFiveYears = [];
+
+  console.log(year);
+  getYears();
+
   // Function to build array of people in flex budget
   var buildFlexArray = function(number){
     self.flexArray = [];
@@ -45,5 +53,14 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
       self.monthSavings = parseInt(self.savings) / 12;
     });
   }; // End: getSavings
+
+  function getYears() {
+    self.nextFiveYears.push(year);
+    for (var i = 0; i < 4; i++) {
+      year++;
+      self.nextFiveYears.push(year);
+    }
+    console.log(self.nextFiveYears);
+  }
 
 }]); // END: ClientProfileController

@@ -35,7 +35,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controllerAs: 'fu'
 		})
 		.when('/financialspend', {
-			templateUrl: '/views/templates/fincancialspend.html',
+			templateUrl: '/views/templates/financialspend.html',
 			controller: 'FinancialSpendController',
 			controllerAs: 'fi'
 		})
@@ -58,11 +58,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 			templateUrl: '/views/templates/savingsgoals.html',
 			controller: 'SavingsGoalsController',
 			controllerAs: 'sg'
-		})
-		.when('/congrats', {
-			templateUrl: '/views/templates/congrats.html',
-			controller: 'CongratsController',
-			controllerAs: 'cc'
 		})
 		.otherwise({
 			redirectTo: 'home'

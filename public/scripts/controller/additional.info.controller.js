@@ -18,6 +18,7 @@ app.controller('AdditionalInfoController', ['$http', 'AuthFactory', 'BudgetFacto
         return;
       }); // end budgetFactory
 
+
   };
 
 }]);

@@ -13,7 +13,6 @@ app.controller('FlexSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.submitFlex = function(){
     console.log(self.flexArray);
     budgetFactory.updateFlexItems(self.flexArray);
-
   }; // End: submitFlex
 
 }]); // END: FlexSpendController

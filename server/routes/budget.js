@@ -207,14 +207,13 @@ router.post("/flowitems", function(req, res) {
                 var queryString = 'INSERT INTO budget_flow_item (budget_id, budget_template_category_id, item_month, item_year, item_amount, item_name, item_sort_sequence) VALUES ';
                 for (var i = 0; i < req.body.length - 1; i++) {
                     var item = req.body[i];
-                    // replace real values with $values
                     queryString += "(" + budgetID;
                     queryString += ", " + item.budget_template_category_id;
                     queryString += ", " + item.item_month;
                     queryString += ", " + item.item_year;
                     queryString += ", " + item.item_amount;
-                    queryString += ", " + item.item_name;
-                    queryString += ", " + item.item_sort_sequence + "), ";
+                    queryString += ", '" + item.item_name;
+                    queryString += "', " + item.item_sort_sequence + "), ";
                 }
                 var lastItem = req.body[req.body.length - 1];
                 queryString += "(" + budgetID;
@@ -222,8 +221,8 @@ router.post("/flowitems", function(req, res) {
                 queryString += ", " + lastItem.item_month;
                 queryString += ", " + lastItem.item_year;
                 queryString += ", " + lastItem.item_amount;
-                queryString += ", " + lastItem.item_name;
-                queryString += ", " + lastItem.item_sort_sequence + "')";
+                queryString += ", '" + lastItem.item_name;
+                queryString += "', " + lastItem.item_sort_sequence + ")";
                 // console.log('queryString', queryString);
                 client.query(queryString,
                     function(err, result) {
@@ -295,7 +294,7 @@ router.delete("/flowitems/:month", function(req, res) {
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log('Financial items deleted');
+                        console.log('Flow items deleted');
                     }
                 });
             }
@@ -389,25 +388,25 @@ router.post("/items", function(req, res) {
                     var oneItem = req.body[req.body.length - 1];
                     queryString += "(" + budgetID;
                     queryString += ", " + oneItem.budget_template_category_id;
-                    queryString += ", " + oneItem.item_name;
-                    queryString += ", " + oneItem.item_amount;
-                    queryString += ", " + oneItem.item_sort_sequence + "')";
+                    queryString += ", '" + oneItem.item_name;
+                    queryString += "', " + oneItem.item_amount;
+                    queryString += ", " + oneItem.item_sort_sequence + ")";
                 } else {
                     for (var i = 0; i < req.body.length - 1; i++) {
                         var item = req.body[i];
                         // replace real values with $values
                         queryString += "(" + budgetID;
                         queryString += ", " + item.budget_template_category_id;
-                        queryString += ", " + item.item_name;
-                        queryString += ", " + item.item_amount;
-                        queryString += ", " + item.item_sort_sequence + "')";
+                        queryString += ", '" + item.item_name;
+                        queryString += "', " + item.item_amount;
+                        queryString += ", " + item.item_sort_sequence + "),";
                     }
                     var lastItem = req.body[req.body.length - 1];
                     queryString += "(" + budgetID;
                     queryString += ", " + lastItem.budget_template_category_id;
-                    queryString += ", " + lastItem.lastItem_name;
-                    queryString += ", " + lastItem.item_amount;
-                    queryString += ", " + lastItem.item_sort_sequence + "')";
+                    queryString += ", '" + lastItem.item_name;
+                    queryString += "', " + lastItem.item_amount;
+                    queryString += ", " + lastItem.item_sort_sequence + ")";
 
                 }
                 // console.log('queryString', queryString);
@@ -428,7 +427,7 @@ router.post("/items", function(req, res) {
     });
 });
 
-// Route: Delete flex items for a budget
+// Route: Delete budget items for a budget
 router.delete("/items", function(req, res) {
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function(err, client, done) {
@@ -449,266 +448,6 @@ router.delete("/items", function(req, res) {
                     } else {
                         res.send(result.rows);
                         console.log('Budget items deleted');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// *********************************** FUNCTIONAL ITEM routes **************************
-
-// Route: GET functional items for a budget
-router.get("/functionalitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT item_amount, item_name FROM functional_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error getting functional items', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows);
-                        console.log('Functional items retrieved');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// Route: GET functional monthly total for a budget
-router.get("/functionalitems/total", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT SUM(item_amount) FROM functional_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error getting functional items monthly total', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows[0]);
-                        console.log('Functional items monthly total retrieved');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// Route: Insert functional items for a budget
-router.post("/functionalitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('body:', req.body);
-                var queryString = 'INSERT INTO functional_item (budget_id, item_amount, item_name) VALUES ';
-                for (var i = 0; i < req.body.length - 1; i++) {
-                    var item = req.body[i];
-                    // replace real values with $values
-                    queryString += "(" + budgetID;
-                    queryString += ", " + item.item_amount;
-                    queryString += ", '" + item.item_name + "'), ";
-                }
-                var lastItem = req.body[req.body.length - 1];
-                queryString += "(" + budgetID;
-                queryString += ", " + lastItem.item_amount;
-                queryString += ", '" + lastItem.item_name + "')";
-                // console.log('queryString', queryString);
-                client.query(queryString,
-                    function(err, result) {
-                        done();
-                        if (err) {
-                            console.log('Error Inserting functionalitems', err);
-                            res.sendStatus(500);
-                        } else {
-                            res.sendStatus(201);
-                            console.log('Functional items inserted');
-                        }
-                    }
-                );
-            }
-        });
-    });
-});
-
-// Route: Delete functional items for a budget
-router.delete("/functionalitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                var queryString = 'DELETE FROM functional_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error deleting functional items', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows);
-                        console.log('Functional items deleted');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// *********************************** FINANCIAL ITEM routes **************************
-
-// Route: GET financial items for a budget
-router.get("/financialitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT item_amount, item_name FROM financial_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error getting financial items', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows);
-                        console.log('Financial items retrieved');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// Route: GET financial monthly total for a budget
-router.get("/financialitems/total", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT SUM(item_amount) FROM financial_item WHERE budget_id = $1';
-                // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error getting financial items monthly total', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows[0]);
-                        console.log('Financial items monthly total retrieved');
-                    }
-                });
-            }
-        });
-    });
-});
-
-// Route: Insert financial items for a budget
-router.post("/financialitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                // console.log('body:', req.body);
-                var queryString = 'INSERT INTO financial_item (budget_id, item_amount, item_name) VALUES ';
-                for (var i = 0; i < req.body.length - 1; i++) {
-                    var item = req.body[i];
-                    // replace real values with $values
-                    queryString += "(" + budgetID;
-                    queryString += ", " + item.item_amount;
-                    queryString += ", '" + item.item_name + "'), ";
-                }
-                var lastItem = req.body[req.body.length - 1];
-                queryString += "(" + budgetID;
-                queryString += ", " + lastItem.item_amount;
-                queryString += ", '" + lastItem.item_name + "')";
-                // console.log('queryString', queryString);
-                client.query(queryString,
-                    function(err, result) {
-                        done();
-                        if (err) {
-                            console.log('Error Inserting financialitems', err);
-                            res.sendStatus(500);
-                        } else {
-                            res.sendStatus(201);
-                            console.log('Financial items inserted');
-                        }
-                    }
-                );
-            }
-        });
-    });
-});
-
-// Route: Delete financial items for a budget
-router.delete("/financialitems", function(req, res) {
-    var userEmail = req.decodedToken.email;
-    pg.connect(connectionString, function(err, client, done) {
-        client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function(err, result) {
-            done();
-            if (err) {
-                console.log('Error getting budgetID:', err);
-                res.sendStatus(500);
-            } else {
-                var budgetID = result.rows[0].id;
-                var queryString = 'DELETE FROM financial_item WHERE budget_id = $1';
-                console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function(err, result) {
-                    done();
-                    if (err) {
-                        console.log('Error deleting financial items', err);
-                        res.sendStatus(500);
-                    } else {
-                        res.send(result.rows);
-                        console.log('Financial items deleted');
                     }
                 });
             }

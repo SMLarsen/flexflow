@@ -1,5 +1,5 @@
 <h1>Your Flow Spending</h1>
-<button ng-repeat="month in fl.months" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month}}</button>
+<button class="btn btn-default" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm" data-backdrop="static">{{month.month}} <br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
 
 
 
@@ -8,14 +8,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{fl.currentMonth}}</h4>
+        <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories">
           <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
-          <span ng-hide="category.activeCategory">{{category.item_placeholder_text}}</span>
+          <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
+        <button id="additionalButton" class="btn" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories" data-backdrop="static">Add Additional Item</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
@@ -23,4 +24,45 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="additionalCategories" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button ng-click="fl.updateFlowItems()"  type="button" class="close"data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Enter Your Additional Budget Item</h4>
+      </div>
+      <div class="modal-body">
+        <input placeholder="New Budget Item"name="category.item_name" ng-model="fl.newCategory.item_name"/>
+        <input placeholder="eg. 150" name="category.item_amount" ng-model="fl.newCategory.item_amount"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="fl.addBudgetItem()" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">Save Budget Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="submitForm" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Flow Budget</h4>
+      </div>
+      <div class="modal-body">
+        <p>Flow Budget Info Here Pls</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
+        <button type="button" class="btn btn-default" ng-click="fl.nextPage()" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav_button_container">
+  <button class="btn" ng-click="fl.prevPage()">Prev</button>
+  <button class="btn" ng-click="fl.nextPage()">Next</button>
 </div>

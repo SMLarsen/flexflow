@@ -3,14 +3,14 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 
 	var self = this;
 	self.newFunctionalBudget = {};
-	var templateFactory = TemplateFactory;
-	self.itemArray = templateFactory.getItemTemplate("Functional");
 	var budgetFactory = BudgetFactory;
+	// self.itemArray = budgetFactory.getFunctionalItems();
 
-	console.log("itemArray ", self.itemArray);
-
-	// adding false value to itemArray
-	removeActiveToggles();
+	budgetFactory.getFunctionalItems().then(function (result) {
+		self.itemArray = result;
+		removeActiveToggles();
+		console.log("functional self.itemArray ", self.itemArray);
+	});
 
 	// toggles activeitem value for each item
 	self.toggleActive = function (item) {
@@ -25,37 +25,17 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	function removeActiveToggles() {
 		for (var i = 0; i < self.itemArray.length; i++) {
 			var item = self.itemArray[i];
-			item.activeItem = false;
+			item.activeitem = false;
 		}
 	}
 
-	self.postFunctionalItems = function () {
-		console.log('post functional items clicked');
-		budgetFactory.postFunctionalItems(self.itemArray)
-			.then(function (result) {
-					console.log('Functional items inserted ', self.itemArray);
-					return;
-				},
-				function (err) {
-					console.log('Error inserting functional items for', currentUser.email, ': ', err);
-					return;
-				});
-	};
-
 	self.getFunctionalItems = function () {
 		console.log("getFunctionalItems is clicked");
-		budgetFactory.getFunctionalItems()
-			.then(function (result) {
-				console.log("getFunctionalItems ", result)
-				self.itemArray = result;
-			});
+		budgetFactory.getFunctionalItems(self.itemArray);
 	};
 
 	self.updateFunctionalItems = function () {
 		console.log("update functional clicked");
-		budgetFactory.updateFunctionalItems(self.itemArray)
-			.then(function (result) {
-				self.itemArray = result;
-			});
+		budgetFactory.updateFunctionalItems(self.itemArray);
 	};
 }]);

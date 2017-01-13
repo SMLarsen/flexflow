@@ -3,14 +3,14 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 
 	var self = this;
 	self.newFinancialBudget = {};
-	var templateFactory = TemplateFactory;
-	self.itemArray = templateFactory.getItemTemplate("Financial");
 	var budgetFactory = BudgetFactory;
+	// self.itemArray = budgetFactory.getFinancialItems();
 
-	console.log("financial itemArray ", self.itemArray);
-
-	// adding false value to itemArray
-	removeActiveToggles();
+	budgetFactory.getFinancialItems().then(function (result) {
+		self.itemArray = result;
+		removeActiveToggles();
+		console.log("financial self.itemArray ", self.itemArray);
+	});
 
 	// toggles activeitem value for each item
 	self.toggleActive = function (item) {
@@ -19,43 +19,23 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 		} else {
 			item.activeitem = false;
 		}
-	}
+	};
 
 	// removes all active values in individual functional items
 	function removeActiveToggles() {
 		for (var i = 0; i < self.itemArray.length; i++) {
 			var item = self.itemArray[i];
-			item.activeItem = false;
+			item.activeitem = false;
 		}
 	}
 
-	self.postFinancialItems = function () {
-		console.log('post financial items clicked');
-		budgetFactory.postFinancialItems(self.itemArray)
-			.then(function (result) {
-					console.log('Financial items inserted ', self.itemArray);
-					return;
-				},
-				function (err) {
-					console.log('Error inserting financial items for', currentUser.email, ': ', err);
-					return;
-				});
-	};
-
 	self.getFinancialItems = function () {
 		console.log("getFinancialItems is clicked");
-		budgetFactory.getFinancialItems()
-			.then(function (result) {
-				console.log("getFinancialItems ", result)
-				self.itemArray = result;
-			});
+		budgetFactory.getFinancialItems(self.itemArray);
 	};
 
 	self.updateFinancialItems = function () {
 		console.log("update financial clicked ");
-		budgetFactory.updateFinancialItems(self.itemArray)
-			.then(function (result) {
-				self.itemArray = result;
-			});
+		budgetFactory.updateFinancialItems(self.itemArray);
 	};
 }]);

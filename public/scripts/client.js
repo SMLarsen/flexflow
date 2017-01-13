@@ -35,7 +35,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controllerAs: 'fu'
 		})
 		.when('/financialspend', {
-			templateUrl: '/views/templates/fincancialspend.html',
+			templateUrl: '/views/templates/financialspend.html',
 			controller: 'FinancialSpendController',
 			controllerAs: 'fi'
 		})

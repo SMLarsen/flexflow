@@ -6,10 +6,8 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	var templateFactory = TemplateFactory;
 	self.itemArray = templateFactory.getItemTemplate("Functional");
 	var budgetFactory = BudgetFactory;
-	
 
 	console.log("itemArray ", self.itemArray);
-	 
 
 	// adding false value to itemArray
 	removeActiveToggles();
@@ -33,7 +31,6 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 
 	self.postFunctionalItems = function () {
 		console.log('post functional items clicked');
-		// budgetFactory.postFunctionalItems(functionalArray)
 		budgetFactory.postFunctionalItems(self.itemArray)
 			.then(function (result) {
 					console.log('Functional items inserted ', self.itemArray);
@@ -46,61 +43,19 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	};
 
 	self.getFunctionalItems = function () {
-		console.log("getFinancialItems is clicked");
+		console.log("getFunctionalItems is clicked");
 		budgetFactory.getFunctionalItems()
 			.then(function (result) {
 				console.log("getFunctionalItems ", result)
 				self.itemArray = result;
-				// console.log('WelcomeController itemArray', self.itemArray);
 			});
 	};
 
 	self.updateFunctionalItems = function () {
-		console.log("update functional clicked ");
-		budgetFactory.updateFunctionalItems()
+		console.log("update functional clicked");
+		budgetFactory.updateFunctionalItems(self.itemArray)
 			.then(function (result) {
-				self.iItemArray = result;
+				self.itemArray = result;
 			});
-			window.location = '/#/financialspend'
 	};
-
 }]);
-
-
-// var functionalArray = [{
-// 		item_amount: 1000,
-// 		item_name: 'Rent | Mortgage'
-//             },
-// 	{
-// 		item_amount: 500,
-// 		item_name: 'Daycare'
-//             },
-// 	{
-// 		item_amount: 40,
-// 		item_name: 'Cars'
-//             },
-// 	{
-// 		item_amount: 150,
-// 		item_name: 'P&C Insurance'
-//             },
-// 	{
-// 		item_amount: 150,
-// 		item_name: 'Cell Phone'
-//             },
-// 	{
-// 		item_amount: 200,
-// 		item_name: 'Utilities'
-//             },
-// 	{
-// 		item_amount: 150,
-// 		item_name: 'Student Loans'
-//             },
-// 	{
-// 		item_amount: 150,
-// 		item_name: 'Credit Card | Loans'
-//             },
-// 	{
-// 		item_amount: 110,
-// 		item_name: 'Gas'
-//             }
-//         ];

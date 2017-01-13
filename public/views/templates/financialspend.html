@@ -5,13 +5,14 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Monthly Financial Spending</h4>
-        <div class="modal-body" ng-repeat="item in fi.itemArray">
-          <input type="text" ng-model="item.item_name" placeholder="financial_name" />
-          <input type="number" ng-model="item.item_amount" placeholder="financial_amount" />
+        <div class="modal-body">
+          <div ng-repeat="item in fi.itemArray">
+          <p>{{item.item_name}}: ${{item.item_amount}}</p>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-          <button class="btn btn-default" type="button" ng-click="fi.updateFinancialItems()">Looks Good! Submit</button>
+          <button class="btn btn-default" type="button" ng-click="fi.submitFinancial()" data-dismiss="modal" onclick="window.location.href='#additionalinfo'">Looks Good! Submit</button>
         </div>
       </div>
     </div>

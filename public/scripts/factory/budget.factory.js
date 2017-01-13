@@ -25,7 +25,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         itemMonth = parseInt(itemMonth);
         itemYear = parseInt(itemYear);
         for (var m = 1; m === flowItemArray.length; m++) {
-          flowItemArray[m].item_sort_sequence = m;
+            flowItemArray[m].item_sort_sequence = m;
         }
         for (var l = 0; l < 12; l++) {
             for (var k = 0; k < flowItemArray.length; k++) {
@@ -425,7 +425,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** AddiontalInfo Item Functions ******************************//
     // function to insert financial items
     postAdditionalInfo = function(budgetArray) {
-      //console.log("budgetArray: ", budgetArray);
+        //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -526,16 +526,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             return getBudgetItemTotal(FINANCIAL);
         },
         getFunctionalItemTotal: function() {
-<<<<<<< HEAD
             return getBudgetItemTotal(FUNCTIONAL);
-=======
-            return getFunctionalItemTotal();
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
->>>>>>> development
         }
-
 
     };
 

@@ -14,6 +14,51 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     var flowItems = [];
 
     //**************************** Budget Functions ******************************//
+
+    // Function to build empty budget
+    buildEmptyBudget = function(itemMonth, itemYear) {
+        // Build flow items
+        itemMonth = parseInt(itemMonth);
+        itemYear = parseInt(itemYear);
+        for (var l = 0; l < 12; l++) {
+            for (var k = 0; k < flowItemArray.length; k++) {
+                newFlowItem = {};
+                newFlowItem.item_amount = 0;
+                newFlowItem.item_month = itemMonth;
+                newFlowItem.item_year = itemYear;
+                newFlowItem.item_name = flowItemArray[k].item_name;
+                newFlowItemArray.push(newFlowItem);
+            }
+            itemMonth++;
+            if (itemMonth > 12) {
+                itemMonth = 1;
+                itemYear++;
+            }
+        }
+        postFlowItems(newFlowItemArray);
+        // console.log('empty flow budget:', newFlowItemArray);
+
+        // Build financial items
+        for (var i = 0; i < financialItemArray.length; i++) {
+            newFinancialItem = {};
+            newFinancialItem.item_amount = 0;
+            newFinancialItem.item_name = financialItemArray[i].item_name;
+            newFinancialItemArray.push(newFinancialItem);
+        }
+        // console.log('empty financial budget:', newFinancialItemArray);
+        postFinancialItems(newFinancialItemArray);
+
+        // Build functional items
+        for (var j = 0; j < functionalItemArray.length; j++) {
+            newFunctionalItem = {};
+            newFunctionalItem.item_amount = 0;
+            newFunctionalItem.item_name = functionalItemArray[j].item_name;
+            newFunctionalItemArray.push(newFunctionalItem);
+        }
+        // console.log('empty functional budget:', newFunctionalItemArray);
+        postFunctionalItems(newFunctionalItemArray);
+    };
+
     // function to insert budget profile
     postBudget = function(profile) {
         console.log('postBudget');
@@ -92,50 +137,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             console.log('User not signed in');
         }
     }; //end updateBudget
-
-    // Function to build empty budget
-    buildEmptyBudget = function(itemMonth, itemYear) {
-        // Build flow items
-        itemMonth = parseInt(itemMonth);
-        itemYear = parseInt(itemYear);
-        for (var l = 0; l < 12; l++) {
-            for (var k = 0; k < flowItemArray.length; k++) {
-                newFlowItem = {};
-                newFlowItem.item_amount = 0;
-                newFlowItem.item_month = itemMonth;
-                newFlowItem.item_year = itemYear;
-                newFlowItem.item_name = flowItemArray[k].item_name;
-                newFlowItemArray.push(newFlowItem);
-            }
-            itemMonth++;
-            if (itemMonth > 12) {
-                itemMonth = 1;
-                itemYear++;
-            }
-        }
-        postFlowItems(newFlowItemArray);
-        // console.log('empty flow budget:', newFlowItemArray);
-
-        // Build financial items
-        for (var i = 0; i < financialItemArray.length; i++) {
-            newFinancialItem = {};
-            newFinancialItem.item_amount = 0;
-            newFinancialItem.item_name = financialItemArray[i].item_name;
-            newFinancialItemArray.push(newFinancialItem);
-        }
-        // console.log('empty financial budget:', newFinancialItemArray);
-        postFinancialItems(newFinancialItemArray);
-
-        // Build functional items
-        for (var j = 0; j < functionalItemArray.length; j++) {
-          newFunctionalItem = {};
-          newFunctionalItem.item_amount = 0;
-          newFunctionalItem.item_name = functionalItemArray[j].item_name;
-          newFunctionalItemArray.push(newFunctionalItem);
-        }
-        // console.log('empty functional budget:', newFunctionalItemArray);
-        postFunctionalItems(newFunctionalItemArray);
-    };
 
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items

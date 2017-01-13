@@ -108,8 +108,12 @@ router.get("/flowitems", function(req, res) {
             } else {
                 var budgetID = result.rows[0].id;
                 // console.log('results:', result.rows[0]);
-                var queryString = 'SELECT item_month, item_year, item_amount, item_name FROM flow_item WHERE budget_id = $1 ORDER BY item_year, item_month';
-                // console.log('queryString:', queryString);
+                var queryString = 'SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_amount, item_sort_sequence ';
+                queryString += 'FROM budget_template_category, budget_flow_item ';
+                queryString += 'WHERE budget_template_category.id = budget_flow_item.budget_template_category_id ';
+                queryString += 'AND budget_id = $1 ';
+                queryString += 'ORDER BY budget_template_category_id, item_year, item_month, item_sort_sequence';
+                console.log('queryString:', queryString);
                 client.query(queryString, [budgetID], function(err, result) {
                     done();
                     if (err) {

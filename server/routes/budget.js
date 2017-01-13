@@ -418,7 +418,8 @@ router.post("/items", function(req, res) {
 });
 
 // Route: Delete budget items for a budget
-router.delete("/items", function(req, res) {
+router.delete("/items/:categoryID", function(req, res) {
+    var categoryID = req.params.categoryID;
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function (err, client, done) {
         client.query('SELECT budget.id FROM budget, users WHERE budget.user_id = users.id AND users.email = $1', [userEmail], function (err, result) {
@@ -428,9 +429,9 @@ router.delete("/items", function(req, res) {
                 res.sendStatus(500);
             } else {
                 var budgetID = result.rows[0].id;
-                var queryString = 'DELETE FROM budget_item WHERE budget_id = $1';
+                var queryString = 'DELETE FROM budget_item WHERE budget_id = $1 AND budget_template_category_id = $2';
                 // console.log('queryString:', queryString);
-                client.query(queryString, [budgetID], function (err, result) {
+                client.query(queryString, [budgetID, categoryID], function (err, result) {
                     done();
                     if (err) {
                         console.log('Error deleting budget items', err);

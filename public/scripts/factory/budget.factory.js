@@ -81,7 +81,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -106,7 +106,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -132,7 +132,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'PUT',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -210,7 +210,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbymonth',
+                    url: '/total/flowitems/totalbymonth',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -236,7 +236,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbyyear',
+                    url: '/total/flowitems/totalbyyear',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -360,7 +360,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/items/total/' + categoryID,
+                    url: '/total/items/total/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }

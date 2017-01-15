@@ -117,7 +117,8 @@ select {
 
 .toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px; }
+  width: 60%;
+  margin: 20px auto 0 390px; }
   @media (max-width: 768px) {
     .toggle_container {
       margin-left: 100px; } }

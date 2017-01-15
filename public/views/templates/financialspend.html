@@ -20,9 +20,10 @@
   </div>
 </div>
 <!-- template for input -->
-<div class="financialSpending" ng-repeat="item in fi.itemArray">
-  <label for="item.item_name" ng-click="fi.toggleActive(item)">{{item.item_name}}</label>
-  <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
+<h1 class="jumbotron">Your Financial Spending</h1>
+<div class="financialSpending toggle_container" ng-repeat="item in fi.itemArray">
+  <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeitem === true, not_active_toggle: item.activeitem === false}"></label>
+  <span ng-hide="item.activeitem">{{item.item_name}}</span>
   <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
 </div>
 <footer>

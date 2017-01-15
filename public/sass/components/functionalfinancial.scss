@@ -1,6 +1,7 @@
 .toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px;
+  width: 60%;
+  margin: 20px auto 0 390px;
   @media (max-width: $mobile-width) {
     margin-left: 100px;
   }

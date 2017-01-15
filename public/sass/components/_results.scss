@@ -3,10 +3,11 @@
     border: 1px solid gainsboro;
     border-radius: 10px;
     width: 200px;
-    margin: 20px auto 20px auto;
+    margin: 20px 20px 20px 20px;
     padding: 0;
     padding-bottom: 10px;
     overflow: hidden;
+    float: left;
 
   }
   &_name {
@@ -21,5 +22,22 @@
     padding: 40px;
     padding-bottom: 20px;
     margin-top: -20px;
+  }
+}
+
+.full_results_container {
+  width: 500px;
+  margin: 0 auto 40px auto;
+  @media (max-width: $mobile-width) {
+    width: 240px;
+    margin: 0 auto 20px auto;
+  }
+}
+
+.results_button_container {
+  margin: 20px auto 20px auto;
+  width: 300px;
+  button {
+    margin-bottom: 20px;
   }
 }

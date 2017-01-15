@@ -159,7 +159,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flowitems',
+                    url: '/item/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -184,7 +184,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems',
+                    url: '/item/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -261,7 +261,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flowitems/' + month,
+                    url: '/item/flowitems/' + month,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -310,7 +310,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/items',
+                    url: '/item/items',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -335,7 +335,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/items/' + categoryID,
+                    url: '/item/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -360,7 +360,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/total/items/total/' + categoryID,
+                    url: '/total/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -385,7 +385,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/items/' + categoryID,
+                    url: '/item/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -430,7 +430,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/comments',
+                    url: '/item/comments',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },

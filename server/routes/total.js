@@ -69,7 +69,7 @@ router.get("/flowitems/totalbyyear", function (req, res) {
 });
 
 // Route: GET total for a budget category
-router.get("/items/total/:categoryID", function(req, res) {
+router.get("/items/:categoryID", function(req, res) {
     var categoryID = req.params.categoryID;
     var userEmail = req.decodedToken.email;
     pg.connect(connectionString, function (err, client, done) {

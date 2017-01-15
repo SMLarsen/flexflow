@@ -4,6 +4,11 @@ main {
 .jumbotron {
   margin-top: -20px; }
 
+.progress {
+  width: 60%;
+  margin: 40px auto;
+  background: lightblue; }
+
 select {
   background-color: white;
   padding: 20px;
@@ -37,11 +42,21 @@ select {
 
 .client_names {
   text-align: center;
-  width: 60%;
+  width: 40%;
   margin: 0 auto; }
+  @media (max-width: 768px) {
+    .client_names {
+      width: 65%; } }
 
 .profile_select {
   margin-bottom: 20px; }
 
 .profile_submit {
+  margin-top: 20px; }
+
+.flex_container {
+  width: 60%;
+  margin: 0 auto; }
+
+.flex_submit {
   margin-top: 20px; }

@@ -7,7 +7,7 @@
   <button class="btn btn-default button_threepeople" ng-click="cp.clickNumPeople(3)"><img class="profilepersonicon" src="/assets/images/profile-icons/threepeople.svg" /></button>
   <button class="btn btn-default button_fourpeople" ng-click="cp.clickNumPeople(4)"><img class="profilepersonicon" src="/assets/images/profile-icons/fourpeople.svg" /></button>
 </div>
-<div class="client_names">
+<div class="client_names" ng-hide="cp.numPeople === 0">
   <label for="names">Name(s)</label><br>
   <div ng-repeat="person in cp.flexArray">
     <input type="text" ng-model="person.item_name" placeholder="e.g. Bob" class="form-control">

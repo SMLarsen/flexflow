@@ -1,0 +1,25 @@
+.results {
+  &_container {
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    width: 200px;
+    margin: 20px auto 20px auto;
+    padding: 0;
+    padding-bottom: 10px;
+    overflow: hidden;
+
+  }
+  &_name {
+    border-bottom: 1px solid black;
+    padding: 30px;
+    padding-bottom: 10px;
+    background: gainsboro;
+    margin-top: -20px;
+  }
+  &_value {
+    border-bottom: 1px solid black;
+    padding: 40px;
+    padding-bottom: 20px;
+    margin-top: -20px;
+  }
+}

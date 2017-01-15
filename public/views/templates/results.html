@@ -1,20 +1,19 @@
-<h1>results</h1>
-<div>
-  <h4>Flow</h4>
-  <span>{{rc.flowTotal | currency:"USD$":0}}</span>
-
+<h1 class="jumbotron">Your Flex/Flow Results</h1>
+<div class="results_container">
+  <h4 class="results_name">Flow</h4>
+  <span class="results_value">{{rc.flowTotal | currency:"USD$":0}}</span>
 </div>
-<div>
-  <h4>Flex</h4>
-  <span>{{rc.flexTotal | currency:"USD$":0}}</span>
+<div class="results_container">
+  <h4 class="results_name">Flex</h4>
+  <span class="results_value">{{rc.flexTotal | currency:"USD$":0}}</span>
 </div>
-<div>
-  <h4>Functional</h4>
-  <span>{{rc.functionalTotal | currency:"USD$":0}}</span>
+<div class="results_container">
+  <h4 class="results_name">Functional</h4>
+  <span class="results_value">{{rc.functionalTotal | currency:"USD$":0}}</span>
 </div>
-<div>
-  <h4>Financial</h4>
-  <span>{{rc.financialTotal | currency:"USD$":0}}</span>
+<div class="results_container">
+  <h4 class="results_name">Financial</h4>
+  <span class="results_value">{{rc.financialTotal | currency:"USD$":0}}</span>
 </div>
 <button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
 <button class="btn btn-default" ng-click="rc.logOut()" type="button" name="button">Log Out</button>

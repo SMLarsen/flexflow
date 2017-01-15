@@ -1,8 +1,17 @@
 main {
   text-align: center; }
 
+body {
+  font-family: 'Open Sans', sans-serif; }
+
 .jumbotron {
-  margin-top: -20px; }
+  margin-top: -20px;
+  background: url("/assets/images/header.jpg");
+  background-size: cover;
+  font-family: 'Fjalla One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  line-height: 50px; }
 
 .progress {
   width: 60%;

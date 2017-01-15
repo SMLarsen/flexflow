@@ -1,6 +1,7 @@
-<h1>Your Flow Spending</h1>
+<h1 class="jumbotron">Your Flow Spending</h1>
+<div class="flow_button_months_container">
 <button class="btn" ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} <br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
-
+</div>
 <div class="modal fade" id="monthDataForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -9,12 +10,12 @@
         <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="category in fl.flowCategories">
-          <label for="category.item_name" ng-click="fl.toggleActive(category)">{{category.item_name}}</label>
+        <div ng-repeat="category in fl.flowCategories" class="flow_toggle_container">
+          <label for="category.item_name" ng-click="fl.toggleActive(category)" ng-class="{active_toggle: category.activeCategory === true, not_active_toggle: category.activeCategory === false}"></label>
           <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
-        <button id="additionalButton" class="btn" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories">Add Additional Item</button>
+        <button id="additionalButton" class="btn" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories">+</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>

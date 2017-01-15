@@ -26,11 +26,12 @@
   <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
 </div>
 <footer>
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="5.6" aria-valuemin="0" aria-valuemax="100" style="width: 83.3%;">
-      15/18
-    </div>
-  </div>
   <button ng-click"self.addItem()">Add an item to Functional Spending?</button>
   <button class="next" data-toggle="modal" data-target="#functionalData" ng-click="fu.updateFunctionalItems()">Review Info/Next</button>
 </footer>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="5.6" aria-valuemin="0" aria-valuemax="100" style="width: 83.3%;">
+    15/18
+  </div>
+</div>

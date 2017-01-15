@@ -1,4 +1,5 @@
 <!-- confirmation/submit modal-->
+<h1 class="jumbotron">Your Functional Spending</h1>
 <div class="modal fade" id="functionalData" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -19,9 +20,9 @@
   </div>
 </div>
 <!-- template for input -->
-<div class="functionalSpending" ng-repeat="item in fu.itemArray">
-  <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
-  <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
+<div class="functionalSpending toggle_container" ng-repeat="item in fu.itemArray">
+  <label for="item.item_name" ng-click="fu.toggleActive(item)" ng-class="{active_toggle: item.activeitem === true, not_active_toggle: item.activeitem === false}"></label>
+  <span ng-hide="item.activeitem">{{item.item_name}}</span>
   <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
 </div>
 <footer>

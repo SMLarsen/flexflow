@@ -114,3 +114,16 @@ select {
 
 .flex_submit {
   margin-top: 20px; }
+
+.toggle_container {
+  text-align: left;
+  margin: 20px 0 10px 200px; }
+  @media (max-width: 768px) {
+    .toggle_container {
+      margin-left: 100px; } }
+  .toggle_container label {
+    height: 20px; }
+  .toggle_container input {
+    height: 20px;
+    border: 1px solid gainsboro;
+    border-radius: 3px; }

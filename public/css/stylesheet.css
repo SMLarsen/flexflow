@@ -178,3 +178,10 @@ select {
   width: 300px; }
   .results_button_container button {
     margin-bottom: 20px; }
+
+.addl_comment {
+  width: 40%;
+  margin: 0 auto; }
+  @media (max-width: 768px) {
+    .addl_comment {
+      width: 80%; } }

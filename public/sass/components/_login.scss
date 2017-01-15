@@ -1,0 +1,10 @@
+.login_ {
+  &container {
+    margin-top: -20px;
+  }
+  &greeting {
+    @media (max-width: $mobile-width) {
+      font-size: 3em;
+    }
+  }
+}

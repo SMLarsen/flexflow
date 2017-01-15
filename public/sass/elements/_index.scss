@@ -1,1 +1,19 @@
 // styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here.
+main {
+  text-align: center;
+}
+
+.jumbotron {
+  margin-top: -20px;
+}
+
+select {
+  background-color: white;
+  padding: 20px;
+  width: 90px;
+  @media (max-width: $mobile-width) {
+    padding: 5px;
+    width: 140px;
+    text-align: center;
+  }
+}

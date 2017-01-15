@@ -1,3 +1,19 @@
+main {
+  text-align: center; }
+
+.jumbotron {
+  margin-top: -20px; }
+
+select {
+  background-color: white;
+  padding: 20px;
+  width: 90px; }
+  @media (max-width: 768px) {
+    select {
+      padding: 5px;
+      width: 140px;
+      text-align: center; } }
+
 .empty_flow_month {
   background: gainsboro;
   border: 1px solid black; }
@@ -5,3 +21,27 @@
 .not_empty_flow_month {
   background: white;
   border: 1px solid gainsboro; }
+
+.login_container {
+  margin-top: -20px; }
+
+@media (max-width: 768px) {
+  .login_greeting {
+    font-size: 3em; } }
+
+.profilepersonicon {
+  width: 50px; }
+
+.people_button_container {
+  margin-bottom: 20px; }
+
+.client_names {
+  text-align: center;
+  width: 60%;
+  margin: 0 auto; }
+
+.profile_select {
+  margin-bottom: 20px; }
+
+.profile_submit {
+  margin-top: 20px; }

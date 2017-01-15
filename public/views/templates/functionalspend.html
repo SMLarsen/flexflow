@@ -26,11 +26,11 @@
     <span ng-hide="item.activeitem">{{item.item_name}}</span>
     <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
   </div>
-  <button class="btn btn-default add_button" ng-click"self.addItem()">+</button>
+  <button class="btn btn-primary add_button" ng-click"self.addItem()">+</button>
 </div>
 
 <footer>
-  <button class="btn btn-default next" data-toggle="modal" data-target="#functionalData" ng-click="fu.updateFunctionalItems()">Review Info/Next</button>
+  <button class="btn btn-primary next" data-toggle="modal" data-target="#functionalData" ng-click="fu.updateFunctionalItems()">Review Info/Next</button>
 </footer>
 
 <div class="progress">

@@ -32,7 +32,7 @@ CREATE TABLE budget (
 );
 
 INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled)
-VALUES (1, 1, 01, 2017, 5000, 100000, true),
+VALUES (1, 01, 2017, 5000, 100000, true),
 (2, 02, 2017, 7200, 120000, true)
 ;
 
@@ -46,8 +46,8 @@ CREATE TABLE budget_comment (
 );
 
 INSERT INTO budget_comment (budget_id, budget_comment)
-VALUES (1, 1, 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto.'),
-(1, 1, 'Vis enim graeco ei.'),
+VALUES (1, 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto.'),
+(1, 'Vis enim graeco ei.'),
 (2, 'Ad mea ludus albucius oporteat, ex eros')
 ;
 
@@ -285,23 +285,18 @@ VALUES (1, 1, 1, 2017, 0, 'Holidays', 1),
 
 SELECT * FROM budget_flow_item;
 
+SELECT item_year, item_month, SUM(item_amount)
+FROM budget_flow_item
+WHERE budget_id = 1
+GROUP BY item_year, item_month
+;
+
 SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_amount, item_sort_sequence
 FROM budget_template_category, budget_flow_item
 WHERE budget_template_category.id = budget_flow_item.budget_template_category_id
 AND budget_id = 1
 ORDER BY budget_template_category_id, item_year, item_month, item_sort_sequence
 ;
-
-
-SELECT
-    id,
-    budget_template_category_id,
-    item_month,
-    item_year,
-    item_amount,
-    item_name,
-    item_sort_sequence
-
 
 CREATE TABLE budget_item (
     id serial PRIMARY KEY,
@@ -345,7 +340,7 @@ VALUES (1, 2, 'Steve', 500, 1),
 (2, 3, 'Groceries', 450, 10)
 ;
 
-SELECT category_name, budget_template_category_id, budget_id, item_name, item_amount, item_sort_sequence
+SELECT category_name, budget_template_category_id, item_name, item_amount, item_sort_sequence
 FROM budget_template_category, budget_item
 WHERE budget_template_category.id = budget_item.budget_template_category_id
 AND budget_id = 1

@@ -55,16 +55,16 @@
         <p ng-repeat="month in fl.budgetMonths"><b>{{month.month}}:</b> ${{month.month_total}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button type="button" class="btn btn-default" ng-click="fl.nextPage()" data-dismiss="modal">Submit</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Edit Info</button>
+        <button type="button" class="btn btn-primary" ng-click="fl.nextPage()" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="nav_button_container">
-  <button class="btn" ng-click="fl.prevPage()">Prev</button>
-  <button ng-click="self.findCategoryTotals()" class="btn" data-toggle="modal" data-target="#submitForm">Next</button>
+  <button class="btn btn-primary" ng-click="fl.prevPage()">Prev</button>
+  <button ng-click="self.findCategoryTotals()" class="btn btn-primary" data-toggle="modal" data-target="#submitForm">Next</button>
 </div>
 
 <div class="progress">

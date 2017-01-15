@@ -23,7 +23,6 @@ var tokenDecoder = function(req, res, next) {
                             console.log('Error getting userID in decoder:', err);
                         } else {
                             req.userID = result.rows[0].id;
-                            console.log('userID:', req.userID);
                             client.query('SELECT id FROM budget WHERE user_id = $1', [req.userID],
                                 function(err, result) {
                                     done();
@@ -31,14 +30,13 @@ var tokenDecoder = function(req, res, next) {
                                         console.log('Error getting budgetID in decoder', err);
                                     } else {
                                         req.budgetID = result.rows[0].id;
-                                        console.log('budgetID:', req.budgetID);
+                                        next();
                                     }
                                 }
                             );
                         }
                     });
                 });
-                next();
             })
             .catch(function(error) {
                 // If the id_token isn't right, return forbidden error

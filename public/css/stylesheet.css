@@ -154,7 +154,10 @@ select {
   padding: 30px;
   padding-bottom: 10px;
   background: gainsboro;
-  margin-top: -20px; }
+  margin-top: -20px;
+  font-family: 'Fjalla One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px; }
 
 .results_value {
   border-bottom: 1px solid black;

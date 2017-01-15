@@ -6,7 +6,8 @@ body {
 
 .jumbotron {
   margin-top: -20px;
-  background: url("/assets/images/header.jpg");
+  background: url("/assets/images/header.png") center bottom no-repeat;
+  color: white;
   background-size: cover;
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;

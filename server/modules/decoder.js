@@ -22,18 +22,28 @@ var tokenDecoder = function(req, res, next) {
                         if (err) {
                             console.log('Error getting userID in decoder:', err);
                         } else {
-                            req.userID = result.rows[0].id;
-                            client.query('SELECT id FROM budget WHERE user_id = $1', [req.userID],
-                                function(err, result) {
-                                    done();
-                                    if (err) {
-                                        console.log('Error getting budgetID in decoder', err);
-                                    } else {
-                                        req.budgetID = result.rows[0].id;
-                                        next();
+                            if (result.rows.length > 0) {
+                                req.userID = result.rows[0].id;
+                                // console.log('userID:', req.userID);
+                                client.query('SELECT id FROM budget WHERE user_id = $1', [req.userID],
+                                    function(err, result) {
+                                        done();
+                                        if (err) {
+                                            console.log('Error getting budgetID in decoder', err);
+                                        } else {
+                                            if (result.rows.length > 0) {
+                                                req.budgetID = result.rows[0].id;
+                                                // console.log('budgetID:', req.budgetID);
+                                                next();
+                                            } else {
+                                                next();
+                                            }
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            } else {
+                              next();
+                            }
                         }
                     });
                 });

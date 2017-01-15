@@ -13,7 +13,7 @@ router.get("/flowitems", function(req, res) {
         queryString += 'WHERE budget_template_category.id = budget_flow_item.budget_template_category_id ';
         queryString += 'AND budget_id = $1 ';
         queryString += 'ORDER BY budget_template_category_id, item_year, item_month, item_sort_sequence';
-        console.log('queryString:', queryString);
+        // console.log('queryString:', queryString);
         client.query(queryString, [req.budgetID], function(err, result) {
             done();
             if (err) {
@@ -65,28 +65,6 @@ router.post("/flowitems", function(req, res) {
     });
 });
 
-// Route: Delete flow items for a budget
-router.put("/flowitems", function(req, res) {
-    pg.connect(connectionString, function(err, client, done) {
-        var queryString = 'UPDATE budget SET ';
-        queryString += 'budget_start_month = $1, budget_start_year = $2, monthly_take_home_amount = $3,';
-        queryString += ' annual_salary = $4, meeting_scheduled = $5 ';
-        queryString += 'WHERE user_id = $6';
-        client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, req.userID],
-            function(err, result) {
-                done();
-                if (err) {
-                    console.log('Error Updating profile', err);
-                    res.sendStatus(500);
-                } else {
-                    res.sendStatus(201);
-                    console.log('Profile updated');
-                }
-            }
-        );
-    });
-});
-
 router.delete("/flowitems/:month", function(req, res) {
     var month = req.params.month;
     pg.connect(connectionString, function(err, client, done) {
@@ -117,7 +95,7 @@ router.get("/items/:categoryID", function(req, res) {
         queryString += 'AND budget_id = $1 ';
         queryString += 'AND budget_template_category_id = $2 ';
         queryString += 'ORDER BY item_sort_sequence';
-        console.log('queryString:', queryString);
+        // console.log('queryString:', queryString);
         client.query(queryString, [req.budgetID, categoryID], function(err, result) {
             done();
             if (err) {

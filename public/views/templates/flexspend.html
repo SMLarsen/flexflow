@@ -1,9 +1,10 @@
-<h1>Your Monthly Flex Allowance</h1>
-
-<div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
-  <input type="text" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
+<h1 class="jumbotron">Your Monthly Flex Allowance</h1>
+<div class="flex_container">
+  <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
+    <input type="text" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
+  </div>
+  <button class="btn btn-primary flex_submit" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
 </div>
-<button class="btn btn-primary" data-toggle="modal" data-target="#flexProfileForm">Submit Flex</button>
 <div class="modal fade" id="flexProfileForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

@@ -24,7 +24,7 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
         for (var i = 0; i < number; i++) {
             self.flexArray.push({
                 item_name: null,
-                item_amount: 0,
+                item_amount: null,
                 item_sort_sequence: i + 1
             });
         }

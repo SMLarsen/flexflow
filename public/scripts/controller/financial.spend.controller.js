@@ -13,10 +13,10 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 
 	// toggles activeitem value for each item
 	self.toggleActive = function (item) {
-		if (item.activeitem === false) {
-			item.activeitem = true;
+		if (item.activeItem === false) {
+			item.activeItem = true;
 		} else {
-			item.activeitem = false;
+			item.activeItem = false;
 		}
 	};
 
@@ -24,7 +24,7 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 	function removeActiveToggles() {
 		for (var i = 0; i < self.itemArray.length; i++) {
 			var item = self.itemArray[i];
-			item.activeitem = false;
+			item.activeItem = false;
 		}
 	}
 
@@ -36,5 +36,6 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 	self.updateFinancialItems = function () {
 		console.log("update financial clicked ");
 		budgetFactory.updateFinancialItems(self.itemArray);
+		window.location = '/#/additionalinfo';
 	};
 }]);

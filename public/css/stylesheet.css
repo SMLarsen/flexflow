@@ -140,6 +140,13 @@ select {
     border: 1px solid gainsboro;
     border-radius: 3px; }
 
+.func_next {
+  margin: 10px 0 10px 0;
+  color: white; }
+
+.financ_next {
+  margin: 10px 0 10px 0; }
+
 .results_container {
   border: 1px solid gainsboro;
   border-radius: 10px;

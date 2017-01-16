@@ -424,6 +424,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
+        console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -438,7 +439,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error adding budget items for', currentUser.email, ': ', err);
+                        console.log('Error adding comment for', currentUser.email, ': ', err);
                         return;
                     });
         } else {

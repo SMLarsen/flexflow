@@ -43,7 +43,25 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-dismiss="modal">Looks Good! Submit</button>
+        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Looks Good! Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="greatWork" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Great work! You've completed your functional budget!</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>Now we'll enter your Financial Spending. This is all of your investments that you are already making each month.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick="window.location.href='#financialspend'" class="btn btn-default" type="button" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>

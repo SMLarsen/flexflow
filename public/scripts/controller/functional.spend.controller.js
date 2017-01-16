@@ -52,7 +52,6 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	self.updateFunctionalItems = function() {
 		console.log("update functional clicked");
 		budgetFactory.updateFunctionalItems(self.itemArray);
-		window.location = '/#/financialspend';
 	};
 
 	self.addFunctionalItem = function() {

@@ -4,7 +4,7 @@
   <div class="toggle_container" ng-repeat="item in fu.itemArray">
     <label for="item.item_name" ng-click="fu.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}"></label>
     <span ng-hide="item.activeItem">{{item.item_name}}</span>
-    <input type="number" placeholder="150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+    <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
   </div>
   <button class="btn btn-primary add_button" data-target="#additionalCategories" data-toggle="modal">Add Category</button>
 </div>
@@ -19,7 +19,7 @@
       </div>
       <div class="modal-body">
         <input placeholder="New Budget Item" ng-model="fu.newCategory.item_name"/>
-        <input placeholder="eg. 150" ng-model="fu.newCategory.item_amount"/>
+        <input placeholder="e.g. 150" type="number" ng-model="fu.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save Budget Item</button>
@@ -37,7 +37,7 @@
         <h4 class="modal-title">Monthly Functional Spending</h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="item in fu.itemArray">
+        <div ng-repeat="item in fu.itemArray" ng-hide="item.item_amount === null">
           <p>{{item.item_name}}: ${{item.item_amount}}</p>
         </div>
       </div>

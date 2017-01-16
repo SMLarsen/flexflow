@@ -3,7 +3,7 @@
 <div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
   <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}"></label>
   <span ng-hide="item.activeItem">{{item.item_name}}</span>
-  <input type="number" placeholder="150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+  <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
 </div>
 <button class="btn btn-primary financ_next" data-toggle="modal" data-target="#financialData">Submit</button>
 <!-- confirmation/submit modal-->
@@ -15,7 +15,7 @@
         <h4 class="modal-title">Monthly Financial Spending</h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="item in fi.itemArray">
+        <div ng-repeat="item in fi.itemArray" ng-hide="item.item_amount === null">
           <p>{{item.item_name}}: ${{item.item_amount}}</p>
         </div>
       </div>

@@ -1,35 +1,23 @@
-<h1>Results</h1>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Flex</h3>
+<h1 class="jumbotron">Your Flex/Flow Results</h1>
+<div class="full_results_container">
+  <div class="results_container">
+    <h4 class="results_name">Flow</h4>
+    <span class="results_value">{{rc.flowTotal | currency:"USD$":0}}</span>
   </div>
-  <div class="panel-body">
-    {{rc.flexTotal | currency:"USD $":0}}
+  <div class="results_container">
+    <h4 class="results_name">Flex</h4>
+    <span class="results_value">{{rc.flexTotal | currency:"USD$":0}}</span>
   </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Flow</h3>
+  <div class="results_container">
+    <h4 class="results_name">Functional</h4>
+    <span class="results_value">{{rc.functionalTotal | currency:"USD$":0}}</span>
   </div>
-  <div class="panel-body">
-    {{rc.flowTotal | currency:"USD $":0}}
-  </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Functional</h3>
-    </div>
-  <div class="panel-body">
-    {{rc.functionalTotal | currency:"USD $":0}}
+  <div class="results_container">
+    <h4 class="results_name">Financial</h4>
+    <span class="results_value">{{rc.financialTotal | currency:"USD$":0}}</span>
   </div>
 </div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Financial</h3>
-    </div>
-  <div class="panel-body">
-    {{rc.financialTotal | currency:"USD $":0}}
-  </div>
+<div class="results_button_container">
+  <button class="btn btn-primary" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
+  <button class="btn btn-primary" ng-click="rc.logOut()" type="button" name="button">Log Out</button>
 </div>
-<button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
-<button class="btn btn-default" ng-click="rc.logOut()" type="button" name="button">Log Out</button>

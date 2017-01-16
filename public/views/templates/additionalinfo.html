@@ -1,11 +1,10 @@
+  <h1 class="jumbotron">Questions for Flex/Flow?</h1>
 
 <div class="container">
-  <h1>Question for Flex/Flow?</h1>
-
   <form>
     <div class="form-group">
-      <label for="comment">Comment:</label>
-      <textarea class="form-control" rows="5" id="comment" ng-model="ai.comment"></textarea>
+      <label for="comment"></label>
+      <textarea class="form-control addl_comment" rows="5" id="comment" ng-model="ai.comment" placeholder="Enter your questions or comments here!"></textarea>
     </div>
     <button type="button" class="btn btn-primary" ng-click="ai.postAdditionalInfo()">Submit</button>
   </form>

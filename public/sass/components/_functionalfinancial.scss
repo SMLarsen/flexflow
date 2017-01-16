@@ -1,0 +1,16 @@
+.toggle_container {
+  text-align: left;
+  width: 60%;
+  margin: 20px auto 0 390px;
+  @media (max-width: $mobile-width) {
+    margin-left: 100px;
+  }
+  label {
+    height: 20px;
+  }
+  input {
+    height: 20px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+  }
+}

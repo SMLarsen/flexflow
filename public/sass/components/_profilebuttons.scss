@@ -1,0 +1,24 @@
+.profilepersonicon {
+  width: 50px;
+}
+
+.people_button_container {
+  margin-bottom: 20px;
+}
+
+.client_names {
+  text-align: center;
+  width: 40%;
+  margin: 0 auto;
+  @media (max-width: $mobile-width) {
+    width: 65%;
+  }
+}
+
+.profile_select {
+  margin-bottom: 20px;
+}
+
+.profile_submit {
+  margin-top: 20px;
+}

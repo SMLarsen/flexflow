@@ -59,7 +59,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.currentMonthIndex = null;
   self.monthlyBudgetData = [];
   self.newFlowBudget = [];
-  self.newCategories = []
+  self.newCategories = [];
+  self.flowTotals = [];
   self.newCategory = {
     item_name: null,
     item_amount: null

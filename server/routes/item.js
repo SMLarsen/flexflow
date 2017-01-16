@@ -36,7 +36,7 @@ router.post("/flowitems", function(req, res) {
         for (var i = 0; i < req.body.length - 1; i++) {
             var item = req.body[i];
             queryString += "(" + req.budgetID;
-            queryString += ", " + item.budget_template_category_id;
+            queryString += ", " + 1;
             queryString += ", " + item.item_month;
             queryString += ", " + item.item_year;
             queryString += ", " + item.item_amount;
@@ -45,7 +45,7 @@ router.post("/flowitems", function(req, res) {
         }
         var lastItem = req.body[req.body.length - 1];
         queryString += "(" + req.budgetID;
-        queryString += ", " + lastItem.budget_template_category_id;
+        queryString += ", " + 1;
         queryString += ", " + lastItem.item_month;
         queryString += ", " + lastItem.item_year;
         queryString += ", " + lastItem.item_amount;

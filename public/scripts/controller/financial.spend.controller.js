@@ -2,7 +2,6 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 	console.log('Financial Spend controller started');
 
 	var self = this;
-	self.newFinancialBudget = {};
 	var budgetFactory = BudgetFactory;
 
 	budgetFactory.getFinancialItems().then(function (result) {

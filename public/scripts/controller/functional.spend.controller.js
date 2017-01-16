@@ -2,9 +2,11 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	console.log('Functional Spend controller started');
 
 	var self = this;
-	self.newFunctionalBudget = {};
 	var budgetFactory = BudgetFactory;
-
+	self.newItem = {
+		item_name: null,
+		item_amount: null
+	};
 
 	budgetFactory.getFunctionalItems().then(function (result) {
 		self.itemArray = result;
@@ -39,11 +41,25 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 		budgetFactory.updateFunctionalItems(self.itemArray);
 	};
 
-	
+self.addInput = function () {
+	var newInput = self.itemArray.length + 1;
+	this.itemArray.push({
+		item_name: null,
+		item_amount: null
+
+	});
+};
+
+function setToggles(){
+    for (var i = 0; i < self.itemArray.length; i++) {
+      var item = self.itemArray[i];
+      if(item.item_amount === undefined || item.item_amount === 0 || category.item_amount === null) {
+        item.activeitem  = false;
+      } else {
+        item.activeitem = true;
+      }
+    }
+  }
 
 }]);
 
-this.addInput = function() {
-    var newInput = this.choices.length+1;
-    $scope.choices.push({'id':'choice'+newItemNo});
-  };

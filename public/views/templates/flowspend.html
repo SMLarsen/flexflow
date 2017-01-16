@@ -13,7 +13,7 @@
         <div ng-repeat="category in fl.flowCategories" class="flow_toggle_container">
           <label for="category.item_name" ng-click="fl.toggleActive(category)" ng-class="{active_toggle: category.activeCategory === true, not_active_toggle: category.activeCategory === false}"></label>
           <span ng-hide="category.activeCategory">{{category.item_name}}</span>
-          <input placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
+          <input type="number" placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
         <button id="additionalButton" class="btn" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories">+</button>
       </div>

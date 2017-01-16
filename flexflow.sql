@@ -4,9 +4,20 @@ DROP TABLE budget_item;
 DROP TABLE budget_comment;
 DROP TABLE budget;
 DROP TABLE users;
+DROP TABLE administration;
 DROP TABLE budget_template_item;
 DROP TABLE budget_template_category;
 
+CREATE TABLE administration (
+  id SERIAL PRIMARY KEY,
+  parameter_name VARCHAR(30) UNIQUE NOT NULL,
+  parameter_value VARCHAR(130) NOT NULL
+);
+
+INSERT INTO administration (parameter_name, parameter_value)
+VALUES ('Scheduling_email', 'schedule.email@gmail.com'),
+ ('Final_report_email', 'report.email01@gmail.com')
+;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -414,3 +425,12 @@ SELECT * FROM budget_template_item
 WHERE budget_category_id = 1
 ORDER BY item_sort_sequence
 ;
+
+SELECT COUNT(id) FROM budget_flow_item
+WHERE budget_id > 2
+;
+
+DELETE FROM budget_flow_item WHERE budget_id > 2;
+DELETE FROM budget_item WHERE budget_id > 2;
+DELETE FROM budget WHERE id > 2;
+DELETE FROM users WHERE id > 2;

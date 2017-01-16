@@ -1,6 +1,11 @@
 var admin = require("firebase-admin");
 var pg = require('pg');
-var connectionString = require('../modules/database-config');
+// var connectionString = require('../modules/database-config');
+var config = require('../modules/pg-config');
+
+var pool = new pg.Pool({
+    database: config.database
+});
 
 admin.initializeApp({
     credential: admin.credential.cert("./server/firebase-service-account.json"),
@@ -16,32 +21,36 @@ var tokenDecoder = function(req, res, next) {
                 // Adding the decodedToken to the request so that downstream processes can use it
                 req.decodedToken = decodedToken;
                 // Try to get userID
-                pg.connect(connectionString, function(err, client, done) {
+                pool.connect()
+                .then( function( client ) {
                     client.query('SELECT id FROM users WHERE email = $1', [decodedToken.email], function(err, result) {
-                        done();
                         if (err) {
                             console.log('Error getting userID in decoder:', err);
+                            client.release();
                         } else {
                             if (result.rows.length > 0) {
                                 req.userID = result.rows[0].id;
                                 // console.log('userID:', req.userID);
                                 client.query('SELECT id FROM budget WHERE user_id = $1', [req.userID],
                                     function(err, result) {
-                                        done();
                                         if (err) {
                                             console.log('Error getting budgetID in decoder', err);
+                                            client.release();
                                         } else {
                                             if (result.rows.length > 0) {
                                                 req.budgetID = result.rows[0].id;
                                                 // console.log('budgetID:', req.budgetID);
+                                                client.release();
                                                 next();
                                             } else {
+                                              client.release();
                                                 next();
                                             }
                                         }
                                     }
                                 );
                             } else {
+                              client.release();
                               next();
                             }
                         }

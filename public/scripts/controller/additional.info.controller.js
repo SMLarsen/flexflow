@@ -1,10 +1,11 @@
-app.controller('AdditionalInfoController', ['$http', 'AuthFactory', 'BudgetFactory', function($http, AuthFactory, BudgetFactory) {
+app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFactory) {
   console.log('Additional Info controller started');
 
   var self = this;
+
   var budgetFactory = BudgetFactory;
 
-  self.postAdditionalInfo = function(){
+  self.postAdditionalInfo = function() {
 
     var sendObject = {budget_comment: self.comment};
 

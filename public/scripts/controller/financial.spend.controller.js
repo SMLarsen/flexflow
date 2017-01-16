@@ -1,11 +1,11 @@
-app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function ($http, AuthFactory, TemplateFactory, BudgetFactory) {
+app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFactory) {
 	console.log('Financial Spend controller started');
 
 	var self = this;
 
 	var budgetFactory = BudgetFactory;
 
-	budgetFactory.getFinancialItems().then(function (result) {
+	budgetFactory.getFinancialItems().then(function(result) {
 		self.itemArray = result;
 		setToggles();
 		resetZeroValues();
@@ -22,7 +22,7 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 	};
 
 	// removes all active values in individual flow categories
-  function setToggles(){
+  function setToggles() {
     for (var i = 0; i < self.itemArray.length; i++) {
       var category = self.itemArray[i];
       if(category.item_amount === undefined || category.item_amount === 0 || category.item_amount === null) {
@@ -31,7 +31,7 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
         category.activeItem = true;
       }
     }
-  } // end setToggles
+  }; // end setToggles
 
 	// function to ensure zero values show up as placeholder in inputs
 	function resetZeroValues() {
@@ -40,15 +40,15 @@ app.controller('FinancialSpendController', ['$http', 'AuthFactory', 'TemplateFac
 				self.itemArray[i].item_amount = null;
 			}
 		}
-	} // end resetZeroValues
+	}; // end resetZeroValues
 
-	self.getFinancialItems = function () {
+	self.getFinancialItems = function() {
 		console.log("getFinancialItems is clicked");
 		budgetFactory.getFinancialItems(self.itemArray);
 	};
 
-	self.updateFinancialItems = function () {
-		console.log("update financial clicked ");
+	self.updateFinancialItems = function() {
+		console.log("updateFinancialItems is clicked");
 		budgetFactory.updateFinancialItems(self.itemArray);
 		window.location = '/#/additionalinfo';
 	};

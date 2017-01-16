@@ -18,11 +18,11 @@
         <h4 class="modal-title">Enter Your Additional Budget Item</h4>
       </div>
       <div class="modal-body">
-        <input placeholder="New Budget Item" ng-model="fu.newCategory.item_name"/>
+        <input placeholder="New Category" ng-model="fu.newCategory.item_name"/>
         <input placeholder="e.g. 150" type="number" ng-model="fu.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save Budget Item</button>
+        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Looks Good! Submit</button>
+        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

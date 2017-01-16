@@ -5,7 +5,7 @@
   <span ng-hide="item.activeItem">{{item.item_name}}</span>
   <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
 </div>
-<button class="btn btn-primary financ_next" data-toggle="modal" data-target="#financialData">Submit</button>
+<button class="btn btn-primary financ_submit" data-toggle="modal" data-target="#financialData">Submit</button>
 <!-- confirmation/submit modal-->
 <div class="modal fade" id="financialData" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -21,7 +21,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-primary" type="button" ng-click="fi.updateFinancialItems()" data-dismiss="modal">Looks Good! Submit</button>
+        <button class="btn btn-primary" type="button" ng-click="fi.updateFinancialItems()" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

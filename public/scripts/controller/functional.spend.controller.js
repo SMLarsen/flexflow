@@ -1,4 +1,4 @@
-app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFactory', 'BudgetFactory', function ($http, AuthFactory, TemplateFactory, BudgetFactory) {
+app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFactory) {
 	console.log('Functional Spend controller started');
 
 	var self = this;
@@ -15,7 +15,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	});
 
 	// toggles activeItem value for each item
-	self.toggleActive = function (item) {
+	self.toggleActive = function(item) {
 		if (item.activeItem === false) {
 			item.activeItem = true;
 		} else {
@@ -24,7 +24,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 	};
 
 	// removes all active values in individual flow categories
-  function setToggles(){
+  function setToggles() {
     for (var i = 0; i < self.itemArray.length; i++) {
       var category = self.itemArray[i];
       if(category.item_amount === undefined || category.item_amount === 0 || category.item_amount === null) {
@@ -33,7 +33,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
         category.activeItem = true;
       }
     }
-  } // end setToggles
+  }; // end setToggles
 
 	// function to ensure zero values show up as placeholder in inputs
 	function resetZeroValues() {
@@ -42,7 +42,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 				self.itemArray[i].item_amount = null;
 			}
 		}
-	} // end resetZeroValues
+	}; // end resetZeroValues
 
 	self.getFunctionalItems = function() {
 		console.log("getFunctionalItems is clicked");

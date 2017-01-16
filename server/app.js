@@ -4,10 +4,15 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
 var privateData = require('./routes/private-data');
-var users = require('./routes/users');
+var admin = require('./routes/admin');
 var templates = require('./routes/template');
+
 var mail = require('./routes/mail');
 var budget = require('./routes/budget');
+
+var profile = require('./routes/profile');
+var item = require('./routes/item');
+var total = require('./routes/total');
 
 var portDecision = process.env.PORT || 5000;
 
@@ -20,6 +25,7 @@ app.use(bodyParser.json());
 
 app.use("/template", templates);
 app.use("/mail", mail);
+app.use("/admin", admin);
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request.
 app.use(decoder.token);
@@ -28,8 +34,9 @@ app.use(decoder.token);
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.get("/privateData", privateData);
-app.use('/users', users);
-app.use("/budget", budget);
+app.use("/profile", profile);
+app.use("/item", item);
+app.use("/total", total);
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

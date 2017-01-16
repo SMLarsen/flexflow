@@ -1,13 +1,13 @@
-<h1>Your Profile</h1>
+<h1 class="jumbotron">Your Profile</h1>
 
-<h2>How many adults are in your household?</h2>
-<div class="btn-group btn-group-lg" role="group" aria-label="...">
-  <button class="btn btn-default" ng-click="cp.clickNumPeople(1)">One Person</button>
-  <button class="btn btn-default" ng-click="cp.clickNumPeople(2)">Two People</button>
-  <button class="btn btn-default" ng-click="cp.clickNumPeople(3)">Three People</button>
-  <button class="btn btn-default" ng-click="cp.clickNumPeople(4)">Four People</button>
+<h4>How many adults are in your household?</h4>
+<div class="people_button_container btn-group btn-group-lg" role="group" aria-label="...">
+  <button class="btn btn-default button_oneperson" ng-click="cp.clickNumPeople(1)"><img class="profilepersonicon" src="/assets/images/profile-icons/oneperson.svg" /></button>
+  <button class="btn btn-default button_twopeople" ng-click="cp.clickNumPeople(2)"><img class="profilepersonicon" src="/assets/images/profile-icons/twopeople.svg" /></button>
+  <button class="btn btn-default button_threepeople" ng-click="cp.clickNumPeople(3)"><img class="profilepersonicon" src="/assets/images/profile-icons/threepeople.svg" /></button>
+  <button class="btn btn-default button_fourpeople" ng-click="cp.clickNumPeople(4)"><img class="profilepersonicon" src="/assets/images/profile-icons/fourpeople.svg" /></button>
 </div>
-<div class="client_names">
+<div class="client_names" ng-hide="cp.numPeople === 0">
   <label for="names">Name(s)</label><br>
   <div ng-repeat="person in cp.flexArray">
     <input type="text" ng-model="person.item_name" placeholder="e.g. Bob" class="form-control">
@@ -31,11 +31,11 @@
     <option value="11">November</option>
     <option value="12">December</option>
   </select>
-  <select name="year" ng-model="cp.budget.budget_start_year">
+  <select class="profile_select" name="year" ng-model="cp.budget.budget_start_year">
     <option ng-repeat="year in cp.nextFiveYears">{{year}}</option>
   </select><br>
-  <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled">I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
-  <button class="btn btn-primary" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
+  <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled"> I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
+  <button class="btn btn-primary profile_submit" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
   <div class="modal fade" id="clientProfileForm" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

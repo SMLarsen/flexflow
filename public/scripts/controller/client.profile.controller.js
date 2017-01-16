@@ -7,7 +7,6 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
     self.budget = {};
     self.flexArray = [];
-
     self.numPeople = 0;
 
     var currentTime = new Date();
@@ -24,7 +23,7 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
         for (var i = 0; i < number; i++) {
             self.flexArray.push({
                 item_name: null,
-                item_amount: 0,
+                item_amount: null,
                 item_sort_sequence: i + 1
             });
         }
@@ -38,6 +37,7 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
     // Function for posting salary info to DB
     self.postBudget = function() {
+      self.budget.meeting_scheduled = false;
         budgetFactory.postBudget(self.budget)
             .then(function(budgetResponse) {
                 budgetFactory.postFlexItems(self.flexArray)

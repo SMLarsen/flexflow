@@ -7,13 +7,15 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     var authFactory = AuthFactory;
     var templateFactory = TemplateFactory;
+
     var flowItemArray = templateFactory.templateData.flowTemplateItems;
+    var financialItemArray = templateFactory.templateData.financialTemplateItems;
+    var functionalItemArray = templateFactory.templateData.functionalTemplateItems;
+
     var newFunctionalItemArray = [];
     var newFinancialItemArray = [];
     var newFlowItemArray = [];
-    var newFlowItem = {};
-    var financialItemArray = templateFactory.templateData.financialTemplateItems;
-    var functionalItemArray = templateFactory.templateData.functionalTemplateItems;
+
     var profile = {};
     var flowItems = [];
 
@@ -29,7 +31,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
         for (var l = 0; l < 12; l++) {
             for (var k = 0; k < flowItemArray.length; k++) {
-                newFlowItem = {};
+                var newFlowItem = {};
                 newFlowItem.item_amount = 0;
                 newFlowItem.budget_template_category_id = 1;
                 newFlowItem.item_month = itemMonth;
@@ -49,7 +51,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
         // Build financial items (id = 4)
         for (var i = 0; i < financialItemArray.length; i++) {
-            newFinancialItem = {};
+            var newFinancialItem = {};
             newFinancialItem.item_amount = 0;
             newFinancialItem.budget_template_category_id = FINANCIAL;
             newFinancialItem.item_name = financialItemArray[i].item_name;
@@ -61,7 +63,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
         // Build functional items (id = 3)
         for (var j = 0; j < functionalItemArray.length; j++) {
-            newFunctionalItem = {};
+            var newFunctionalItem = {};
             newFunctionalItem.item_amount = 0;
             newFunctionalItem.budget_template_category_id = FUNCTIONAL;
             newFunctionalItem.item_name = functionalItemArray[j].item_name;
@@ -77,6 +79,10 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         console.log('postBudget');
         var itemMonth = profile.budget_start_month;
         var itemYear = profile.budget_start_year;
+        if (profile.meeting_scheduled === null) {
+          profile.meeting_scheduled = FALSE;
+        }
+        console.log('profile:', profile);
         var currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
@@ -156,6 +162,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     postFlowItems = function(month) {
         // console.log('postFlowItems', month);
         var currentUser = authFactory.getCurrentUser();
+        // console.log('postFlowItems:', month);
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -166,7 +173,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     data: month
                 })
                 .then(function(response) {
-                        // console.log('Profile updated');
                         return;
                     },
                     function(err) {
@@ -285,7 +291,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     postFlowItems(budgetArray)
                         .then(function(response) {
                                 console.log('Flow items replaced');
-                                return;
+                                return ;
                             },
                             function(err) {
                                 console.log('Error replacing flow items for', err);
@@ -301,6 +307,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** Budget Item Functions ******************************//
     // function to insert budget items
     postBudgetItems = function(budgetArray, categoryID) {
+      // console.log('postBudgetItems:', categoryID, budgetArray);
         for (var i = 0; i < budgetArray.length; i++) {
             budgetArray[i].budget_template_category_id = categoryID;
         }
@@ -424,6 +431,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
+        console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -438,7 +446,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                         return;
                     },
                     function(err) {
-                        console.log('Error adding budget items for', currentUser.email, ': ', err);
+                        console.log('Error adding comment for', currentUser.email, ': ', err);
                         return;
                     });
         } else {

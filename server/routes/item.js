@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
@@ -170,5 +172,45 @@ router.delete("/items/:categoryID", function(req, res) {
         });
     });
 });
+
+// *********************************** Comment routes ************************** //
+// Route: Get comment items for a budget
+router.get("/comments", function(req, res) {
+    //console.log("i got here");
+
+    pg.connect(connectionString, function(err, client, done) {
+
+        var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';
+        client.query(queryString, [req.budgetID], function(err, result) {
+            done();
+            if (err) {
+                console.log('Error getting financial items', err);
+                res.sendStatus(500);
+            } else {
+                res.send(result.rows);
+                // console.log('Comment items retrieved');
+            }
+        }); // end inside client.query
+    }); // end pg.connect
+}); // end route.get
+
+router.post("/comments", function(req, res) {
+  pg.connect(connectionString, function(err, client, done) {
+
+    //console.log("im in post");
+    client.query('INSERT INTO budget_comment (budget_id, budget_comment) VALUES($1, $2)', [req.budgetID, req.body.budget_comment], (err, result) => {
+        done();
+        if (err) {
+            console.log('Error Inserting comment', err);
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(201);
+            console.log('Comment inserted');
+        }
+    });
+  });
+
+}); // end route.post
+
 
 module.exports = router;

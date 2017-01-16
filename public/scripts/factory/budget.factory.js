@@ -81,7 +81,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -106,7 +106,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -132,7 +132,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'PUT',
-                    url: '/budget/profile',
+                    url: '/profile',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -159,7 +159,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/flowitems',
+                    url: '/item/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -184,7 +184,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems',
+                    url: '/item/flowitems',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -210,14 +210,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbymonth',
+                    url: '/total/flowitems/totalbymonth',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
                         flowItemMonthlyTotals = response.data;
-                        console.log('flowItemMonthlyTotals', flowItemMonthlyTotals);
                         return flowItemMonthlyTotals;
                     },
                     function(err) {
@@ -236,14 +235,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/flowitems/totalbyyear',
+                    url: '/total/flowitems/totalbyyear',
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
                         flowItemYearlyTotal = response.data;
-                        console.log('flowItemYearlyTotal', flowItemYearlyTotal);
                         return flowItemYearlyTotal;
                     },
                     function(err) {
@@ -261,7 +259,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/flowitems/' + month,
+                    url: '/item/flowitems/' + month,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -310,7 +308,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/items',
+                    url: '/item/items',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },
@@ -335,7 +333,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/items/' + categoryID,
+                    url: '/item/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -360,14 +358,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'GET',
-                    url: '/budget/items/total/' + categoryID,
+                    url: '/total/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
                 })
                 .then(function(response) {
                         budgetItemTotal = response.data;
-                        console.log('budgetItemTotal', budgetItemTotal);
                         return budgetItemTotal;
                     },
                     function(err) {
@@ -385,7 +382,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'DELETE',
-                    url: '/budget/items/' + categoryID,
+                    url: '/item/items/' + categoryID,
                     headers: {
                         id_token: authFactory.getIdToken()
                     }
@@ -430,7 +427,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (currentUser) {
             return $http({
                     method: 'POST',
-                    url: '/budget/comments',
+                    url: '/item/comments',
                     headers: {
                         id_token: authFactory.getIdToken()
                     },

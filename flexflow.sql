@@ -445,3 +445,44 @@ DELETE FROM budget_item WHERE budget_id > 2;
 DELETE FROM budget WHERE id > 2;
 DELETE FROM budget_comment WHERE id > 2;
 DELETE FROM users WHERE id > 2;
+
+--Query to get flex, financial, and functional items/amounts by budget_id
+SELECT category_name, item_name, item_amount 
+FROM budget_item, budget_template_category
+WHERE budget_template_category.id = budget_template_category_id
+AND budget_id = 1
+ORDER BY budget_template_category_id, item_sort_sequence
+;
+
+--Query to get flex, financial, and functional monthly total by budget_id and category_id
+SELECT budget_template_category.category_name, SUM(item_amount) AS monthly_total
+FROM budget_item, budget_template_category
+WHERE budget_template_category.id = budget_template_category_id
+AND budget_id = 1
+GROUP BY budget_template_category.category_name
+;
+
+--Query to get flow items/amounts by budget_id
+SELECT category_name, item_year, item_month, item_name, item_amount 
+FROM budget_flow_item, budget_template_category
+WHERE budget_template_category.id = budget_template_category_id
+AND budget_id = 1
+ORDER BY budget_template_category_id, item_year, item_month, item_sort_sequence
+;
+
+--Query to get flow monthly total by item_year and item_month
+SELECT item_year, item_month, SUM(item_amount) AS monthly_total
+FROM budget_flow_item
+WHERE budget_id = 1
+GROUP BY item_year, item_month
+;
+
+--Query to get flow annual total by item_name
+SELECT item_name, SUM(item_amount) AS annual_total
+FROM budget_flow_item
+WHERE budget_id = 1
+GROUP BY item_name
+;
+
+
+

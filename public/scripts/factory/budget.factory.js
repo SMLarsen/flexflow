@@ -217,7 +217,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         flowItemMonthlyTotals = response.data;
-                        console.log('flowItemMonthlyTotals', flowItemMonthlyTotals);
                         return flowItemMonthlyTotals;
                     },
                     function(err) {
@@ -243,7 +242,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         flowItemYearlyTotal = response.data;
-                        console.log('flowItemYearlyTotal', flowItemYearlyTotal);
                         return flowItemYearlyTotal;
                     },
                     function(err) {
@@ -367,7 +365,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         budgetItemTotal = response.data;
-                        console.log('budgetItemTotal', budgetItemTotal);
                         return budgetItemTotal;
                     },
                     function(err) {

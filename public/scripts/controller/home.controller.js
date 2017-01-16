@@ -1,11 +1,13 @@
-app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", function($http, AuthFactory, TemplateFactory) {
+app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", "AdminFactory", function($http, AuthFactory, TemplateFactory, AdminFactory) {
     console.log('HomeController started');
-    
+
     var self = this;
     var authFactory = AuthFactory;
+    var adminFactory = AdminFactory;
     var templateFactory = TemplateFactory;
 
     templateFactory.loadTemplateData();
+    adminFactory.getAdminData();
 
     // Function to Login
     self.logIn = function() {

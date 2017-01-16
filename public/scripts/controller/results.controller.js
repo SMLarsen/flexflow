@@ -1,10 +1,11 @@
-app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', function($http, AuthFactory, BudgetFactory) {
+app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', function($http, AuthFactory, BudgetFactory, AdminFactory) {
     console.log('Results controller started');
     var self = this;
     var budgetFactory = BudgetFactory;
     var authFactory = AuthFactory;
+    var adminFactory = AdminFactory;
+    var scheduleEmail = adminFactory.getAdminParameter('Scheduling_email');
     var currentUser = authFactory.getCurrentUser();
-    console.log('results email:', currentUser);
 
     budgetFactory.getFlowItemTotalByYear().then(function(results) {
         self.flowTotal = results.sum / 12;
@@ -24,7 +25,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', fu
 
     self.scheduleMeeting = function() {
         console.log('scheduleMeeting clicked');
-        var link = "mailto:" + "isaiah@becomingfinancial.com" +
+        var link = "mailto:" + scheduleEmail +
             "?cc=" + currentUser.email +
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");

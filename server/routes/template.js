@@ -1,25 +1,33 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = require('../modules/database-config');
+// var connectionString = require('../modules/database-config');
+var config = require('../modules/pg-config');
+
+var pool = new pg.Pool({
+    database: config.database
+});
 
 router.get("/category", function(req, res) {
-    pg.connect(connectionString, function(err, client, done) {
+    pool.connect()
+    .then(function(client) {
         client.query('SELECT * FROM budget_template_category', function(err, result) {
-            done();
             if (err) {
                 console.log('Error COMPLETING category select task', err);
                 res.sendStatus(500);
+                client.release();
             } else {
                 res.send(result.rows);
                 console.log('retrieved categories');
+                client.release();
             }
         });
     });
 });
 
 router.get("/item", function(req, res) {
-    pg.connect(connectionString, function(err, client, done) {
+    pool.connect()
+    .then( function(client) {
       var queryString = 'SELECT budget_template_category.category_name, budget_template_item.item_name, ';
       queryString += 'budget_template_item.item_text, budget_template_item.item_placeholder_text, budget_template_item.item_img_src, ';
       queryString += 'budget_template_item.item_sort_sequence FROM budget_template_category, budget_template_item ';
@@ -28,13 +36,14 @@ router.get("/item", function(req, res) {
       // console.log(queryString);
         client.query(queryString,
             function(err, result) {
-                done();
                 if (err) {
                     console.log('Error COMPLETING item select task', err);
                     res.sendStatus(500);
+                    client.release();
                 } else {
                     res.send(result.rows);
                     console.log('retrieved items');
+                    client.release();
                 }
             });
     });

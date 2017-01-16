@@ -107,7 +107,7 @@ CREATE TABLE budget (
     budget_start_year integer,
     monthly_take_home_amount integer,
     annual_salary integer,
-    meeting_scheduled boolean default false
+    meeting_scheduled BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled)
@@ -364,6 +364,11 @@ VALUES (1, 1, 1, 2017, 0, 'Holidays', 1),
 
 SELECT * FROM budget_flow_item;
 
+Select * from budget_flow_item
+Where budget_id = 1
+and item_month = 1
+order by item_sort_sequence;
+
 SELECT item_year, item_month, SUM(item_amount)
 FROM budget_flow_item
 WHERE budget_id = 1
@@ -426,8 +431,17 @@ AND budget_id = 1
 ORDER BY budget_template_category_id, item_sort_sequence
 ;
 
+SELECT * FROM budget_flow_item
+WHERE budget_id = 12 AND item_name = 'Holidays'
+;
+
+SELECT COUNT(id), item_name FROM budget_flow_item
+WHERE budget_id = 12
+GROUP BY item_name;
+
 
 DELETE FROM budget_flow_item WHERE budget_id > 2;
 DELETE FROM budget_item WHERE budget_id > 2;
 DELETE FROM budget WHERE id > 2;
+DELETE FROM budget_comment WHERE id > 2;
 DELETE FROM users WHERE id > 2;

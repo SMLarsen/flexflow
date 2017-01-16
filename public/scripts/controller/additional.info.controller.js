@@ -5,12 +5,13 @@ app.controller('AdditionalInfoController', ['$http', 'AuthFactory', 'BudgetFacto
   var budgetFactory = BudgetFactory;
 
   self.postAdditionalInfo = function(){
+
     var sendObject = {budget_comment: self.comment};
 
     budgetFactory.postAdditionalInfo(sendObject)
       .then(function(result){
           //console.log('Comment Inserted on Client Side');
-          // console.log("in postAdditionalInfo");
+          // console.log("in postAdditionalInfo ", sendObject);
           window.location = '/#/results';
       },
       function(err){

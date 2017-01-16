@@ -297,11 +297,12 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   } // end resetZeroValues
 
   self.addBudgetItem = function(){
-    if(self.newCategory.item_name || self.newCategory.item_amount === null) {
+    if(self.newCategory.item_name === null || self.newCategory.item_amount === null) {
       alert('Please enter an additional category before submitting.');
     } else {
       self.newCategory.item_month = self.currentMonthData.month_id;
       self.newCategory.item_year = self.currentMonthData.year;
+      self.newCategory.item_sort_sequence = self.flowCategories.length + 2;
       console.log(self.newCategory);
       self.newCategories.push(self.newCategory);
       self.postFlowItems();

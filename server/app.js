@@ -9,6 +9,7 @@ var templates = require('./routes/template');
 var profile = require('./routes/profile');
 var item = require('./routes/item');
 var total = require('./routes/total');
+// var comment = require('./routes/comment');
 
 var portDecision = process.env.PORT || 5000;
 

@@ -1,49 +1,69 @@
 app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFactory) {
-  console.log('Client Profile controller started');
+    console.log('Client Profile controller started');
 
-  var self = this;
+    var self = this;
 
-  var budgetFactory = BudgetFactory;
+    var budgetFactory = BudgetFactory;
 
-  self.budget = {};
-  self.flexArray = [];
-
-  self.numPeople = 0;
-
-  // Function to build array of people in flex budget
-  var buildFlexArray = function(number){
+    self.budget = {};
     self.flexArray = [];
-    for (var i = 0; i < number; i++) {
-      self.flexArray.push({flex_name: null, flex_amount: null, temp_id: i});
+    self.numPeople = 0;
+
+    var currentTime = new Date();
+
+    var year = currentTime.getFullYear();
+    self.nextFiveYears = [];
+
+    console.log(year);
+    getYears();
+
+    // Function to build array of people in flex budget
+    var buildFlexArray = function(number) {
+        self.flexArray = [];
+        for (var i = 0; i < number; i++) {
+            self.flexArray.push({
+                item_name: null,
+                item_amount: null,
+                item_sort_sequence: i + 1
+            });
+        }
+    }; // End: buildFlexArray
+
+    // Function for selecting number of adults in household
+    self.clickNumPeople = function(number) {
+        self.numPeople = number;
+        buildFlexArray(self.numPeople);
+    }; // End: clickNumPeople
+
+    // Function for posting salary info to DB
+    self.postBudget = function() {
+      self.budget.meeting_scheduled = false;
+        budgetFactory.postBudget(self.budget)
+            .then(function(budgetResponse) {
+                budgetFactory.postFlexItems(self.flexArray)
+                    .then(function(flexResponse) {
+                        budgetFactory.getBudget()
+                            .then(function(getResponse) {
+                                self.budget = getResponse;
+                                self.savings = parseInt(self.budget.annual_salary) * 0.20;
+                                self.monthSavings = parseInt(self.savings) / 12;
+                            });
+
+                    });
+            });
+    }; // End: postBudget
+
+    self.budget = {};
+    self.savings = undefined;
+    self.monthSavings = undefined;
+
+    function getYears() {
+        self.nextFiveYears.push(year);
+        for (var i = 0; i < 4; i++) {
+            year++;
+            self.nextFiveYears.push(year);
+        }
+        console.log(self.nextFiveYears);
     }
-  }; // End: buildFlexArray
-
-  // Function for selecting number of adults in household
-  self.clickNumPeople = function(number) {
-    self.numPeople = number;
-    buildFlexArray(self.numPeople);
-  }; // End: clickNumPeople
-
-  // Function for posting salary info to DB
-  self.postBudget = function(){
-    budgetFactory.postBudget(self.budget).then(function(response){
-      budgetFactory.postFlexItems(self.flexArray);
-      getBudget();
-      getSavings();
-    });
-  }; // End: postBudget
-
-  self.budget = {};
-  self.savings = undefined;
-  self.monthSavings = undefined;
-
-  // Function for getting savings from DB and calculating yearly and monthly
-  function getSavings() {
-    budgetFactory.getBudget().then(function(response){
-      self.budget = response;
-      self.savings = parseInt(self.budget.annual_salary) * .20;
-      self.monthSavings = parseInt(self.savings) / 12;
-    });
-  }; // End: getSavings
 
 }]); // END: ClientProfileController

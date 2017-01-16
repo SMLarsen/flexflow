@@ -7,7 +7,7 @@ var connectionString = require('../modules/database-config');
 router.get("/privateData", function (req, res) {
 	pg.connect(connectionString, function (err, client, done) {
 		var userEmail = req.decodedToken.email;
-		console.log(userEmail);
+		// console.log(userEmail);
 		/* getting user by email */
 		client.query('SELECT * FROM users WHERE email=$1', [userEmail], function (err, result) {
 			done();
@@ -35,7 +35,7 @@ router.get("/privateData", function (req, res) {
 										} else {
 											var currentUser = result.rows[0];
 											currentUser.newUser = true;
-											console.log('new User:', currentUser);
+											// console.log('new User:', currentUser);
 											res.send(currentUser);
 										}
 									});
@@ -44,7 +44,7 @@ router.get("/privateData", function (req, res) {
 					} else {
 						var currentUser = result.rows[0];
 						currentUser.newUser = false;
-						console.log('currentUser:', currentUser);
+						// console.log('currentUser:', currentUser);
 						res.send(currentUser);
 					}
 					done();

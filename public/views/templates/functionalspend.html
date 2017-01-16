@@ -1,3 +1,33 @@
+<!-- template for input -->
+<h1 class="jumbotron">Your Functional Spending</h1>
+<div class="functional_financial_spending_container">
+  <div class="toggle_container" ng-repeat="item in fu.itemArray">
+    <label for="item.item_name" ng-click="fu.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}"></label>
+    <span ng-hide="item.activeItem">{{item.item_name}}</span>
+    <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+  </div>
+  <button class="btn btn-primary add_button" data-target="#additionalCategories" data-toggle="modal">Add Category</button>
+</div>
+<button class="btn btn-primary func_next" data-toggle="modal" data-target="#functionalData">Submit</button>
+
+<div class="modal fade" id="additionalCategories" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">&times;</button>
+        <h4 class="modal-title">Enter Your Additional Budget Item</h4>
+      </div>
+      <div class="modal-body">
+        <input placeholder="New Budget Item" ng-model="fu.newCategory.item_name"/>
+        <input placeholder="e.g. 150" type="number" ng-model="fu.newCategory.item_amount"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save Budget Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- confirmation/submit modal-->
 <div class="modal fade" id="functionalData" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -7,29 +37,38 @@
         <h4 class="modal-title">Monthly Functional Spending</h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="item in fu.itemArray">
+        <div ng-repeat="item in fu.itemArray" ng-hide="item.item_amount === null">
           <p>{{item.item_name}}: ${{item.item_amount}}</p>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-dismiss="modal" onclick="window.location.href='#financialspend'">Looks Good! Submit</button>
+        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Looks Good! Submit</button>
       </div>
     </div>
   </div>
 </div>
-<!-- template for input -->
-<div class="functionalSpending" ng-repeat="item in fu.itemArray">
-  <label for="item.item_name" ng-click="fu.toggleActive(item)">{{item.item_name}}</label>
-  <span ng-hide="item.activeitem">{{item.item_placeholder_text}}</span>
-  <input type="number" placeholder="150" ng-show="item.activeitem" name="item.item_name" ng-model="item.item_amount" />
-</div>
-<footer>
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="5.6" aria-valuemin="0" aria-valuemax="100" style="width: 83.3%;">
-      15/18
+<div class="modal fade" id="greatWork" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Great work! You've completed your functional budget!</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>Now we'll enter your Financial Spending. This is all of your investments that you are already making each month.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick="window.location.href='#financialspend'" class="btn btn-default" type="button" data-dismiss="modal">Continue</button>
+      </div>
     </div>
   </div>
-  <button ng-click"self.addItem()">Add an item to Functional Spending?</button>
-  <button class="next" data-toggle="modal" data-target="#functionalData" ng-click="fu.updateFunctionalItems()">Review Info/Next</button>
-</footer>
+</div>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="57.1" aria-valuemin="0" aria-valuemax="100" style="width: 57.1%;">
+    4/7
+  </div>
+</div>

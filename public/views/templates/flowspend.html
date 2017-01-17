@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories" class="flow_toggle_container">
-          <label for="category.item_name" ng-click="fl.toggleActive(category)" ng-class="{active_toggle: category.activeCategory === true, not_active_toggle: category.activeCategory === false}"></label>
+          <label for="category.item_name" ng-click="fl.toggleActive(category)" ng-class="{active_toggle: category.activeCategory === true, not_active_toggle: category.activeCategory === false}" ng-style="{'background-image': 'url(/assets/images/flow-icons/' + category.item_img_src + ')'}"></label>
           <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input type="number" placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>

@@ -5,6 +5,16 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
 
   var budgetFactory = BudgetFactory;
 
+  self.navActive = false;
+
+  self.activateMobileNav = function() {
+    if(self.navActive === false){
+      self.navActive = true;
+    } else {
+      self.navActive = false;
+    }
+  };
+
   self.postAdditionalInfo = function() {
 
     var sendObject = {budget_comment: self.comment};

@@ -13,6 +13,15 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
     var year = currentTime.getFullYear();
     self.nextFiveYears = [];
+    self.navActive = false;
+
+    self.activateMobileNav = function() {
+      if(self.navActive === false){
+        self.navActive = true;
+      } else {
+        self.navActive = false;
+      }
+    };
 
     console.log(year);
     getYears();

@@ -5,7 +5,15 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 
 	var budgetFactory = BudgetFactory;
 
-	self.newCategory = {};
+	self.navActive = false;
+
+	self.activateMobileNav = function() {
+		if(self.navActive === false){
+			self.navActive = true;
+		} else {
+			self.navActive = false;
+		}
+	};
 
 	budgetFactory.getFunctionalItems().then(function(result) {
 		self.itemArray = result;

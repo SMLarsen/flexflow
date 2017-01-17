@@ -5,6 +5,16 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 
 	var budgetFactory = BudgetFactory;
 
+	self.navActive = false;
+
+	self.activateMobileNav = function() {
+		if(self.navActive === false){
+			self.navActive = true;
+		} else {
+			self.navActive = false;
+		}
+	};
+
 	budgetFactory.getFinancialItems().then(function(result) {
 		self.itemArray = result;
 		setToggles();

@@ -29,12 +29,26 @@
   </div>
 </div>
 <div class="results_button_container">
-  <button class="btn btn-primary" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
-  <button class="btn btn-primary" ng-click="rc.logOut()" type="button" name="button">Log Out</button>
+  <button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
+  <button class="btn btn-primary" ng-click="rc.logOut()" type="button" name="button">Complete</button>
 </div>
 
 <div class="progress">
   <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
     7/7
   </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="rc.navActive">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flexspend">Flow</a></li>
+  <li><a href="#functionalspend">Functional</a></li>
+  <li><a href="#financialspend">Financial</a></li>
+  <li><a href="#additionalinfo">Comments</a></li>
+  <li class="active">Results</li>
+</ol>
+<div class="hamburger" ng-click="rc.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

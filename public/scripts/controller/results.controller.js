@@ -7,6 +7,16 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
     var scheduleEmail = adminFactory.getAdminParameter('Scheduling_email');
     var currentUser = authFactory.getCurrentUser();
 
+    self.navActive = false;
+
+    self.activateMobileNav = function() {
+      if(self.navActive === false){
+        self.navActive = true;
+      } else {
+        self.navActive = false;
+      }
+    };
+
     budgetFactory.getFlowItemTotalByYear().then(function(results) {
         self.flowTotal = results.sum / 12;
     });

@@ -1,6 +1,10 @@
 .flex_container {
-  width: 60%;
+  text-align: center;
+  width: 40%;
   margin: 0 auto;
+  @media (max-width: $mobile-width) {
+    width: 65%;
+  }
 }
 
 .flex_submit {

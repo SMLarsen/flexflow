@@ -1,10 +1,21 @@
-app.controller('AdditionalInfoController', ['$http', 'AuthFactory', 'BudgetFactory', function($http, AuthFactory, BudgetFactory) {
+app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFactory) {
   console.log('Additional Info controller started');
 
   var self = this;
+
   var budgetFactory = BudgetFactory;
 
-  self.postAdditionalInfo = function(){
+  self.navActive = false;
+
+  self.activateMobileNav = function() {
+    if(self.navActive === false){
+      self.navActive = true;
+    } else {
+      self.navActive = false;
+    }
+  };
+
+  self.postAdditionalInfo = function() {
 
     var sendObject = {budget_comment: self.comment};
 

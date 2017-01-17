@@ -3,3 +3,4 @@ node_modules
 *.log
 .firebaserc
 server/firebase-service-account.json
+.env

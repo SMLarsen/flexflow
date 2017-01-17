@@ -9,8 +9,8 @@ router.get('/send', function(req, res){
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'lhien11@gmail.com',
-      pass: 'at582465'
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASS,
     }
   });
 

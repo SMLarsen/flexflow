@@ -46,6 +46,7 @@ function formatFlowItems(itemMonthArray) {
         itemMonthColumn.push(itemMonthArray[i]);
         if ((i + 1) % (itemMonthArray.length / 12) === 0) {
             itemMonthColumn.push({
+                category_name: 'Flex',
                 item_name: 'Monthly Total',
                 item_amount: monthTotal
             });
@@ -85,39 +86,48 @@ router.get("/", function(req, res, next) {
 
 function formatNonFlowItems(itemMonthArray) {
     console.log('formatNonFlowItems', itemMonthArray.length);
+    // console.log('itemMonthArray[0]', itemMonthArray[0]);
     var itemMonthColumn = [];
-    var itemYear = [];
     var monthTotal = 0;
     var yearTotal = 0;
     var currentCategory = itemMonthArray[0].category_name;
     for (var i = 0; i < itemMonthArray.length; i++) {
         monthTotal += itemMonthArray[i].item_amount;
+        console.log(i, currentCategory, itemMonthArray[i].item_name, itemMonthArray[i].item_amount);
         itemMonthColumn.push(itemMonthArray[i]);
         if ((i + 1) < itemMonthArray.length) {
-          console.log(12341234);
+            console.log('currentCategory', currentCategory, itemMonthArray[i + 1].category_name);
             if (currentCategory !== itemMonthArray[i + 1].category_name) {
-                itemMonthColumn.push({
-                    item_name: 'Monthly Total',
-                    item_amount: monthTotal
-                });
-                for (var mm = 1; mm <= 12; mm++) {
-                    itemYear.push(itemMonthColumn);
-                }
-                pdfData[currentCategory] = itemYear;
-                itemYear = [];
+                buildItemYear(currentCategory, monthTotal, itemMonthColumn);
                 itemMonthColumn = [];
                 monthTotal = 0;
                 currentCategory = itemMonthArray[i + 1].category_name;
             }
         } else {
-          currentCategory = itemMonthArray[i].category_name;
-            pdfData[currentCategory] = itemYear;
-            itemYear = [];
-            itemMonthColumn = [];
-            monthTotal = 0;
+            currentCategory = itemMonthArray[i].category_name;
+            buildItemYear(currentCategory, monthTotal, itemMonthColumn);
         }
     }
-    console.log(pdfData);
+    // console.log(pdfData.Flex[0]);
+    // console.log(pdfData.Flow[0]);
+    // console.log(pdfData.Financial[0]);
+    // console.log(pdfData.Functional[0]);
 }
+
+function buildItemYear(currentCategory, monthTotal, itemMonthColumn) {
+  // console.log('buildItemYear', currentCategory, monthTotal);
+    var itemYear = [];
+    itemMonthColumn.push({
+        category_name: currentCategory,
+        item_name: 'Monthly Total',
+        item_amount: monthTotal
+    });
+    // console.log('itemMonthColumn:', itemMonthColumn);
+    for (var mm = 1; mm <= 12; mm++) {
+        itemYear.push(itemMonthColumn);
+    }
+    pdfData[currentCategory] = itemYear;
+}
+
 
 module.exports = router;

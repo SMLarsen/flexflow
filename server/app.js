@@ -3,7 +3,7 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
-var pdf = require('./routes/pdf');
+var clientReport = require('./routes/client-report');
 var privateData = require('./routes/private-data');
 var admin = require('./routes/admin');
 var templates = require('./routes/template');
@@ -35,7 +35,7 @@ app.get("/privateData", privateData);
 app.use("/profile", profile);
 app.use("/item", item);
 app.use("/total", total);
-app.use("/pdf", pdf);
+app.use("/client-report", clientReport);
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

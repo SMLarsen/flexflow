@@ -18,7 +18,7 @@ var pool = new pg.Pool({
 router.get("/flowitems", function(req, res) {
     pool.connect()
         .then(function(client) {
-            var queryString = 'SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_amount, item_sort_sequence ';
+            var queryString = 'SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_img_src, item_amount, item_sort_sequence ';
             queryString += 'FROM budget_template_category, budget_flow_item ';
             queryString += 'WHERE budget_template_category.id = budget_flow_item.budget_template_category_id ';
             queryString += 'AND budget_id = $1 ';
@@ -41,26 +41,30 @@ router.get("/flowitems", function(req, res) {
 router.post("/flowitems", function(req, res) {
     pool.connect()
         .then(function(client) {
-            var queryString = 'INSERT INTO budget_flow_item (budget_id, budget_template_category_id, item_month, item_year, item_amount, item_name, item_sort_sequence) VALUES ';
+            var queryString = 'INSERT INTO budget_flow_item (budget_id, budget_template_category_id, item_month, item_year, item_img_src, item_amount, item_name, item_sort_sequence) VALUES ';
             for (var i = 0; i < req.body.length - 1; i++) {
                 var item = req.body[i];
                 queryString += "(" + req.budgetID;
-                queryString += ", " + item.budget_template_category_id;
+                queryString += ", " + 1;
                 queryString += ", " + item.item_month;
                 queryString += ", " + item.item_year;
-                queryString += ", " + item.item_amount;
+                queryString += ", '" + item.item_img_src;
+                queryString += "', " + item.item_amount;
                 queryString += ", '" + item.item_name;
                 queryString += "', " + item.item_sort_sequence + "), ";
 
             }
             var lastItem = req.body[req.body.length - 1];
             queryString += "(" + req.budgetID;
-            queryString += ", " + lastItem.budget_template_category_id;
+            queryString += ", " + 1;
             queryString += ", " + lastItem.item_month;
             queryString += ", " + lastItem.item_year;
-            queryString += ", " + lastItem.item_amount;
+            queryString += ", '" + lastItem.item_img_src;
+            queryString += "', " + lastItem.item_amount;
             queryString += ", '" + lastItem.item_name;
             queryString += "', " + lastItem.item_sort_sequence + ")";
+
+            console.log(queryString);
 
             // make query
             client.query(queryString,
@@ -107,7 +111,7 @@ router.get("/items/:categoryID", function(req, res) {
     console.log("here in item categoryID", categoryID);
     pool.connect()
         .then(function(client) {
-            var queryString = 'SELECT category_name, budget_template_category_id, item_name, item_amount, item_sort_sequence ';
+            var queryString = 'SELECT category_name, budget_template_category_id, item_name, item_img_src, item_amount, item_sort_sequence ';
             queryString += 'FROM budget_template_category, budget_item ';
             queryString += 'WHERE budget_template_category.id = budget_item.budget_template_category_id ';
             queryString += 'AND budget_id = $1 ';
@@ -131,13 +135,14 @@ router.get("/items/:categoryID", function(req, res) {
 // Route: Insert budget items for a budget category
 router.post("/items", function(req, res) {
     pool.connect()
-        .then(function(err, client, done) {
-            var queryString = 'INSERT INTO budget_item (budget_id, budget_template_category_id, item_name, item_amount, item_sort_sequence) VALUES ';
+        .then(function(client) {
+            var queryString = 'INSERT INTO budget_item (budget_id, budget_template_category_id, item_img_src, item_name, item_amount, item_sort_sequence) VALUES ';
             if (req.body.length === 1) {
                 var oneItem = req.body[req.body.length - 1];
                 queryString += "(" + req.budgetID;
                 queryString += ", " + oneItem.budget_template_category_id;
-                queryString += ", '" + oneItem.item_name;
+                queryString += ", '" + oneItem.item_img_src;
+                queryString += "', '" + oneItem.item_name;
                 queryString += "', " + oneItem.item_amount;
                 queryString += ", " + oneItem.item_sort_sequence + ")";
             } else {
@@ -145,18 +150,21 @@ router.post("/items", function(req, res) {
                     var item = req.body[i];
                     queryString += "(" + req.budgetID;
                     queryString += ", " + item.budget_template_category_id;
-                    queryString += ", '" + item.item_name;
+                    queryString += ", '" + item.item_img_src;
+                    queryString += "', '" + item.item_name;
                     queryString += "', " + item.item_amount;
                     queryString += ", " + item.item_sort_sequence + "),";
                 }
                 var lastItem = req.body[req.body.length - 1];
                 queryString += "(" + req.budgetID;
                 queryString += ", " + lastItem.budget_template_category_id;
-                queryString += ", '" + lastItem.item_name;
+                queryString += ", '" + lastItem.item_img_src;
+                queryString += "', '" + lastItem.item_name;
                 queryString += "', " + lastItem.item_amount;
                 queryString += ", " + lastItem.item_sort_sequence + ")";
 
             }
+            console.log(queryString);
             client.query(queryString,
                 function(err, result) {
                     if (err) {

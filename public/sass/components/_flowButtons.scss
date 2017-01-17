@@ -27,12 +27,14 @@
 
 .active_toggle {
   @include category_toggle;
-  background: white;
+  background-color: white;
+  background-size: 80%;
 }
 
 .not_active_toggle {
   @include category_toggle;
-  background: gainsboro;
+  background-color: gainsboro;
+  background-size: 80%;
 }
 
 .flow_toggle_container {

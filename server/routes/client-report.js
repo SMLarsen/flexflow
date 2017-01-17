@@ -133,29 +133,22 @@ router.get("/", function(req, res, next) {
 
 
 function formatItems(itemArray) {
-    var tempItemArray = [];
     var tempCategoryArray = [];
-    // console.log('itemArray[0]', itemArray[0]);
-    var currentName = itemArray[0].item_name;
     var currentCategory = itemArray[0].category_name;
     for (var i = 0; i < itemArray.length; i++) {
-        // console.log(i, itemArray[i].item_name, currentName, currentCategory, itemArray[i]);
-        if (itemArray[i].item_name === currentName) {
-            tempItemArray.push(itemArray[i]);
-            // console.log('push1:', i);
-            // console.log('tempItemArray', tempItemArray);
-        } else {
-            tempCategoryArray.push(tempItemArray);
-            tempItemArray = [];
-            tempItemArray.push(itemArray[i]);
-            // console.log('push2:', i);
-            currentName = itemArray[i].item_name;
-            if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
-                reportData[currentCategory] = tempCategoryArray;
-                tempCategoryArray = [];
-                currentCategory = itemArray[i].category_name;
-                // console.log("reportData:", reportData);
+        console.log(i, itemArray[i].item_name, itemArray[i].category_name, currentCategory, itemArray[i]);
+        if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
+            if (i === itemArray.length - 1) {
+                tempCategoryArray.push(itemArray[i]);
             }
+            reportData[currentCategory] = tempCategoryArray;
+            tempCategoryArray = [];
+            tempCategoryArray.push(itemArray[i]);
+            currentCategory = itemArray[i].category_name;
+            console.log(1);
+        } else {
+            tempCategoryArray.push(itemArray[i]);
+            console.log(2);
         }
     }
 }
@@ -174,6 +167,7 @@ function formatFlowItems(itemArray) {
             currentName = itemArray[i].item_name;
         }
     }
+    tempCategoryArray.push(tempItemArray);
     reportData.Flow = tempCategoryArray;
 }
 

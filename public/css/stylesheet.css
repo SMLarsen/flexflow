@@ -193,3 +193,28 @@ select {
   @media (max-width: 768px) {
     .addl_comment {
       width: 80%; } }
+
+
+/*client letter styling*/
+ .letterTable th {
+   text-align: center;
+ }
+
+.letterTable .typeRow {
+  text-align: left;
+  background-color: lightgrey;
+}
+
+.letterTable tr:last-of-type {
+  border-top: 1px solid black;
+}
+
+.letterTable h5 {
+  border-top: 1px solid black;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.letterTable td {
+  text-align: right;
+}

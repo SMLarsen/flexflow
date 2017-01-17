@@ -28,7 +28,7 @@ router.get("/", function(req, res, next) {
             // queryString += "AND budget_template_category.id = $2 ";
             queryString += "GROUP BY budget_template_category.category_name ";
             queryString += "ORDER BY 1, item_sort_sequence";
-            console.log('queryString:', queryString);
+            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting items for reporting', err);
@@ -38,6 +38,46 @@ router.get("/", function(req, res, next) {
                     console.log('Reporting items retrieved');
                     formatItems(result.rows);
                     // console.log(result.rows);
+                    client.release();
+                    next();
+                }
+            });
+        });
+});
+
+// Route: GET flow item totals for a budget
+router.get("/", function(req, res, next) {
+    pool.connect()
+        .then(function(client) {
+            var queryString = "SELECT item_name, item_amount, item_year, item_month, item_sort_sequence ";
+            queryString += "FROM budget_flow_item ";
+            queryString += "WHERE budget_id = $1 ";
+            queryString += "UNION ";
+            queryString += "SELECT item_name, SUM(item_amount) AS annual_amount, MAX(item_year) + 1 AS item_year, 1 AS item_month, item_sort_sequence ";
+            queryString += "FROM budget_flow_item ";
+            queryString += "WHERE budget_id = $1 ";
+            queryString += "GROUP BY item_name, item_sort_sequence ";
+            queryString += "UNION ";
+            queryString += "SELECT 'Total', SUM(item_amount), item_year, item_month, 99 AS item_sort_sequence ";
+            queryString += "FROM budget_flow_item ";
+            queryString += "WHERE budget_id = $1 ";
+            queryString += "GROUP BY item_year, item_month ";
+            queryString += "UNION ";
+            queryString += "SELECT 'Total', SUM(item_amount) AS annual_amount, MAX(item_year) + 1 AS item_year, 1 AS item_month, 99 AS item_sort_sequence ";
+            queryString += "FROM budget_flow_item ";
+            queryString += "WHERE budget_id = $1 ";
+            queryString += "ORDER BY item_sort_sequence, item_year, item_month";
+            console.log('queryString:', queryString);
+            client.query(queryString, [req.budgetID], function(err, result) {
+                if (err) {
+                    console.log('Error getting flow items for reporting', err);
+                    client.release();
+                    next();
+                } else {
+                    console.log('Reporting flow items retrieved');
+                    reportData.Flow = result.rows;
+                    console.log(result.rows);
+                    console.log(reportData);
                     client.release();
                     next();
                 }

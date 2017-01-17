@@ -64,6 +64,7 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 			self.newCategory.item_sort_sequence = self.itemArray.length + 2;
 			self.newCategory.budget_template_category_id = 4;
 			self.itemArray.push(self.newCategory);
+			self.newCategory = {};
 		}
 	};
 

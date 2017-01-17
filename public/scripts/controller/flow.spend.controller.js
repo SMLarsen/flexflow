@@ -164,6 +164,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       month: self.currentMonthData.month,
       year: self.currentMonthData.month,
       month_id: self.currentMonthData.month_id,
+      item_img_src: 'additional.svg',
+      item_sort_sequence: self.flowCategories.length + 1,
       item_amount: null,
       item_name: null
     });

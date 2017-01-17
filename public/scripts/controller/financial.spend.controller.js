@@ -53,4 +53,18 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 		window.location = '/#/additionalinfo';
 	};
 
+	self.addFinancialItem = function() {
+		if(self.newCategory.item_name === null || self.newCategory.item_amount === null) {
+			alert('Please enter an additional category before submitting.');
+		} else {
+			console.log(self.newCategory);
+			self.newCategory.activeItem = true;
+			self.newCategory.item_img_src = 'additional.svg';
+			self.newCategory.item_sort_sequence = self.itemArray.length + 2;
+			self.newCategory.budget_template_category_id = 4;
+			self.itemArray.push(self.newCategory);
+			self.newCategory = {};
+		}
+	};
+
 }]);

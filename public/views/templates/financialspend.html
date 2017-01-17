@@ -1,11 +1,32 @@
 <!-- template for input -->
 <h1 class="jumbotron">Your Financial Spending</h1>
-<div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
-  <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/financial-icons/' + item.item_img_src + ')'}"></label>
-  <span ng-hide="item.activeItem">{{item.item_name}}</span>
-  <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+<div class="financial_input">
+  <div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
+    <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/financial-icons/' + item.item_img_src + ')'}"></label>
+    <span ng-hide="item.activeItem">{{item.item_name}}</span>
+    <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+  </div>
+  <button class="btn btn-primary add_button" data-target="#additionalCategories" data-toggle="modal">Add Category</button>
 </div>
 <button class="btn btn-primary financ_submit" data-toggle="modal" data-target="#financialData">Submit</button>
+
+<div class="modal fade" id="additionalCategories" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+        <h4 class="modal-title">Enter Your Additional Budget Item</h4>
+      </div>
+      <div class="modal-body">
+        <input placeholder="New Category" ng-model="fi.newCategory.item_name"/>
+        <input placeholder="e.g. 150" type="number" ng-model="fi.newCategory.item_amount"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="fi.addFinancialItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- confirmation/submit modal-->
 <div class="modal fade" id="financialData" role="dialog">
   <div class="modal-dialog modal-lg">

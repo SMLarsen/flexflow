@@ -25,7 +25,6 @@ h1 {
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;
   letter-spacing: 5px;
-  line-height: 50px;
   border-bottom: 1px solid #2c4877;
   text-align: center;
   width: 100%;
@@ -35,7 +34,7 @@ h1 {
 .progress {
   width: 60%;
   margin: 40px auto;
-  background: lightblue; }
+  background: #f7f1e4; }
 
 select {
   background-color: white;
@@ -51,7 +50,7 @@ select {
   text-align: left;
   width: 60%;
   margin: 20px auto 0 auto;
-  padding-left: 50%; }
+  padding-left: 25%; }
   @media (max-width: 768px) {
     .toggle_container {
       margin-left: 150px;
@@ -76,7 +75,7 @@ select {
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: white;
+  background-color: #29839e;
   background-size: 80%; }
 
 .not_active_toggle {
@@ -89,7 +88,7 @@ select {
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #f7f1e4;
+  background-color: #2c4877;
   background-size: 80%; }
 
 .flow_button_months_container {
@@ -109,24 +108,36 @@ select {
   height: 100px;
   border-radius: 50%;
   margin: 5px;
-  background: gainsboro;
-  border: 1px solid black;
-  width: 100px; }
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #f7f1e4;
+  border: 1px solid #29839e;
+  width: 100px;
+  color: #2c4877; }
 
 .not_empty_flow_month {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin: 5px;
-  background: white;
-  border: 1px solid gainsboro; }
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #29839e;
+  border: 1px solid #2c4877;
+  color: white; }
 
 .flow_toggle_container {
   text-align: left;
   width: 60%;
-  margin: 20px auto 0 10px; }
+  margin: 20px auto 0 10px;
+  padding-left: 40%; }
   @media (max-width: 768px) {
     .flow_toggle_container {
+      padding-left: 0;
       margin-left: 115px; } }
   .flow_toggle_container input {
     height: 50px;
@@ -158,6 +169,18 @@ select {
 
 .people_button_container {
   margin-bottom: 20px; }
+  .people_button_container button {
+    background: #29839e;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border: 1px solid #2c4877; }
+    @media (max-width: 768px) {
+      .people_button_container button {
+        width: 70px;
+        height: 70px; } }
+    .people_button_container button:hover {
+      background: #33a4c7; }
 
 .client_names {
   text-align: center;
@@ -278,7 +301,8 @@ select {
 .hamburger {
   width: 40px;
   height: 40px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid white;
   position: absolute;
   top: 0;
   right: 0; }

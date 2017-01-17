@@ -14,22 +14,26 @@
 
 .empty_flow_month {
   @include month_button;
-  background: gainsboro;
-  border: 1px solid black;
+  background: $main-color;
+  border: 1px solid $detail-color;
   width: 100px;
+  color: $accent-color;
 }
 
 .not_empty_flow_month {
   @include month_button;
-  background: white;
-  border: 1px solid gainsboro;
+  background: $detail-color;
+  border: 1px solid $accent-color;
+  color: white;
 }
 
 .flow_toggle_container {
   text-align: left;
   width: 60%;
   margin: 20px auto 0 10px;
+  padding-left: 40%;
   @media (max-width: $mobile-width) {
+    padding-left: 0;
     margin-left: 115px;
   }
   input {

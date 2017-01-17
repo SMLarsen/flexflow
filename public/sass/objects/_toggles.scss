@@ -2,7 +2,7 @@
   text-align: left;
   width: 60%;
   margin: 20px auto 0 auto;
-  padding-left: 50%;
+  padding-left: 25%;
   @media (max-width: $mobile-width) {
     margin-left: 150px;
     padding-left: 0;
@@ -22,12 +22,12 @@
 
 .active_toggle {
   @include category_toggle;
-  background-color: white;
+  background-color: $detail-color;
   background-size: 80%;
 }
 
 .not_active_toggle {
   @include category_toggle;
-  background-color: $main-color;
+  background-color: $accent-color;
   background-size: 80%;
 }

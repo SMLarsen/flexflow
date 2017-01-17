@@ -25,30 +25,21 @@
   border: 1px solid gainsboro;
 }
 
-.active_toggle {
-  @include category_toggle;
-  background-color: white;
-  background-size: 80%;
-}
-
-.not_active_toggle {
-  @include category_toggle;
-  background-color: gainsboro;
-  background-size: 80%;
-}
-
 .flow_toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px;
+  width: 60%;
+  margin: 20px auto 0 10px;
   @media (max-width: $mobile-width) {
-    margin-left: 100px;
-  }
-  label {
-    height: 20px;
+    margin-left: 115px;
   }
   input {
-    height: 20px;
+    height: 50px;
     border: 1px solid gainsboro;
     border-radius: 3px;
+  }
+  span {
+    height: 50px;
+    padding: 15px;
+    display: block;
   }
 }

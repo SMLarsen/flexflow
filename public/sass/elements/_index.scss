@@ -5,10 +5,10 @@ main {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  background: $main-color;
 }
 
 .jumbotron {
-  margin-top: -20px;
   background: url('/assets/images/header.png') center bottom no-repeat;
   color: white;
   background-size: cover;

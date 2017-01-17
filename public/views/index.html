@@ -18,7 +18,7 @@
 
     <!-- jQuery -->
     <script src="../../bower_components/jquery-3.1.1.min.js"></script>
-
+    <div ng-include="'/views/templates/nav.html'"></div>
     <!-- Angular Application with Authentication -->
     <script src="scripts/client.js"></script>
     <script src="scripts/factory/auth.factory.js"></script>
@@ -40,7 +40,6 @@
     <link rel="stylesheet" href="css/stylesheet.css" />
   </head>
   <body>
-    <div ng-include="'/views/templates/nav.html'"></div>
     <main ng-view></main>
   </body>
 </html>

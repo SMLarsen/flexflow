@@ -2,10 +2,10 @@ main {
   text-align: center; }
 
 body {
-  font-family: 'Open Sans', sans-serif; }
+  font-family: 'Open Sans', sans-serif;
+  background: #f7f1e4; }
 
 .jumbotron {
-  margin-top: -20px;
   background: url("/assets/images/header.png") center bottom no-repeat;
   color: white;
   background-size: cover;
@@ -29,6 +29,48 @@ select {
       padding: 5px;
       width: 140px;
       text-align: center; } }
+
+.toggle_container {
+  text-align: left;
+  width: 60%;
+  margin: 20px auto 0 10px; }
+  @media (max-width: 768px) {
+    .toggle_container {
+      margin-left: 150px; } }
+  .toggle_container input {
+    height: 50px;
+    border: 1px solid gainsboro;
+    border-radius: 3px; }
+  .toggle_container span {
+    height: 50px;
+    padding: 15px;
+    display: block; }
+
+.active_toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  position: absolute;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 80%; }
+
+.not_active_toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  position: absolute;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: gainsboro;
+  background-size: 80%; }
 
 .flow_button_months_container {
   width: 500px;
@@ -59,45 +101,47 @@ select {
   background: white;
   border: 1px solid gainsboro; }
 
-.active_toggle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid gainsboro;
-  margin-bottom: 10px;
-  position: absolute;
-  margin-left: -35px;
-  background: white; }
-
-.not_active_toggle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid gainsboro;
-  margin-bottom: 10px;
-  position: absolute;
-  margin-left: -35px;
-  background: gainsboro; }
-
 .flow_toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px; }
+  width: 60%;
+  margin: 20px auto 0 10px; }
   @media (max-width: 768px) {
     .flow_toggle_container {
-      margin-left: 100px; } }
-  .flow_toggle_container label {
-    height: 20px; }
+      margin-left: 115px; } }
   .flow_toggle_container input {
-    height: 20px;
+    height: 50px;
     border: 1px solid gainsboro;
     border-radius: 3px; }
+  .flow_toggle_container span {
+    height: 50px;
+    padding: 15px;
+    display: block; }
 
 .login_container {
   margin-top: -20px; }
 
-@media (max-width: 768px) {
-  .login_greeting {
-    font-size: 3em; } }
+.login_greeting {
+  font-size: 5em;
+  padding: 100px;
+  letter-spacing: 15px;
+  color: white;
+  margin-bottom: 100px;
+  text-shadow: 3px 3px #2c4877; }
+  @media (max-width: 768px) {
+    .login_greeting {
+      font-size: 4em;
+      letter-spacing: 8px; } }
+
+.button_log_in {
+  background: #29839e;
+  color: #f7f1e4;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  width: 200px;
+  font-size: 2em; }
+  .button_log_in:hover {
+    background: #33a4c7; }
 
 .profilepersonicon {
   width: 50px; }
@@ -125,20 +169,6 @@ select {
 
 .flex_submit {
   margin-top: 20px; }
-
-.toggle_container {
-  text-align: left;
-  width: 60%;
-  margin: 20px auto 0 390px; }
-  @media (max-width: 768px) {
-    .toggle_container {
-      margin-left: 100px; } }
-  .toggle_container label {
-    height: 20px; }
-  .toggle_container input {
-    height: 20px;
-    border: 1px solid gainsboro;
-    border-radius: 3px; }
 
 .func_next {
   margin: 10px 0 10px 0;

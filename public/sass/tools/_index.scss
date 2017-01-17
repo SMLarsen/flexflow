@@ -7,11 +7,26 @@
 }
 
 @mixin category_toggle {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: 1px solid gainsboro;
   margin-bottom: 10px;
   position: absolute;
-  margin-left: -35px;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin header_text {
+  font-size: 5em;
+  padding: 100px;
+  letter-spacing: 15px;
+  color: lighten($main-color, 50%);
+  margin-bottom: 100px;
+  text-shadow: 3px 3px $accent-color;
+  @media (max-width: $mobile-width) {
+    font-size: 4em;
+    letter-spacing: 8px;
+  }
 }

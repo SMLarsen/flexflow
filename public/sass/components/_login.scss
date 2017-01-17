@@ -3,8 +3,19 @@
     margin-top: -20px;
   }
   &greeting {
-    @media (max-width: $mobile-width) {
-      font-size: 3em;
-    }
+    @include header_text;
+}
+}
+
+.button_log_in {
+  background: $detail-color;
+  color: $main-color;
+  border: 1px solid $accent-color;
+  border-radius: 15px;
+  padding: 20px;
+  width: 200px;
+  font-size: 2em;
+  &:hover {
+    background: lighten($detail-color, 10%);
   }
 }

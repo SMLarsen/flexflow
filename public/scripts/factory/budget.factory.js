@@ -69,7 +69,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             newFunctionalItem.item_amount = 0;
             newFunctionalItem.budget_template_category_id = FUNCTIONAL;
             newFunctionalItem.item_name = functionalItemArray[j].item_name;
-            newFunctionalItem.item_img_src = functionalItemArray[i].item_img_src;
+            newFunctionalItem.item_img_src = functionalItemArray[j].item_img_src;
             newFunctionalItem.item_sort_sequence = functionalItemArray[j].item_sort_sequence;
             newFunctionalItemArray.push(newFunctionalItem);
         }

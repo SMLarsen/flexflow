@@ -25,8 +25,17 @@
   color: lighten($main-color, 50%);
   margin-bottom: 100px;
   text-shadow: 3px 3px $accent-color;
+  text-align: center;
   @media (max-width: $mobile-width) {
-    font-size: 4em;
+    font-size: 40px;
     letter-spacing: 8px;
   }
+}
+
+@mixin button {
+  background: $detail-color;
+  color: $main-color;
+  border: 1px solid $accent-color;
+  border-radius: 15px;
+  padding: 20px;
 }

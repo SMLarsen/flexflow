@@ -1,21 +1,12 @@
-.login_ {
-  &container {
-    margin-top: -20px;
-  }
-  &greeting {
-    @include header_text;
-}
-}
-
 .button_log_in {
-  background: $detail-color;
-  color: $main-color;
-  border: 1px solid $accent-color;
-  border-radius: 15px;
-  padding: 20px;
+@include button;
   width: 200px;
   font-size: 2em;
+  margin-top: 150px;
   &:hover {
     background: lighten($detail-color, 10%);
   }
+    @media (max-width: $mobile-width) {
+      width: 185px;
+    }
 }

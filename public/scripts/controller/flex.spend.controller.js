@@ -5,6 +5,16 @@ app.controller('FlexSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   var budgetFactory = BudgetFactory;
 
+  self.navActive = false;
+
+  self.activateMobileNav = function() {
+    if(self.navActive === false){
+      self.navActive = true;
+    } else {
+      self.navActive = false;
+    }
+  };
+
   budgetFactory.getFlexItems().then(function(result){
     self.flexArray = result;
   });

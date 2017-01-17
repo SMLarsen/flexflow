@@ -8,6 +8,10 @@ body {
   background: $main-color;
 }
 
+h1 {
+  @include header_text;
+}
+
 .jumbotron {
   background: url('/assets/images/header.png') center bottom no-repeat;
   color: white;
@@ -16,7 +20,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 5px;
   line-height: 50px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $accent-color;
+  text-align: center;
+  width: 100%;
+  margin-top: -20px;
+  padding: 70px;
 }
 
 .progress {

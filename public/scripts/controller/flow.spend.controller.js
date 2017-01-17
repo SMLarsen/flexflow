@@ -67,6 +67,16 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   };
   var budgetFactory = BudgetFactory;
 
+  self.navActive = false;
+
+  self.activateMobileNav = function() {
+    if(self.navActive === false){
+      self.navActive = true;
+    } else {
+      self.navActive = false;
+    }
+  };
+
   // $('#monthDataForm').on('hidden', function () {
   //   console.log('closed');
   //   findMonthTotals();

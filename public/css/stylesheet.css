@@ -5,6 +5,19 @@ body {
   font-family: 'Open Sans', sans-serif;
   background: #f7f1e4; }
 
+h1 {
+  font-size: 5em;
+  padding: 100px;
+  letter-spacing: 15px;
+  color: white;
+  margin-bottom: 100px;
+  text-shadow: 3px 3px #2c4877;
+  text-align: center; }
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 40px;
+      letter-spacing: 8px; } }
+
 .jumbotron {
   background: url("/assets/images/header.png") center bottom no-repeat;
   color: white;
@@ -13,7 +26,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 5px;
   line-height: 50px;
-  border-bottom: 1px solid black; }
+  border-bottom: 1px solid #2c4877;
+  text-align: center;
+  width: 100%;
+  margin-top: -20px;
+  padding: 70px; }
 
 .progress {
   width: 60%;
@@ -33,14 +50,17 @@ select {
 .toggle_container {
   text-align: left;
   width: 60%;
-  margin: 20px auto 0 10px; }
+  margin: 20px auto 0 auto;
+  padding-left: 50%; }
   @media (max-width: 768px) {
     .toggle_container {
-      margin-left: 150px; } }
+      margin-left: 150px;
+      padding-left: 0; } }
   .toggle_container input {
     height: 50px;
     border: 1px solid gainsboro;
-    border-radius: 3px; }
+    border-radius: 3px;
+    padding-left: 20px; }
   .toggle_container span {
     height: 50px;
     padding: 15px;
@@ -69,7 +89,7 @@ select {
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: gainsboro;
+  background-color: #f7f1e4;
   background-size: 80%; }
 
 .flow_button_months_container {
@@ -111,26 +131,12 @@ select {
   .flow_toggle_container input {
     height: 50px;
     border: 1px solid gainsboro;
-    border-radius: 3px; }
+    border-radius: 3px;
+    padding-left: 20px; }
   .flow_toggle_container span {
     height: 50px;
     padding: 15px;
     display: block; }
-
-.login_container {
-  margin-top: -20px; }
-
-.login_greeting {
-  font-size: 5em;
-  padding: 100px;
-  letter-spacing: 15px;
-  color: white;
-  margin-bottom: 100px;
-  text-shadow: 3px 3px #2c4877; }
-  @media (max-width: 768px) {
-    .login_greeting {
-      font-size: 4em;
-      letter-spacing: 8px; } }
 
 .button_log_in {
   background: #29839e;
@@ -139,9 +145,13 @@ select {
   border-radius: 15px;
   padding: 20px;
   width: 200px;
-  font-size: 2em; }
+  font-size: 2em;
+  margin-top: 150px; }
   .button_log_in:hover {
     background: #33a4c7; }
+  @media (max-width: 768px) {
+    .button_log_in {
+      width: 185px; } }
 
 .profilepersonicon {
   width: 50px; }
@@ -164,18 +174,30 @@ select {
   margin-top: 20px; }
 
 .flex_container {
-  width: 60%;
+  text-align: center;
+  width: 40%;
   margin: 0 auto; }
+  @media (max-width: 768px) {
+    .flex_container {
+      width: 65%; } }
 
 .flex_submit {
   margin-top: 20px; }
+
+.add_button {
+  margin: 30px 0 10px 0; }
 
 .func_next {
   margin: 10px 0 10px 0;
   color: white; }
 
-.financ_next {
-  margin: 10px 0 10px 0; }
+.financ_submit {
+  margin: 30px 0 10px 0; }
+
+.financial_header {
+  width: 70%;
+  text-align: center;
+  margin: 0 auto; }
 
 .results_container {
   border: 1px solid gainsboro;
@@ -185,17 +207,19 @@ select {
   padding: 0;
   padding-bottom: 10px;
   overflow: hidden;
+  background: white;
   float: left; }
 
 .results_name {
   border-bottom: 1px solid black;
   padding: 30px;
   padding-bottom: 10px;
-  background: gainsboro;
+  background: #29839e;
   margin-top: -20px;
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 3px; }
+  letter-spacing: 3px;
+  color: white; }
 
 .results_value {
   border-bottom: 1px solid black;
@@ -217,9 +241,47 @@ select {
   .results_button_container button {
     margin-bottom: 20px; }
 
+.results_header {
+  width: 70%;
+  text-align: center;
+  margin: 0 auto; }
+
 .addl_comment {
   width: 40%;
   margin: 0 auto; }
   @media (max-width: 768px) {
     .addl_comment {
       width: 80%; } }
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    display: none; } }
+
+.breadcrumb_mobile {
+  border: 1px solid black;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  padding: 10px 10px 10px 10px;
+  list-style: none;
+  width: 250px;
+  background-color: white; }
+  .breadcrumb_mobile li {
+    font-size: 2em;
+    border-bottom: 1px solid black; }
+    .breadcrumb_mobile li:last-of-type {
+      border-bottom: none; }
+  @media (min-width: 768px) {
+    .breadcrumb_mobile {
+      display: none; } }
+
+.hamburger {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 0;
+  right: 0; }
+  @media (min-width: 768px) {
+    .hamburger {
+      display: none; } }

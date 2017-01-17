@@ -1,6 +1,17 @@
+<ol class="breadcrumb">
+  <li class="active">Home</li>
+</ol>
+
 <div class="login_container">
   <h1 class="jumbotron login_greeting">Flex/Flow</h1>
-
   <div class="btn-group btn-group-lg" role="group" aria-label="...">
-  <button class="btn btn-primary" ng-click="hc.logIn()">Log In</button>
+    <button class="btn btn-primary" ng-click="hc.logIn()">Log In</button>
+  </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="hc.navActive">
+  <li class="active">Home</li>
+</ol>
+<div class="hamburger" ng-click="hc.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

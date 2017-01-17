@@ -1,4 +1,11 @@
-<h1 class="jumbotron">Your Flow Spending</h1>
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li class="active">Flow</li>
+</ol>
+
+<h1 class="jumbotron">Flow Spending</h1>
 <div class="flow_button_months_container">
 <button class="btn" ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} <br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
 </div>
@@ -88,4 +95,14 @@
   <div class="progress-bar" role="progressbar" aria-valuenow="42.9" aria-valuemin="0" aria-valuemax="100" style="width: 42.9%;">
     3/7
   </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="fl.navActive">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li class="active">Flow</li>
+</ol>
+<div class="hamburger" ng-click="fl.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 
-router.get('/send', function(req, res){
+router.post("/", function(req, res){
   console.log("im here in send mail");
 
   // create reusable transporter object using SMTP transport
@@ -20,7 +20,7 @@ router.get('/send', function(req, res){
     subject: 'Website Submission', // Subject line
     // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
     // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-    text: 'You have a submission with the following details',
+    text: 'You have a submission with the following details from flex flow',
     html: '<p>You have a submission with the folowing details... </p>'
 };
 

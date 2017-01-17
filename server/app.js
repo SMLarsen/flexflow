@@ -9,7 +9,7 @@ var templates = require('./routes/template');
 var profile = require('./routes/profile');
 var item = require('./routes/item');
 var total = require('./routes/total');
-// var mail = require('./routes/mail');
+var mail = require('./routes/mail');
 var comment = require('./routes/comment');
 
 var portDecision = process.env.PORT || 5000;
@@ -34,7 +34,7 @@ app.get("/privateData", privateData);
 app.use("/profile", profile);
 app.use("/item", item);
 app.use("/total", total);
-// app.use("/mail", mail);
+app.use("/mail", mail);
 app.use("/comment", comment);
 
 app.listen(portDecision, function(){

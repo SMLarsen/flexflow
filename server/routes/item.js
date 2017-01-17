@@ -238,9 +238,4 @@ router.post("/comments", function(req, res) {
         });
 }); // end route.post
 
-router.get('/mail', function(req, res) {
-    console.log("im here in send mail");
-});
-
-
 module.exports = router;

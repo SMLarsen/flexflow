@@ -60,6 +60,7 @@ app.controller('FunctionalSpendController', ['$http', 'AuthFactory', 'TemplateFa
 		} else {
 			console.log(self.newCategory);
 			self.newCategory.activeItem = true;
+			self.newCategory.item_img_src = 'additional.svg';
 			self.newCategory.item_sort_sequence = self.itemArray.length + 2;
 			self.newCategory.budget_template_category_id = 4;
 			self.itemArray.push(self.newCategory);

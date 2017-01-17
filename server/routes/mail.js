@@ -3,6 +3,7 @@ var router = express.Router();
 var nodemailer = require('nodemailer');
 
 router.get('/send', function(req, res){
+  console.log("im here in send mail");
 
   // create reusable transporter object using SMTP transport
   var transporter = nodemailer.createTransport({
@@ -29,10 +30,11 @@ transporter.sendMail(mailOptions, function(error, info){
         res.redirect('/');
         return console.log(error);
     }
+    res.sendStatus(200);
     console.log('Message sent: ' + info.response);
 
 });
-
+ res.sendStatus(200);
 
 });
 

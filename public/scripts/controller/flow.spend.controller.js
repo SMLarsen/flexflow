@@ -164,6 +164,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       month: self.currentMonthData.month,
       year: self.currentMonthData.month,
       month_id: self.currentMonthData.month_id,
+      item_img_src: 'additional.svg',
+      item_sort_sequence: self.flowCategories.length + 1,
       item_amount: null,
       item_name: null
     });
@@ -297,11 +299,13 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   } // end resetZeroValues
 
   self.addBudgetItem = function(){
-    if(self.newCategory.item_name || self.newCategory.item_amount === null) {
+    if(self.newCategory.item_name === null || self.newCategory.item_amount === null) {
       alert('Please enter an additional category before submitting.');
     } else {
       self.newCategory.item_month = self.currentMonthData.month_id;
       self.newCategory.item_year = self.currentMonthData.year;
+      self.newCategory.item_sort_sequence = self.flowCategories.length + 1;
+      self.newCategory.item_img_src = 'additional.svg';
       console.log(self.newCategory);
       self.newCategories.push(self.newCategory);
       self.postFlowItems();

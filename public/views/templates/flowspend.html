@@ -1,3 +1,14 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li class="active">Flow</li>
+  <li><a href="#functionalspend">Functional</a></li>
+  <li><a href="#financialspend">Financial</a></li>
+  <li><a href="#additionalinfo">Comments</a></li>
+  <li><a href="#results">Results</a></li>
+</ol>
+
 <h1 class="jumbotron">Your Flow Spending</h1>
 <div class="flow_button_months_container">
 <button class="btn" ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} <br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>

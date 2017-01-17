@@ -40,6 +40,11 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");
         window.location.href = link;
+
+    };
+
+    self.logOut = function() {
+        console.log('logout clicked');
         var sendObject = {
             displayName: currentUser.displayName,
             email: currentUser.email,
@@ -64,10 +69,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             }, function(err) {
                 console.log('Error sending mail in RESULT', currentUser.email, ': ', err);
             });
-    };
 
-    self.logOut = function() {
-        console.log('logout clicked');
         authFactory.logOut();
         window.location = '/#/home';
     };

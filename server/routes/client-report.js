@@ -10,6 +10,7 @@ var pool = new pg.Pool({
 
 var reportData = {};
 
+console.log('Report route starting -------------------');
 
 // Route: GET item totals for a budget
 router.get("/", function(req, res, next) {
@@ -67,7 +68,7 @@ router.get("/", function(req, res, next) {
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "ORDER BY item_sort_sequence, item_year, item_month";
-            console.log('queryString:', queryString);
+            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting flow items for reporting', err);
@@ -82,6 +83,54 @@ router.get("/", function(req, res, next) {
             });
         });
 });
+
+// Route: GET profile for a budget
+router.get("/", function(req, res, next) {
+    pool.connect()
+        .then(function(client) {
+            var queryString = "SELECT * FROM budget ";
+            queryString += "WHERE id = $1 ";
+            // console.log('queryString:', queryString);
+            client.query(queryString, [req.budgetID], function(err, result) {
+                if (err) {
+                    console.log('Error getting profile for reporting', err);
+                    client.release();
+                    next();
+                } else {
+                    console.log('Reporting profile retrieved');
+                    reportData.profile = result.rows[0];
+                    client.release();
+                    next();
+                }
+            });
+        });
+});
+
+// Route: GET comments for a budget
+router.get("/", function(req, res, next) {
+    pool.connect()
+        .then(function(client) {
+            var queryString = "SELECT * FROM budget_comment ";
+            queryString += "WHERE id = $1 ";
+            // console.log('queryString:', queryString);
+            client.query(queryString, [req.budgetID], function(err, result) {
+                if (err) {
+                    console.log('Error getting comment for reporting', err);
+                    client.release();
+                    res.sendStatus(500);
+                    next();
+                } else {
+                    console.log('Reporting comment retrieved');
+                    reportData.comment = result.rows;
+                    client.release();
+                    console.log(reportData);
+                    res.send(reportData);
+                    next();
+                }
+            });
+        });
+});
+
 
 function formatItems(itemArray) {
     var tempItemArray = [];
@@ -116,20 +165,16 @@ function formatFlowItems(itemArray) {
     var tempCategoryArray = [];
     var currentName = itemArray[0].item_name;
     for (var i = 0; i < itemArray.length; i++) {
-        console.log(i, itemArray[i].item_name, currentName, itemArray[i]);
         if (itemArray[i].item_name === currentName) {
             tempItemArray.push(itemArray[i]);
-            console.log('push1:', i);
         } else {
             tempCategoryArray.push(tempItemArray);
             tempItemArray = [];
             tempItemArray.push(itemArray[i]);
             currentName = itemArray[i].item_name;
-            console.log('push2:', i);
         }
     }
     reportData.Flow = tempCategoryArray;
-    console.log(reportData);
 }
 
 module.exports = router;

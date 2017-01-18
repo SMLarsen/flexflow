@@ -217,7 +217,11 @@ select {
   .flow_toggle_container span {
     height: 50px;
     padding: 15px;
-    display: block; }
+    display: block;
+    width: 400px; }
+    @media (max-width: 768px) {
+      .flow_toggle_container span {
+        width: 200px; } }
 
 .flow_footer {
   text-align: center; }

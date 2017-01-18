@@ -1,6 +1,8 @@
 app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) {
   console.log('Flow Spend controller started');
   var self = this;
+  // set index;
+  var i;
   var allMonths = [
     {month: 'January',
     year: 0,
@@ -159,12 +161,12 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   // reverts to previous flex spending page
   self.prevPage = function() {
-    window.location = '/#/flexspend'
+    window.location = '/#/flexspend';
   }; // end prevPage
 
   // advances to functional spending page
   self.nextPage = function() {
-    window.location = '/#/functionalspend'
+    window.location = '/#/functionalspend';
   }; // end nextPage
 
   // toggles activeCategory value for each category
@@ -186,11 +188,11 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       item_amount: null,
       item_name: null
     });
-  }
+  };
 
   // removes all active values in individual flow categories
   function setToggles(){
-    for (var i = 0; i < self.flowCategories.length; i++) {
+    for (i = 0; i < self.flowCategories.length; i++) {
       var category = self.flowCategories[i];
       if(category.item_amount === undefined || category.item_amount === 0 || category.item_amount === null) {
         category.activeCategory  = false;
@@ -202,7 +204,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   // restructuring monthly flow data for database
   function structureMonthFlowData() {
-    for (var i = 0; i < self.flowCategories.length; i++) {
+    for (i = 0; i < self.flowCategories.length; i++) {
       if(self.flowCategories[i].item_amount === undefined || self.flowCategories[i].item_amount === null) {
         self.flowCategories[i].item_amount = 0;
       }
@@ -229,12 +231,12 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   function setStartingMonth() {
     var startingMonthIndex = self.startingMonthID - 1;
-    for (var i = 0; i < allMonths.length; i++) {
+    for (i = 0; i < allMonths.length; i++) {
       if(i >= startingMonthIndex) {
         self.budgetMonths.push(allMonths[i]);
       }
     }
-    for (var i = 0; i < allMonths.length; i++) {
+    for (i = 0; i < allMonths.length; i++) {
       if(i < startingMonthIndex) {
         self.budgetMonths.push(allMonths[i]);
       }
@@ -244,12 +246,12 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   // sets years of months
   function setYears() {
     if(self.budgetMonths[0].month === 'January') {
-      for (var i = 0; i < self.budgetMonths.length; i++) {
+      for (i = 0; i < self.budgetMonths.length; i++) {
         self.budgetMonths[i].year = self.startingYear;
       }
     } else {
       var newYear = false;
-      for (var i = 0; i < self.budgetMonths.length; i++) {
+      for (i = 0; i < self.budgetMonths.length; i++) {
         if(newYear === false && self.budgetMonths[i].month != 'January') {
           newYear = false;
           self.budgetMonths[i].year = self.startingYear;
@@ -298,7 +300,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   // function to pull data from returned database array and push it onto array tied to DOM
   function pullCurrentMonthData() {
     self.flowCategories = [];
-    for (var i = 0; i < self.monthlyBudgetData.length; i++) {
+    for (i = 0; i < self.monthlyBudgetData.length; i++) {
       if(self.monthlyBudgetData[i].item_month == self.currentMonthData.month_id) {
         self.flowCategories.push(self.monthlyBudgetData[i]);
       }
@@ -308,8 +310,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   // function to ensure zero values show up as placeholder in inputs
   function resetZeroValues() {
-    for (var i = 0; i < self.flowCategories.length; i++) {
-      if(self.flowCategories[i].item_amount == 0) {
+    for (i = 0; i < self.flowCategories.length; i++) {
+      if(self.flowCategories[i].item_amount === 0) {
         self.flowCategories[i].item_amount = null;
       }
     }
@@ -328,9 +330,10 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       self.updateFlowItems();
       self.newCategory = {};
     }
-  }
+  };
 
   function findMonthTotals() {
+
     for (var y = 0; y < self.budgetMonths.length; y++) {
       self.budgetMonths[y].month_total = 0;
     }
@@ -342,7 +345,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       }
     }
 
-    for (var i = 0; i < self.budgetMonths.length; i++) {
+    for ( i = 0; i < self.budgetMonths.length; i++) {
       if(self.budgetMonths[i].month_total === 0) {
         self.budgetMonths[i].month_total = null;
       }
@@ -350,7 +353,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   } // end findMonthTotals
 
   function setInactiveValuesToZero() {
-    for (var i = 0; i < self.flowCategories.length; i++) {
+    for ( i = 0; i < self.flowCategories.length; i++) {
       if(self.flowCategories[i].activeCategory === false) {
         self.flowCategories[i].item_amount = 0;
       }

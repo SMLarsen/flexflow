@@ -91,6 +91,42 @@ select {
   background-color: #2c4877;
   background-size: 80%; }
 
+.submit_button {
+  background: #29839e;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  padding: 13px; }
+  .submit_button:hover {
+    background-color: #33a4c7; }
+
+.edit_button {
+  background: #59b7d4;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  padding: 13px; }
+  .edit_button:hover {
+    background-color: #6dc0d9; }
+
+.additional_button {
+  background: #29839e;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  font-size: 30px;
+  border-radius: 50%;
+  margin-top: 40px;
+  margin-bottom: 20px; }
+  .additional_button:hover {
+    background-color: #33a4c7; }
+
 .flow_button_months_container {
   width: 500px;
   margin: 0 auto;
@@ -164,6 +200,8 @@ select {
   width: 200px;
   font-size: 2em;
   margin-top: 150px; }
+  .button_log_in:hover {
+    background-color: #33a4c7; }
   .button_log_in:hover {
     background: #33a4c7; }
   @media (max-width: 768px) {

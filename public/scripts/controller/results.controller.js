@@ -36,7 +36,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
 
     self.scheduleMeeting = function() {
         console.log('scheduleMeeting clicked');
-        var link = "mailto:" + scheduleEmail +
+        var link = "mailto:" + "isaiah@becomingfinancial.com" +
             "?cc=" + currentUser.email +
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");

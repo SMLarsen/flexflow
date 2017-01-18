@@ -21,6 +21,7 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
 
     budgetFactory.postAdditionalInfo(sendObject)
       .then(function(result){
+        budgetFactory.updateBudgetStatus("Comments");
           //console.log('Comment Inserted on Client Side');
           // console.log("in postAdditionalInfo ", sendObject);
           window.location = '/#/results';

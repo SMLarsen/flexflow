@@ -5,24 +5,31 @@ main {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  background: $main-color;
+}
+
+h1 {
+  @include header_text;
 }
 
 .jumbotron {
-  margin-top: -20px;
   background: url('/assets/images/header.png') center bottom no-repeat;
   color: white;
   background-size: cover;
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;
   letter-spacing: 5px;
-  line-height: 50px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $accent-color;
+  text-align: center;
+  width: 100%;
+  margin-top: -20px;
+  padding: 70px;
 }
 
 .progress {
   width: 60%;
   margin: 40px auto;
-  background: lightblue;
+  background: $main-color;
 }
 
 select {

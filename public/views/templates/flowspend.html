@@ -26,7 +26,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
-        <button class="btn btn-default" ng-click="fl.updateFlowItems()" type="button" class="close" data-dismiss="modal">Save</button>
+        <button class="btn btn-default" ng-click="fl.saveAndClose()" type="button" class="close" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
       </div>
     </div>
@@ -45,7 +45,7 @@
         <input placeholder="eg. 150" ng-model="fl.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fl.addBudgetItem()" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">Save Budget Item</button>
+        <button type="button" class="btn btn-default" ng-click="fl.addBudgetItem()" data-dismiss="modal">Save Budget Item</button>
       </div>
     </div>
   </div>

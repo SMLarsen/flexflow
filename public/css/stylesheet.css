@@ -163,25 +163,6 @@ select {
 .nav_button_container {
   margin-bottom: 20px; }
 
-.not_empty_flow_month {
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  margin: 5px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.7em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0;
-  background: #309abb;
-  border: 1px solid #29839e;
-  color: white; }
-  .not_empty_flow_month:hover {
-    background: #29839e;
-    color: white; }
-  .not_empty_flow_month:active {
-    color: white; }
-
 .empty_flow_month {
   width: 100px;
   height: 100px;
@@ -192,13 +173,32 @@ select {
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0;
-  background: #29839e;
-  border: 1px solid #29839e;
+  background: #309abb;
+  border: 2px solid #29839e;
   color: white; }
   .empty_flow_month:hover {
-    background: #309abb;
+    background: #29839e;
     color: white; }
   .empty_flow_month:active {
+    color: white; }
+
+.not_empty_flow_month {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  margin: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0;
+  background: #29839e;
+  border: 2px solid #29839e;
+  color: white; }
+  .not_empty_flow_month:hover {
+    background: #309abb;
+    color: white; }
+  .not_empty_flow_month:active {
     color: white; }
 
 .flow_toggle_container {

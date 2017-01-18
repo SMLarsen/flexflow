@@ -7,6 +7,7 @@
     padding: 0;
     padding-bottom: 10px;
     overflow: hidden;
+    background: white;
     float: left;
 
   }
@@ -14,11 +15,12 @@
     border-bottom: 1px solid black;
     padding: 30px;
     padding-bottom: 10px;
-    background: gainsboro;
+    background: $detail-color;
     margin-top: -20px;
     font-family: 'Fjalla One', sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
+    color: white;
   }
   &_value {
     border-bottom: 1px solid black;

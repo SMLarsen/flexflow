@@ -12,43 +12,57 @@
   margin-bottom: 20px;
 }
 
-.empty_flow_month {
-  @include month_button;
-  background: gainsboro;
-  border: 1px solid black;
-  width: 100px;
-}
-
 .not_empty_flow_month {
   @include month_button;
-  background: white;
-  border: 1px solid gainsboro;
+  background: lighten($detail-color, 7%);
+  border: 1px solid $detail-color;
+  width: 100px;
+  color: white;
+  &:hover {
+    background: $detail-color;
+    color: white;
+  }
+  &:active {
+    color: white;
+  }
 }
 
-.active_toggle {
-  @include category_toggle;
-  background-color: white;
-  background-size: 80%;
-}
-
-.not_active_toggle {
-  @include category_toggle;
-  background-color: gainsboro;
-  background-size: 80%;
+.empty_flow_month {
+  @include month_button;
+  background: $detail-color;
+  border: 1px solid $detail-color;
+  color: white;
+  &:hover {
+    background: lighten($detail-color, 7%);
+    color: white;
+  }
+  &:active {
+    color: white;
+  }
 }
 
 .flow_toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px;
+  width: 60%;
+  margin: 20px auto 0 10px;
+  padding-left: 40%;
   @media (max-width: $mobile-width) {
-    margin-left: 100px;
-  }
-  label {
-    height: 20px;
+    padding-left: 0;
+    margin-left: 115px;
   }
   input {
-    height: 20px;
+    height: 50px;
     border: 1px solid gainsboro;
     border-radius: 3px;
+    padding-left: 20px;
   }
+  span {
+    height: 50px;
+    padding: 15px;
+    display: block;
+  }
+}
+
+.flow_footer {
+  text-align: center;
 }

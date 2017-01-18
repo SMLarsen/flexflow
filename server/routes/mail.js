@@ -47,7 +47,7 @@ router.post("/", function(req, res) {
         //     contentType: "application/pdf"
         // }]
         attachments: [{
-            filename: 'file.pdf',
+            fileName: 'file.pdf',
             path: filePath,
             streamSource: fs.createReadStream(filePath),
             contentType: 'application/pdf'

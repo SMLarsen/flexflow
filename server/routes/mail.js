@@ -3,7 +3,7 @@ var router = express.Router();
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require('path');
-var filePath = path.join(__dirname);
+var filePath = path.join(__dirname, 'file.pdf');
 
 router.post("/", function(req, res) {
     // console.log("im here in send mail");
@@ -44,21 +44,18 @@ router.post("/", function(req, res) {
         //     streamSource: fs.createReadStream(filePath),
         //     contentType: "application/pdf"
         // }]
-        attachments: [{
-            fileName: 'file.pdf',
-            path: filePath,
-            streamSource: fs.createReadStream(filePath),
-            contentType: 'application/pdf'
-        }],
-        function(err, info) {
-            if (err) {
-                console.error(err);
-                // res.send(err);
-            } else {
-                console.log(info);
-                // res.send(info);
-            }
+        attachments: [
+
+        {   // file on disk as an attachment
+            filename: 'file.pdf',
+            path: filePath, // stream this file
+            //below one not working some time dont know why but its work for me now
+            //  path: 'C:/Users/Me/Desktop/ab.txt',
+            //this also work foo me
+            contentType: "application/pdf"
+
         }
+      ]
     };
 
 

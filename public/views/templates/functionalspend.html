@@ -1,5 +1,12 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flowspend">Flow</a></li>
+  <li class="active">Functional</li>
+</ol>
 <!-- template for input -->
-<h1 class="jumbotron">Your Functional Spending</h1>
+<h1 class="jumbotron">Functional Spending</h1>
 <div class="functional_financial_spending_container">
   <div class="toggle_container" ng-repeat="item in fu.itemArray">
     <label for="item.item_name" ng-click="fu.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/functional-icons/' + item.item_img_src + ')'}"></label>
@@ -14,15 +21,15 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
         <h4 class="modal-title">Enter Your Additional Budget Item</h4>
       </div>
       <div class="modal-body">
-        <input placeholder="New Budget Item" ng-model="fu.newCategory.item_name"/>
+        <input placeholder="New Category" ng-model="fu.newCategory.item_name"/>
         <input placeholder="e.g. 150" type="number" ng-model="fu.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save Budget Item</button>
+        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
       </div>
     </div>
   </div>
@@ -43,7 +50,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Looks Good! Submit</button>
+        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>
@@ -71,4 +78,15 @@
   <div class="progress-bar" role="progressbar" aria-valuenow="57.1" aria-valuemin="0" aria-valuemax="100" style="width: 57.1%;">
     4/7
   </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="fu.navActive">
+  <li><a href="#">Home</a></li>
+  <li><a href="#clientprofile">Profile</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flowspend">Flow</a></li>
+  <li class="active">Functional</li>
+</ol>
+<div class="hamburger" ng-click="fu.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

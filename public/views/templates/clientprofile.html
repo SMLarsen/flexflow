@@ -1,7 +1,12 @@
-<h1 class="jumbotron">Your Profile</h1>
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li class="active">Profile</li>
+</ol>
+
+<h1 class="jumbotron">Create Profile</h1>
 
 <h4>How many adults are in your household?</h4>
-<div class="people_button_container btn-group btn-group-lg" role="group" aria-label="...">
+<div class="people_button_container btn-group btn-group-lg" role="group">
   <button class="btn btn-default button_oneperson" ng-click="cp.clickNumPeople(1)"><img class="profilepersonicon" src="/assets/images/profile-icons/oneperson.svg" /></button>
   <button class="btn btn-default button_twopeople" ng-click="cp.clickNumPeople(2)"><img class="profilepersonicon" src="/assets/images/profile-icons/twopeople.svg" /></button>
   <button class="btn btn-default button_threepeople" ng-click="cp.clickNumPeople(3)"><img class="profilepersonicon" src="/assets/images/profile-icons/threepeople.svg" /></button>
@@ -13,9 +18,9 @@
     <input type="text" ng-model="person.item_name" placeholder="e.g. Bob" class="form-control">
   </div><br>
   <label for="total income">Total Household Income</label><br>
-  <input type="text" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
+  <input type="number" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
-  <input type="text" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control"><br>
+  <input type="number" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control"><br>
   <label for="start budget">What month are you starting your budget?</label><br>
   <select name="month" ng-model="cp.budget.budget_start_month">
     <option value="1">January</option>
@@ -93,4 +98,12 @@
   <div class="progress-bar" role="progressbar" aria-valuenow="14.3" aria-valuemin="0" aria-valuemax="100" style="width: 14.3%;">
     1/7
   </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="cp.navActive">
+  <li><a href="#">Home</a></li>
+  <li class="active">Profile</li>
+</ol>
+<div class="hamburger" ng-click="cp.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

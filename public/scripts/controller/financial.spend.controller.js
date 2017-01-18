@@ -59,7 +59,9 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 
 	self.updateFinancialItems = function() {
 		console.log("updateFinancialItems is clicked");
-		budgetFactory.updateFinancialItems(self.itemArray);
+		budgetFactory.updateFinancialItems(self.itemArray).then(function(result){
+			budgetFactory.updateBudgetStatus("Financial");
+		});
 		window.location = '/#/additionalinfo';
 	};
 

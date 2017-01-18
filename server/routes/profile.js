@@ -12,7 +12,7 @@ var pool = new pg.Pool({
 router.get("/", function(req, res) {
     pool.connect()
     .then( function(client) {
-        client.query('SELECT id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled FROM budget WHERE user_id = $1', [req.userID], function(err, result) {
+        client.query('SELECT id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled, budget_status FROM budget WHERE user_id = $1', [req.userID], function(err, result) {
             if (err) {
                 console.log('Error getting profile', err);
                 res.sendStatus(500);
@@ -33,9 +33,9 @@ router.post("/", function(req, res) {
     .then( function(client) {
         var queryString = 'INSERT INTO budget ';
         queryString += '(user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary,';
-        queryString += ' meeting_scheduled) ';
-        queryString += 'VALUES ($1, $2, $3, $4, $5, $6)';
-        client.query(queryString, [req.userID, req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled],
+        queryString += ' meeting_scheduled, budget_status) ';
+        queryString += 'VALUES ($1, $2, $3, $4, $5, $6, $7)';
+        client.query(queryString, [req.userID, req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, req.body.budget_status],
             function(err, result) {
                 if (err) {
                     console.log('Error Inserting profile', err);
@@ -55,11 +55,12 @@ router.post("/", function(req, res) {
 router.put("/", function(req, res) {
     pool.connect()
     .then( function(client) {
+      console.log(req.budgetID);
         var queryString = 'UPDATE budget SET ';
         queryString += 'budget_start_month = $1, budget_start_year = $2, monthly_take_home_amount = $3,';
-        queryString += ' annual_salary = $4, meeting_scheduled = $5 ';
-        queryString += 'WHERE user_id = $6';
-        client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, req.userID],
+        queryString += ' annual_salary = $4, meeting_scheduled = $5, budget_status = $6 ';
+        queryString += 'WHERE id = $7';
+        client.query(queryString, [req.body.budget_start_month, req.body.budget_start_year, req.body.monthly_take_home_amount, req.body.annual_salary, req.body.meeting_scheduled, req.body.budget_status, req.budgetID],
             function(err, result) {
                 if (err) {
                     console.log('Error Updating profile', err);

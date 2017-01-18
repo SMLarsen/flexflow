@@ -7,7 +7,7 @@
 <h1 class="jumbotron">Monthly Flex Allowance</h1>
 <div class="flex_container">
   <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
-    <input type="text" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
+    <input type="number" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
   </div>
   <button class="btn btn-primary flex_submit" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
 </div>

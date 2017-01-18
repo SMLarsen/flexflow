@@ -40,10 +40,36 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");
         window.location.href = link;
+
     };
 
     self.logOut = function() {
         console.log('logout clicked');
+        var sendObject = {
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            flowTotal: self.flowTotal,
+            flexTotal: self.flexTotal,
+            functionalTotal: self.functionalTotal,
+            financialTotal: self.financialTotal
+        };
+        // console.log("SendObject ", sendObject);
+
+        $http({
+                method: 'POST',
+                url: '/mail',
+                headers: {
+                    id_token: authFactory.getIdToken()
+                },
+                data: sendObject
+            })
+            .then(function(response) {
+                console.log('POST mail succesfully in RESULT page');
+                return;
+            }, function(err) {
+                console.log('Error sending mail in RESULT', currentUser.email, ': ', err);
+            });
+
         authFactory.logOut();
         window.location = '/#/home';
     };

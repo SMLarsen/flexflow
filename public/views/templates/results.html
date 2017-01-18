@@ -1,56 +1,56 @@
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li><a href="#functionalspend">Functional</a></li>
-  <li><a href="#financialspend">Financial</a></li>
-  <li><a href="#additionalinfo">Comments</a></li>
-  <li class="active">Results</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#clientprofile">Profile</a></li>
+    <li><a href="#flexspend">Flex</a></li>
+    <li><a href="#flexspend">Flow</a></li>
+    <li><a href="#functionalspend">Functional</a></li>
+    <li><a href="#financialspend">Financial</a></li>
+    <li><a href="#additionalinfo">Comments</a></li>
+    <li class="active">Results</li>
 </ol>
 
 <div class="jumbotron">
-<h1 class="results_header">Flex/Flow Results</h1>
+    <h1 class="results_header">Flex/Flow Results</h1>
 </div>
 <div class="full_results_container">
-  <div class="results_container">
-    <h4 class="results_name">Flow</h4>
-    <span class="results_value">{{rc.flowTotal | currency:"$":0}}</span>
-  </div>
-  <div class="results_container">
-    <h4 class="results_name">Flex</h4>
-    <span class="results_value">{{rc.flexTotal | currency:"$":0}}</span>
-  </div>
-  <div class="results_container">
-    <h4 class="results_name">Functional</h4>
-    <span class="results_value">{{rc.functionalTotal | currency:"$":0}}</span>
-  </div>
-  <div class="results_container">
-    <h4 class="results_name">Financial</h4>
-    <span class="results_value">{{rc.financialTotal | currency:"$":0}}</span>
-  </div>
+    <div class="results_container">
+        <h4 class="results_name">Flow</h4>
+        <span class="results_value">{{rc.flowTotal | currency:"$":0}}</span>
+    </div>
+    <div class="results_container">
+        <h4 class="results_name">Flex</h4>
+        <span class="results_value">{{rc.flexTotal | currency:"$":0}}</span>
+    </div>
+    <div class="results_container">
+        <h4 class="results_name">Functional</h4>
+        <span class="results_value">{{rc.functionalTotal | currency:"$":0}}</span>
+    </div>
+    <div class="results_container">
+        <h4 class="results_name">Financial</h4>
+        <span class="results_value">{{rc.financialTotal | currency:"$":0}}</span>
+    </div>
 </div>
 <div class="results_button_container">
-  <button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button">Schedule Meeting with an Advisor</button>
-  <button class="btn btn-primary" ng-click="rc.logOut()" type="button">Complete Flex/Flow</button>
+    <button class="btn btn-default" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
+    <button class="btn btn-primary" ng-click="rc.logOut()" type="button" name="button">Complete</button>
 </div>
 
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-    7/7
-  </div>
+    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+        7/7
+    </div>
 </div>
 
 <ol class="breadcrumb_mobile" ng-show="rc.navActive">
-  <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li><a href="#functionalspend">Functional</a></li>
-  <li><a href="#financialspend">Financial</a></li>
-  <li><a href="#additionalinfo">Comments</a></li>
-  <li class="active">Results</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#clientprofile">Profile</a></li>
+    <li><a href="#flexspend">Flex</a></li>
+    <li><a href="#flexspend">Flow</a></li>
+    <li><a href="#functionalspend">Functional</a></li>
+    <li><a href="#financialspend">Financial</a></li>
+    <li><a href="#additionalinfo">Comments</a></li>
+    <li class="active">Results</li>
 </ol>
 <div class="hamburger" ng-click="rc.activateMobileNav()">
-  <img src="/assets/images/hamburger.svg" alt="hamburger">
+    <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

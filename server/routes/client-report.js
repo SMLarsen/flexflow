@@ -178,7 +178,9 @@ router.get("/", function(req, res, next) {
 
 function createPDF() {
     console.log('starting createPDF');
-    var doc = new pdfDocument;
+    var doc = new pdfDocument({
+      layout: 'landscape'
+    });
     doc.pipe(fs.createWriteStream('./flexflow.pdf'));
 
     // draw some text
@@ -192,7 +194,7 @@ function createPDF() {
     for (var i = 0; i < reportData.Flex.length; i++) {
         item = reportData.Flex[i];
         formatItem = item.item_name + " - $" + item.item_amount;
-        doc.font('Times-Roman', 10)
+        doc.font('Courier', 10)
             .moveDown()
             .text(formatItem, {
                 width: 412,
@@ -221,7 +223,7 @@ function createPDF() {
                 item[11].item_amount + ', ' + item[12].item_amount;
                 doc.font('Times-Roman', 10)
                     .moveDown()
-                    .text([item[0].item_name item[0].item_amount], {
+                    .text([item[0].item_name, item[0].item_amount], {
                         width: 1200,
                         align: 'justify',
                         indent: 30,
@@ -293,5 +295,20 @@ function createPDF() {
     // });
 }
 
+function spacer(value, length) {
+  if (value.length > length) {
+    console.log(1, value, value.substring(0, length));
+    return value.substring(0, length);
+  } else {
+    if (value.length === length) {
+      return value;
+    } else {
+      var spacesNeeded = length - value.length;
+      for (var i = 0; i < spacesNeeded; i++) {
+        value += ' ';
+      }
+    }
+  }
+}
 
 module.exports = router;

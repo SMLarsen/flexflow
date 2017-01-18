@@ -42,4 +42,18 @@
   border: 1px solid $accent-color;
   border-radius: 15px;
   padding: 20px;
+  &:hover {
+    background-color: lighten($detail-color, 10%);
+  }
+}
+
+@mixin secondary_button {
+  background: lighten($detail-color, 20%);
+  color: white;
+  border: 1px solid $accent-color;
+  border-radius: 15px;
+  padding: 20px;
+  &:hover {
+    background-color: lighten($detail-color, 25%);
+  }
 }

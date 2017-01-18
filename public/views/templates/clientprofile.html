@@ -40,7 +40,7 @@
     <option ng-repeat="year in cp.nextFiveYears">{{year}}</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled"> I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
-  <button class="btn btn-primary profile_submit" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit Profile</button>
+  <button class="submit_button" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit</button>
   <div class="modal fade" id="clientProfileForm" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -53,8 +53,8 @@
           <p>Annual Income: ${{cp.budget.annual_salary}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-          <button ng-click="cp.postBudget()" class="btn btn-default" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Submit</button>
+          <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+          <button ng-click="cp.postBudget()" class="submit_button" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Submit</button>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
         <p>This means a monthly savings of ${{cp.monthSavings.toFixed()}}.</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-default" data-target="#congratsForm" data-toggle="modal" data-dismiss="modal">Continue</button>
+        <button class="submit_button" data-target="#congratsForm" data-toggle="modal" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@
         <p>Next we'll talk about your flex spending. Imagine you could spend an amount every month on whatever makes you happy. This could be date nights, dinners with friends, new shoes... whatever you enjoy. That's flex spending!</p>
       </div>
       <div class="modal-footer">
-        <button onclick="window.location.href='#flexspend'" class="btn btn-default" data-dismiss="modal">Let's Start!</button>
+        <button onclick="window.location.href='#flexspend'" class="submit_button" data-dismiss="modal">Let's Start!</button>
       </div>
     </div>
   </div>

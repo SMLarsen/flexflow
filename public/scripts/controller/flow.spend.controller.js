@@ -59,7 +59,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.currentMonthIndex = null;
   self.monthlyBudgetData = [];
   self.newFlowBudget = [];
-  self.newCategories = [];
   self.flowTotals = [];
   self.newCategory = {
     item_name: null,
@@ -94,7 +93,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
-    budgetFactory.updateFlowItems(self.flowCategories).then(function(result) {
+    budgetFactory.updateFlowItems(self.flowCategories).then(function(result){
+      budgetFactory.updateBudgetStatus("Flow");
       self.getFlowItems();
     });
   };
@@ -324,10 +324,9 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       self.newCategory.item_sort_sequence = self.flowCategories.length + 1;
       self.newCategory.item_img_src = 'additional.svg';
       console.log(self.newCategory);
-      self.newCategories.push(self.newCategory);
+      self.flowCategories.push(self.newCategory);
       self.updateFlowItems();
-      self.newCategories = [];
-      self.newCatory = {};
+      self.newCategory = {};
     }
   }
 

@@ -1,11 +1,10 @@
-app.controller('ReportController', ['$http', 'AuthFactory', function($http, AuthFactory) {
-    console.log('Report controller started');
-    var self = this;
+app.factory("ReportFactory", function($http, AuthFactory) {
+    console.log('ReportFactory started');
+
     var authFactory = AuthFactory;
 
-
-    self.reportData = {};
-    self.monthHeadings = [];
+    reportData = {};
+    monthHeadings = [];
 
     var allMonths = [
       {month: 'January',
@@ -58,46 +57,50 @@ app.controller('ReportController', ['$http', 'AuthFactory', function($http, Auth
       month_total: null},
     ];
 
+    var budgetMonths = [];
+    var startingMonthIndex = 0;
+    var startingMonthID = 0;
+    var startingYear = 0;
+
       function setStartingMonth() {
-        self.budgetMonths = [];
-        var startingMonthIndex = self.startingMonthID - 1;
+        var startingMonthIndex = startingMonthID - 1;
         for (var i = 0; i < allMonths.length; i++) {
           if(i >= startingMonthIndex) {
-            self.budgetMonths.push(allMonths[i]);
+            budgetMonths.push(allMonths[i]);
           }
         }
         for (var i = 0; i < allMonths.length; i++) {
           if(i < startingMonthIndex) {
-            self.budgetMonths.push(allMonths[i]);
+            budgetMonths.push(allMonths[i]);
           }
         }
       } // end setStartingMonth
 
       // sets years of months
       function setYears() {
-        if(self.budgetMonths[0].month === 'January') {
-          for (var i = 0; i < self.budgetMonths.length; i++) {
-            self.budgetMonths[i].year = self.startingYear;
+        if(budgetMonths[0].month === 'January') {
+          for (var i = 0; i < budgetMonths.length; i++) {
+            budgetMonths[i].year = startingYear;
           }
         } else {
           var newYear = false;
-          for (var i = 0; i < self.budgetMonths.length; i++) {
-            if(newYear === false && self.budgetMonths[i].month != 'January') {
+          for (var i = 0; i < budgetMonths.length; i++) {
+            if(newYear === false && budgetMonths[i].month != 'January') {
               newYear = false;
-              self.budgetMonths[i].year = self.startingYear;
-            } else if (newYear === false && self.budgetMonths[i].month === 'January') {
+              budgetMonths[i].year = startingYear;
+            } else if (newYear === false && budgetMonths[i].month === 'January') {
               newYear = true;
-              self.budgetMonths[i].year = self.startingYear + 1;
+              budgetMonths[i].year = startingYear + 1;
             } else {
-              self.budgetMonths[i].year = self.startingYear + 1;
+              budgetMonths[i].year = startingYear + 1;
             }
           }
         }
       } // end setYears
 
 
-    self.getReportData = function() {
-        $http({
+    getReportData = function() {
+        return $http({
                 method: 'GET',
                 url: '/client-report',
                 headers: {
@@ -105,14 +108,14 @@ app.controller('ReportController', ['$http', 'AuthFactory', function($http, Auth
                 }
             })
             .then(function(response) {
-                    self.reportData = response.data;
-                    console.log('Report data:', self.reportData);
-                    self.startingMonthID = self.reportData.profile.budget_start_month;
-                    self.startingYear = self.reportData.profile.budget_start_year;
+                    reportData = response.data;
+                    console.log('Report data:', reportData);
+                    startingMonthID = reportData.profile.budget_start_month;
+                    startingYear = reportData.profile.budget_start_year;
                     setStartingMonth();
                     setYears();
-                    console.log(self.budgetMonths);
-                    return;
+                    console.log(budgetMonths);
+                    return reportData;
                 },
                 function(err) {
                     console.log('Error getting report data ', err);
@@ -120,8 +123,16 @@ app.controller('ReportController', ['$http', 'AuthFactory', function($http, Auth
                 });
     }; //end getReportData
 
-function formatMonthHeadings() {
+  function formatMonthHeadings() {
 
-}
+  }
 
-}]);
+    var publicApi = {
+        getReportData: function() {
+            return getReportData();
+        }
+    };
+
+    return publicApi;
+
+}); // END: ReportFactory

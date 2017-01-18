@@ -166,15 +166,15 @@ select {
 .not_empty_flow_month {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding: 0;
   background: #309abb;
   border: 1px solid #29839e;
-  width: 100px;
   color: white; }
   .not_empty_flow_month:hover {
     background: #29839e;
@@ -185,12 +185,13 @@ select {
 .empty_flow_month {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding: 0;
   background: #29839e;
   border: 1px solid #29839e;
   color: white; }

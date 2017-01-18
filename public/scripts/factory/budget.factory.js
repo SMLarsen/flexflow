@@ -36,6 +36,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 newFlowItem.budget_template_category_id = 1;
                 newFlowItem.item_month = itemMonth;
                 newFlowItem.item_year = itemYear;
+                newFlowItem.item_img_src = flowItemArray[k].item_img_src;
                 newFlowItem.item_name = flowItemArray[k].item_name;
                 newFlowItem.item_sort_sequence = flowItemArray[k].item_sort_sequence;
                 newFlowItemArray.push(newFlowItem);
@@ -54,6 +55,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             var newFinancialItem = {};
             newFinancialItem.item_amount = 0;
             newFinancialItem.budget_template_category_id = FINANCIAL;
+            newFinancialItem.item_img_src = financialItemArray[i].item_img_src;
             newFinancialItem.item_name = financialItemArray[i].item_name;
             newFinancialItem.item_sort_sequence = financialItemArray[i].item_sort_sequence;
             newFinancialItemArray.push(newFinancialItem);
@@ -67,6 +69,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             newFunctionalItem.item_amount = 0;
             newFunctionalItem.budget_template_category_id = FUNCTIONAL;
             newFunctionalItem.item_name = functionalItemArray[j].item_name;
+            newFunctionalItem.item_img_src = functionalItemArray[j].item_img_src;
             newFunctionalItem.item_sort_sequence = functionalItemArray[j].item_sort_sequence;
             newFunctionalItemArray.push(newFunctionalItem);
         }

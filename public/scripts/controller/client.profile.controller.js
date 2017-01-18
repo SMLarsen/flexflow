@@ -74,6 +74,6 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
             self.nextFiveYears.push(year);
         }
         console.log(self.nextFiveYears);
-    };
+    }
 
 }]); // END: ClientProfileController

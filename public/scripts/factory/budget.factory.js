@@ -291,7 +291,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         var month = budgetArray[0].item_month;
         return deleteFlowItems(month)
             .then(function(response) {
-                    postFlowItems(budgetArray)
+                    return postFlowItems(budgetArray)
                         .then(function(response) {
                                 console.log('Flow items replaced');
                                 return ;

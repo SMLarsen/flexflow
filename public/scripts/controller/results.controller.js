@@ -1,20 +1,21 @@
-app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', function($http, AuthFactory, BudgetFactory, AdminFactory) {
+app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', 'ReportFactory', function($http, AuthFactory, BudgetFactory, AdminFactory, ReportFactory) {
     console.log('Results controller started');
     var self = this;
     var budgetFactory = BudgetFactory;
     var authFactory = AuthFactory;
     var adminFactory = AdminFactory;
+    var reportFactory = ReportFactory;
     var scheduleEmail = adminFactory.getAdminParameter('Scheduling_email');
     var currentUser = authFactory.getCurrentUser();
 
     self.navActive = false;
 
     self.activateMobileNav = function() {
-      if(self.navActive === false){
-        self.navActive = true;
-      } else {
-        self.navActive = false;
-      }
+        if (self.navActive === false) {
+            self.navActive = true;
+        } else {
+            self.navActive = false;
+        }
     };
 
     budgetFactory.getFlowItemTotalByYear().then(function(results) {
@@ -47,5 +48,14 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
         authFactory.logOut();
         window.location = '/#/home';
     };
+
+    self.getReportData = function() {
+        reportFactory.getReportData()
+            .then(function(result) {
+                self.reportData = result;
+                console.log('Retrieved report data');
+            });
+    };
+
 
 }]);

@@ -59,7 +59,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.currentMonthIndex = null;
   self.monthlyBudgetData = [];
   self.newFlowBudget = [];
-  self.newCategories = [];
   self.flowTotals = [];
   self.newCategory = {
     item_name: null,
@@ -94,7 +93,9 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
-    budgetFactory.updateFlowItems(self.flowCategories);
+    budgetFactory.updateFlowItems(self.flowCategories).then(function(result) {
+      self.getFlowItems();
+    });
   };
 
   self.postFlowItems = function() {
@@ -128,6 +129,11 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
     setToggles();
     console.log(self.flowCategories);
   }; // end enterMonthFlowData
+
+  self.saveAndClose = function() {
+    setInactiveValuesToZero();
+    self.updateFlowItems();
+  }
 
   // advances to the next month
   self.nextMonth = function() {
@@ -317,13 +323,16 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
       self.newCategory.item_sort_sequence = self.flowCategories.length + 1;
       self.newCategory.item_img_src = 'additional.svg';
       console.log(self.newCategory);
-      self.newCategories.push(self.newCategory);
-      self.postFlowItems();
-      self.newCategories = [];
+      self.flowCategories.push(self.newCategory);
+      self.updateFlowItems();
+      self.newCategory = {};
     }
   }
 
   function findMonthTotals() {
+    for (var y = 0; y < self.budgetMonths.length; y++) {
+      self.budgetMonths[y].month_total = 0;
+    }
     for (var i = 0; i < self.monthlyBudgetData.length; i++) {
       for (var x = 0; x < self.budgetMonths.length; x++) {
         if(self.monthlyBudgetData[i].item_month === self.budgetMonths[x].month_id) {

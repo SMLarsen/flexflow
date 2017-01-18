@@ -21,6 +21,7 @@ router.post("/", function(req, res) {
         }
     });
 
+<<<<<<< HEAD
     var mailOptions = {
         from: 'Hien Le ✔ <lhien11@gmail.com>', // sender address
         to: 'lhien04@gmail.com, lhien4635@gmail.com', // list of receivers
@@ -30,6 +31,28 @@ router.post("/", function(req, res) {
         text: 'You have a submission with the following details from flex flow...',
         html: htmlObject
     };
+=======
+  var mailOptions = {
+    from: 'Hien Le ✔ <lhien11@gmail.com>', // sender address
+    to: 'lhien04@gmail.com, lhien4635@gmail.com', // list of receivers
+    subject: 'Website Submission', // Subject line
+    // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
+    // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
+    text: 'You have a submission with the following details from flex flow',
+    html: '<p>You have a submission with the folowing details... </p>'
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        res.redirect('/');
+        return console.log(error);
+    }
+    res.sendStatus(200);
+    console.log('Message sent: ' + info.response);
+
+});
+>>>>>>> development
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info) {

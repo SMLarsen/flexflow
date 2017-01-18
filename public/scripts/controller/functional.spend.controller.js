@@ -41,16 +41,16 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
         category.activeItem = true;
       }
     }
-  }; // end setToggles
+  } // end setToggles
 
 	// function to ensure zero values show up as placeholder in inputs
 	function resetZeroValues() {
 		for (var i = 0; i < self.itemArray.length; i++) {
-			if(self.itemArray[i].item_amount == 0) {
+			if(self.itemArray[i].item_amount === 0) {
 				self.itemArray[i].item_amount = null;
 			}
 		}
-	}; // end resetZeroValues
+	} // end resetZeroValues
 
 	self.getFunctionalItems = function() {
 		console.log("getFunctionalItems is clicked");

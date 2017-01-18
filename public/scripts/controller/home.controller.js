@@ -37,20 +37,26 @@ app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", "Ad
             case "Finished":
             window.location = "/#/results";
             break;
+            case "Comments":
+            window.location = "/#/results";
+            break;
             case "Financial":
-            window.location = "/#/financialspend";
+            window.location = "/#/additionalinfo";
             break;
             case "Functional":
-            window.location = "/#/functionalspend";
+            window.location = "/#/financialspend";
             break;
             case "Flow":
-            window.location = "/#/flowspend";
+            window.location = "/#/functionalspend";
             break;
             case "Flex":
+            window.location = "/#/flowspend";
+            break;
+            case "Profile":
             window.location = "/#/flexspend";
             break;
             default:
-            window.location = "/#/clientprofile";  
+            window.location = "/#/clientprofile";
           }
         });
       }

@@ -29,8 +29,8 @@ CREATE TABLE budget_template_category(
 INSERT INTO budget_template_category (category_name, category_text)
 VALUES ('Flow', 'Lorem ipsum dolor sit amet, ad mel persius labores perfecto. Vis enim graeco ei. Ad mea ludus albucius oporteat, ex eros quaestio appellantur sit. Cu usu reque errem, est mundi integre imperdiet ne. Eu his labitur electram. Vel eu nibh patrioque scriptorem, choro percipit apeirian cum ne.'),
 ('Flex', 'Ei has fugit constituto, ei nec alia sonet nominavi. Usu modo dico dolorem ad. Unum dolor tation ut his, no vix delicata inciderint. At quo atqui convenire intellegebat.'),
-('Financial', 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'),
-('Functional', 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.')
+('Functional', 'Copiosae nominati nec ne. Mea partem tincidunt at, appareat dignissim ex vix. Per ne vide iusto labore. Eam erat audire necessitatibus at. Gloriatur rationibus ius ut, ne viderer inermis intellegam mel. Nec te tale feugait civibus, ad partem reprimique honestatis cum.'),
+('Financial', 'Dolor aliquip copiosae per id, his aeque ludus erroribus no. Ad his alia tacimates. Ipsum exerci posidonium duo cu. Ut nec clita insolens disputando, ipsum eruditi vituperatoribus qui ut.')
 ;
 
 SELECT * FROM budget_template_category;
@@ -107,7 +107,8 @@ CREATE TABLE budget (
     budget_start_year integer,
     monthly_take_home_amount integer,
     annual_salary integer,
-    meeting_scheduled boolean default false
+    meeting_scheduled boolean default false,
+    budget_status VARCHAR(20)
 );
 
 INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled)
@@ -388,7 +389,6 @@ CREATE TABLE budget_item (
     item_sort_sequence integer
 );
 
-
 INSERT INTO budget_item (budget_id, budget_template_category_id, item_name, item_img_src, item_amount, item_sort_sequence)
 VALUES (1, 2, 'Steve', 'img30.jpg', 500, 1),
 (1, 2, 'Ellen', 'img30.jpg', 500, 2),
@@ -433,3 +433,40 @@ DELETE FROM budget_flow_item WHERE budget_id > 2;
 DELETE FROM budget_item WHERE budget_id > 2;
 DELETE FROM budget WHERE id > 2;
 DELETE FROM users WHERE id > 2;
+
+--Query to get flex, financial, and functional items/amounts by budget_id
+SELECT category_name, item_name, item_amount
+FROM budget_item, budget_template_category
+WHERE budget_template_category.id = budget_template_category_id
+AND budget_id = 1
+ORDER BY budget_template_category_id, item_sort_sequence
+;
+
+--Query to get flex, financial, and functional monthly total by budget_id and category_id
+SELECT budget_template_category.category_name, SUM(item_amount) AS monthly_total
+FROM budget_item, budget_template_category
+WHERE budget_template_category.id = budget_template_category_id
+AND budget_id = 1
+GROUP BY budget_template_category.category_name
+;
+
+--Query to get flow items/amounts by name and budget_id
+SELECT item_year, item_month, item_name, item_amount
+FROM budget_flow_item
+WHERE budget_id = 1
+ORDER BY item_year, item_month, item_sort_sequence
+;
+
+--Query to get flow monthly total by item_year and item_month
+SELECT item_year, item_month, SUM(item_amount) AS monthly_total
+FROM budget_flow_item
+WHERE budget_id = 1
+GROUP BY item_year, item_month
+;
+
+--Query to get flow annual total by item_name
+SELECT item_name, SUM(item_amount) AS annual_total
+FROM budget_flow_item
+WHERE budget_id = 1
+GROUP BY item_name
+;

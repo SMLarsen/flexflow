@@ -5,7 +5,6 @@ var fs = require('fs');
 var path = require('path');
 var filePath = path.join(__dirname);
 
-
 router.post("/", function(req, res) {
     // console.log("im here in send mail");
     var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
@@ -17,7 +16,6 @@ router.post("/", function(req, res) {
         "FinancialTotal: " + req.body.financialTotal + '</p>';
 
     var receivers = req.body.email;
-    //console.log("filepath = ", filePath);
 
     // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
@@ -63,16 +61,6 @@ router.post("/", function(req, res) {
         }
     };
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            res.redirect('/');
-            return console.log(error);
-        }
-        res.sendStatus(200);
-        console.log('Message sent: ' + info.response);
-
-    });
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info) {
@@ -80,6 +68,7 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
+
         // console.log('Message sent: ' + info.response);
     });
 });

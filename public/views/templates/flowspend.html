@@ -1,6 +1,5 @@
 <ol class="breadcrumb">
   <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
   <li><a href="#flexspend">Flex</a></li>
   <li class="active">Flow</li>
 </ol>
@@ -22,12 +21,12 @@
           <span ng-hide="category.activeCategory">{{category.item_name}}</span>
           <input type="number" placeholder="eg. 150" ng-show="category.activeCategory" name="category.item_name" ng-model="category.item_amount"/>
         </div>
-        <button id="additionalButton" class="btn" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories">+</button>
+        <button id="additionalButton" class="additional_button" data-toggle="modal" data-dismiss="modal" data-target="#additionalCategories">+</button>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fl.prevMonth()">Previous Month</button>
-        <button class="btn btn-default" ng-click="fl.updateFlowItems()" type="button" class="close" data-dismiss="modal">Save</button>
-        <button type="button" class="btn btn-default" ng-click="fl.nextMonth()">Next Month</button>
+      <div class="modal-footer flow_footer">
+        <button type="button" class="submit_button" ng-click="fl.prevMonth()">Previous Month</button>
+        <button class="edit_button" ng-click="fl.saveAndClose()" type="button" class="close" data-dismiss="modal">Save</button>
+        <button type="button" class="submit_button" ng-click="fl.nextMonth()">Next Month</button>
       </div>
     </div>
   </div>
@@ -37,7 +36,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Enter Your Additional Budget Item</h4>
       </div>
       <div class="modal-body">
@@ -45,7 +44,7 @@
         <input placeholder="eg. 150" ng-model="fl.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fl.addBudgetItem()" data-dismiss="modal" data-toggle="modal" data-target="#monthDataForm">Save Budget Item</button>
+        <button type="button" class="submit_button" ng-click="fl.addBudgetItem()" data-dismiss="modal">Save New Item</button>
       </div>
     </div>
   </div>
@@ -62,8 +61,8 @@
         <p ng-repeat="month in fl.budgetMonths"><b>{{month.month}}:</b> ${{month.month_total}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Edit Info</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#congratsForm">Submit</button>
+        <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+        <button type="button" class="submit_button" data-dismiss="modal" data-toggle="modal" data-target="#congratsForm">Submit</button>
       </div>
     </div>
   </div>
@@ -80,15 +79,15 @@
         <p>Now we'll gather your Functional Spending. Functional spending includes items that you spend a fixed amount on each month. (Rent... mortgage... quarterly subscriptions...)</p>
       </div>
       <div class="modal-footer">
-        <button ng-click="fl.nextPage()" class="btn btn-default" data-dismiss="modal">Let's go!</button>
+        <button ng-click="fl.nextPage()" class="submit_button" data-dismiss="modal">Let's go!</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="nav_button_container">
-  <button class="btn btn-primary" ng-click="fl.prevPage()">Prev</button>
-  <button ng-click="self.findCategoryTotals()" class="btn btn-primary" data-toggle="modal" data-target="#submitForm">Next</button>
+  <button class="submit_button" ng-click="fl.prevPage()">Back to Flex</button>
+  <button ng-click="self.findCategoryTotals()" class="submit_button" data-toggle="modal" data-target="#submitForm">Continue</button>
 </div>
 
 <div class="progress">
@@ -99,7 +98,6 @@
 
 <ol class="breadcrumb_mobile" ng-show="fl.navActive">
   <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
   <li><a href="#flexspend">Flex</a></li>
   <li class="active">Flow</li>
 </ol>

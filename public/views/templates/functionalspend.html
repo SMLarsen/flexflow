@@ -1,6 +1,5 @@
 <ol class="breadcrumb">
   <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
   <li><a href="#flexspend">Flex</a></li>
   <li><a href="#flowspend">Flow</a></li>
   <li class="active">Functional</li>
@@ -13,9 +12,9 @@
     <span ng-hide="item.activeItem">{{item.item_name}}</span>
     <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
   </div>
-  <button class="btn btn-primary add_button" data-target="#additionalCategories" data-toggle="modal">Add Category</button>
+  <button class="additional_button" data-target="#additionalCategories" data-toggle="modal">+</button>
 </div>
-<button class="btn btn-primary func_next" data-toggle="modal" data-target="#functionalData">Submit</button>
+<button class="submit_button" data-toggle="modal" data-target="#functionalData">Submit</button>
 
 <div class="modal fade" id="additionalCategories" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -29,7 +28,7 @@
         <input placeholder="e.g. 150" type="number" ng-model="fu.newCategory.item_amount"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
+        <button type="button" class="submit_button" ng-click="fu.addFunctionalItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
       </div>
     </div>
   </div>
@@ -49,8 +48,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button class="btn btn-default" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
+        <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+        <button class="submit_button" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>
@@ -68,7 +67,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button onclick="window.location.href='#financialspend'" class="btn btn-default" type="button" data-dismiss="modal">Continue</button>
+        <button onclick="window.location.href='#financialspend'" class="submit_button" type="button" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>
@@ -82,7 +81,6 @@
 
 <ol class="breadcrumb_mobile" ng-show="fu.navActive">
   <li><a href="#">Home</a></li>
-  <li><a href="#clientprofile">Profile</a></li>
   <li><a href="#flexspend">Flex</a></li>
   <li><a href="#flowspend">Flow</a></li>
   <li class="active">Functional</li>

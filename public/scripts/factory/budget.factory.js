@@ -160,6 +160,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
     }; //end updateBudget
 
+    updateBudgetStatus = function(status) {
+      profile.budget_status = status;
+      return updateBudget(profile);
+    };
+
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
@@ -291,7 +296,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         var month = budgetArray[0].item_month;
         return deleteFlowItems(month)
             .then(function(response) {
-                    postFlowItems(budgetArray)
+                    return postFlowItems(budgetArray)
                         .then(function(response) {
                                 console.log('Flow items replaced');
                                 return ;
@@ -538,6 +543,9 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
+        },
+        updateBudgetStatus: function(status) {
+            return updateBudgetStatus(status);
         }
 
     };

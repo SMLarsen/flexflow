@@ -4,6 +4,20 @@
 
 .people_button_container {
   margin-bottom: 20px;
+  button {
+    background: $detail-color;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border: 1px solid $accent-color;
+    @media (max-width: $mobile-width) {
+      width: 70px;
+      height: 70px;
+    }
+    &:hover {
+      background: lighten($detail-color, 10%);
+    }
+  }
 }
 
 .client_names {

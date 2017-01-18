@@ -37,6 +37,39 @@ router.get("/flowitems", function(req, res) {
 
 }); // end pool.connect
 
+// Route: GET flow items for a budget within certain month
+router.get("/flowitems/:month", function(req, res) {
+  var month = req.params.month;
+    pool.connect()
+        .then(function(client) {
+            var queryString = 'SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_img_src, item_amount, item_sort_sequence ';
+            queryString += 'FROM budget_template_category, budget_flow_item ';
+            queryString += 'WHERE budget_template_category.id = budget_flow_item.budget_template_category_id ';
+            queryString += 'AND budget_id = $1 AND item_month = $2';
+            queryString += 'ORDER BY budget_template_category_id, item_year, item_month, item_sort_sequence';
+            client.query(queryString, [req.budgetID, month])
+                .then(function(result) {
+                    client.release();
+                    res.send(result.rows);
+                }).catch(function(err) {
+                    // error
+                    client.release();
+                    console.log('Error on get flowitems ', err);
+                }); // end inner then
+
+        }); // end firs tthen
+
+}); // end pool.connect
+
+// Route: Update flow items for a budget within certain month
+router.put("/flowitems/:month", function(req, res){
+  var month = req.params.month;
+  pool.connect()
+    .then(function(client){
+      
+    })
+});
+
 // Route: Insert flow items for a budget
 router.post("/flowitems", function(req, res) {
     pool.connect()

@@ -10,20 +10,20 @@
 <table class="letterTable">
   <thead>
     <tr>
-      <th style="width:22%"></th>
-      <th style="width:6%">{{cr.budgetMonths[0].month}}<br>{{cr.budgetMonths[0].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[1].month}}<br>{{cr.budgetMonths[1].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[2].month}}<br>{{cr.budgetMonths[2].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[3].month}}<br>{{cr.budgetMonths[3].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[4].month}}<br>{{cr.budgetMonths[4].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[5].month}}<br>{{cr.budgetMonths[5].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[6].month}}<br>{{cr.budgetMonths[6].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[7].month}}<br>{{cr.budgetMonths[7].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[8].month}}<br>{{cr.budgetMonths[8].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[9].month}}<br>{{cr.budgetMonths[9].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[10].month}}<br>{{cr.budgetMonths[10].year}}</th>
-      <th style="width:6%">{{cr.budgetMonths[11].month}}<br>{{cr.budgetMonths[11].year}}</th>
-      <th style="width:6%">Total</th>
+      <th style="width:9%"></th>
+      <th style="width:7%">{{cr.budgetMonths[0].month}}<br>{{cr.budgetMonths[0].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[1].month}}<br>{{cr.budgetMonths[1].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[2].month}}<br>{{cr.budgetMonths[2].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[3].month}}<br>{{cr.budgetMonths[3].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[4].month}}<br>{{cr.budgetMonths[4].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[5].month}}<br>{{cr.budgetMonths[5].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[6].month}}<br>{{cr.budgetMonths[6].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[7].month}}<br>{{cr.budgetMonths[7].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[8].month}}<br>{{cr.budgetMonths[8].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[9].month}}<br>{{cr.budgetMonths[9].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[10].month}}<br>{{cr.budgetMonths[10].year}}</th>
+      <th style="width:7%">{{cr.budgetMonths[11].month}}<br>{{cr.budgetMonths[11].year}}</th>
+      <th style="width:7%">Total</th>
     </tr>
   </thead>
   <tbody>
@@ -113,6 +113,57 @@
       <td>{{item.item_amount}}</td>
       <td>{{item.annual_amount}}</td>
     </tr>
+    <!-- <tr>
+      <td colspan="14"><h5>Summary</h5></td>
+    </tr>
+    <tr>
+      <td>Total Income</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr>
+    <tr>
+      <td>Total Expense</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr>
+    <tr>
+      <td>Net Total</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{cr.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr> -->
   </tbody>
 </table>
 <h2>Comments</h2>

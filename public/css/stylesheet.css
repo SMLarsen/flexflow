@@ -205,7 +205,7 @@ select {
   background-color: lightgrey;
 }
 
-.letterTable tr:last-of-type {
+.letterTable tr:last {
   border-top: 1px solid black;
 }
 

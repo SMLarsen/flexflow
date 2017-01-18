@@ -59,7 +59,9 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 
 	self.updateFunctionalItems = function() {
 		console.log("update functional clicked");
-		budgetFactory.updateFunctionalItems(self.itemArray);
+		budgetFactory.updateFunctionalItems(self.itemArray).then(function(result){
+			budgetFactory.updateBudgetStatus("Functional");
+		});
 	};
 
 	self.addFunctionalItem = function() {

@@ -93,7 +93,8 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
-    budgetFactory.updateFlowItems(self.flowCategories).then(function(result) {
+    budgetFactory.updateFlowItems(self.flowCategories).then(function(result){
+      budgetFactory.updateBudgetStatus("Flow");
       self.getFlowItems();
     });
   };

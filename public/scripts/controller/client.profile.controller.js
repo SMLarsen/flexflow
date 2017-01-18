@@ -46,7 +46,8 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
     // Function for posting salary info to DB
     self.postBudget = function() {
-      self.budget.meeting_scheduled = false;
+      // self.budget.meeting_scheduled = false;
+      self.budget.budget_status = "Profile";
         budgetFactory.postBudget(self.budget)
             .then(function(budgetResponse) {
                 budgetFactory.postFlexItems(self.flexArray)

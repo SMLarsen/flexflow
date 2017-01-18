@@ -155,8 +155,9 @@ select {
   background-color: #29839e;
   font-family: 'Fjalla One', sans-serif;
   color: white;
-  letter-spacing: 3px;
-  text-transform: uppercase; }
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #2c4877; }
 
 .flow_button_months_container {
   width: 500px;

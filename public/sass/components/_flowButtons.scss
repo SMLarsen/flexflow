@@ -16,7 +16,6 @@
   @include month_button;
   background: lighten($detail-color, 7%);
   border: 1px solid $detail-color;
-  width: 100px;
   color: white;
   &:hover {
     background: $detail-color;
@@ -24,9 +23,6 @@
   }
   &:active {
     color: white;
-  }
-  span {
-    margin-left: -5px;
   }
 }
 

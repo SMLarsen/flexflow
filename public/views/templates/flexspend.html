@@ -8,7 +8,7 @@
   <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
     <input type="number" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
   </div>
-  <button class="btn btn-primary flex_submit" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
+  <button class="submit_button" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
 </div>
 <div class="modal fade" id="flexProfileForm" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -21,8 +21,8 @@
         <div ng-repeat="person in fx.flexArray"> <p>{{person.item_name}}: ${{person.item_amount}}</p></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button ng-click="fx.submitFlex()" class="btn btn-default" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Submit</button>
+        <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+        <button ng-click="fx.submitFlex()" class="submit_button" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
         <p>Flow spending is non-monthly expenses that often are what break our budget! Think about holidays, birthdays, field trips and quarterly bills.</p>
       </div>
       <div class="modal-footer">
-        <button onclick="window.location.href='#flowspend'" class="btn btn-default" data-dismiss="modal">Continue</button>
+        <button onclick="window.location.href='#flowspend'" class="submit_button" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>

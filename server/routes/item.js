@@ -39,7 +39,7 @@ router.get("/flowitems", function(req, res) {
 
 // Route: GET flow items for a budget within certain month
 router.get("/flowitems/:month", function(req, res) {
-  var month = req.params.month;
+    var month = req.params.month;
     pool.connect()
         .then(function(client) {
             var queryString = 'SELECT category_name, budget_template_category_id, item_month, item_year, item_name, item_img_src, item_amount, item_sort_sequence ';
@@ -62,12 +62,58 @@ router.get("/flowitems/:month", function(req, res) {
 }); // end pool.connect
 
 // Route: Update flow items for a budget within certain month
-router.put("/flowitems/:month", function(req, res){
-  var month = req.params.month;
-  pool.connect()
-    .then(function(client){
-      
-    })
+router.put("/flowitems/:month", function(req, res) {
+    var month = req.params.month;
+    console.log("In edit flowitems: month = ", month );
+    // console.log("In edit flowitems: year = ", req.body.item_year);
+    var data = [
+      item_name = req.body.item_name,
+      item_amount = req.body.item_amount,
+      item_year = req.body.item_year
+    ];
+
+    // console.log("In edit flowitems: item_name = ", data.item_name );
+
+    pool.connect()
+        .then(function(client) {
+            client.query('UPDATE budget_flow_item SET item_name = $1, item_amount = $2 WHERE budget_id = $3 AND item_month = $4 AND item_name = $5', [req.body.item_name, req.body.item_amount, req.budgetID, month, req.body.item_name])
+                .then(function(result) {
+                  client.release();
+                  res.sendStatus(200);
+                }).catch(function(err) {
+                    // error
+                    client.release();
+                    console.log('Error on EDIT flowitems', err);
+                    res.sendStatus(500);
+                });
+        });
+});
+// Route: Update flow items for a budget within certain month
+router.put("/flowitems/:month/:item_name", function(req, res) {
+    var month = req.params.month;
+    console.log("In edit flowitems: month = ", month );
+    // console.log("In edit flowitems: year = ", req.body.item_year);
+    var data = [
+      item_name = req.body.item_name,
+      item_amount = req.body.item_amount,
+      item_year = req.body.item_year
+    ];
+
+    // console.log("In edit flowitems: item_name = ", data.item_name );
+
+    pool.connect()
+        .then(function(client) {
+            client.query('UPDATE budget_flow_item SET item_amount = $1 WHERE budget_id = $2 AND item_month = $3 AND item_name = $4', [req.body.item_amount, req.budgetID, req.params.month, req.params.item_name])
+                .then(function(result) {
+                  client.release();
+                  res.sendStatus(200);
+                }).catch(function(err) {
+                    // error
+                    client.release();
+                    console.log('Error on EDIT flowitems', err);
+                    res.sendStatus(500);
+                });
+        });
 });
 
 // Route: Insert flow items for a budget

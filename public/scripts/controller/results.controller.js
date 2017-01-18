@@ -10,11 +10,11 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
     self.navActive = false;
 
     self.activateMobileNav = function() {
-      if(self.navActive === false){
-        self.navActive = true;
-      } else {
-        self.navActive = false;
-      }
+        if (self.navActive === false) {
+            self.navActive = true;
+        } else {
+            self.navActive = false;
+        }
     };
 
     budgetFactory.getFlowItemTotalByYear().then(function(results) {
@@ -53,7 +53,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             functionalTotal: self.functionalTotal,
             financialTotal: self.financialTotal
         };
-        console.log("SendObject ", sendObject);
+        // console.log("SendObject ", sendObject);
 
         $http({
                 method: 'POST',

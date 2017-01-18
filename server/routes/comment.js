@@ -47,21 +47,20 @@ router.post('/', function(req, res) {
 });
 
 router.put('/:id', function(req, res) {
-    console.log("here in edit comment");
+    // console.log("here in edit comment");
     // Grab data from the URL parameters
     var commentID = req.params.id;
 
     // the data to send to edit
     var data = {
         budget_comment: req.body.budget_comment,
-        created_at: req.body.created_at
     };
 
     pool.connect()
         .then(function(client) {
           // make query
-          client.query('UPDATE budget_comment SET budget_comment=($1), created_at=($2) WHERE id=($3)',
-          [data.budget_comment, data.created_at, commentID])
+          client.query('UPDATE budget_comment SET budget_comment=($1) WHERE id=($2)',
+          [data.budget_comment, commentID])
             .then(function(result){
               client.release();
               res.sendStatus(201);

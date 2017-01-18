@@ -11,11 +11,11 @@ app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", "Ad
     adminFactory.getAdminData();
 
     self.activateMobileNav = function() {
-      if(self.navActive === false){
-        self.navActive = true;
-      } else {
-        self.navActive = false;
-      }
+        if (self.navActive === false) {
+            self.navActive = true;
+        } else {
+            self.navActive = false;
+        }
     };
 
     // Function to Login

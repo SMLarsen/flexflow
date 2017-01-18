@@ -71,7 +71,9 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
                 console.log('Error sending mail in RESULT', currentUser.email, ': ', err);
             });
 
-        authFactory.logOut();
+        budgetFactory.updateBudgetStatus("Finished").then(function(result){
+          authFactory.logOut();
+        });
         window.location = '/#/home';
     };
 

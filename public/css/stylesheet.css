@@ -151,6 +151,13 @@ select {
       top: 5px;
       left: 5px; } }
 
+.modal-header {
+  background-color: #29839e;
+  font-family: 'Fjalla One', sans-serif;
+  color: white;
+  letter-spacing: 3px;
+  text-transform: uppercase; }
+
 .flow_button_months_container {
   width: 500px;
   margin: 0 auto;
@@ -368,7 +375,10 @@ select {
   padding: 10px 10px 10px 10px;
   background-color: rgba(255, 255, 255, 0.95);
   list-style: none;
-  width: 250px; }
+  width: 250px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family: 'Fjalla One', sans-serif; }
   .breadcrumb_mobile li {
     font-size: 2em;
     border-bottom: 1px solid #29839e; }

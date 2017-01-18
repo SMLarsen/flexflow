@@ -15,3 +15,11 @@
     left: 5px;
   }
 }
+
+.modal-header {
+  background-color: $detail-color;
+  font-family: 'Fjalla One', sans-serif;
+  color: white;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}

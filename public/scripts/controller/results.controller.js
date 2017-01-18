@@ -45,7 +45,9 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
 
     self.logOut = function() {
         console.log('logout clicked');
-        authFactory.logOut();
+        budgetFactory.updateBudgetStatus("Finished").then(function(result){
+          authFactory.logOut();
+        });
         window.location = '/#/home';
     };
 

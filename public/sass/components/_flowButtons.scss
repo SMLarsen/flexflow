@@ -22,6 +22,9 @@
     background: $detail-color;
     color: white;
   }
+  &:active {
+    color: white;
+  }
 }
 
 .empty_flow_month {
@@ -31,6 +34,9 @@
   color: white;
   &:hover {
     background: lighten($detail-color, 7%);
+    color: white;
+  }
+  &:active {
     color: white;
   }
 }
@@ -55,4 +61,8 @@
     padding: 15px;
     display: block;
   }
+}
+
+.flow_footer {
+  text-align: center;
 }

@@ -35,12 +35,9 @@ app.get("/privateData", privateData);
 app.use("/profile", profile);
 app.use("/item", item);
 app.use("/total", total);
-<<<<<<< HEAD
 app.use("/mail", mail);
 app.use("/comment", comment);
-=======
 app.use("/client-report", clientReport);
->>>>>>> 81fc2f6fdef7cc44c97751f640ff9f0d4cd3fa0d
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

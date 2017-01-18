@@ -50,7 +50,7 @@ app.controller("HomeController", ["$http", "AuthFactory", "TemplateFactory", "Ad
             window.location = "/#/flexspend";
             break;
             default:
-            window.location = "/#/flexspend";  
+            window.location = "/#/clientprofile";  
           }
         });
       }

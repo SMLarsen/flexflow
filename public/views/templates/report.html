@@ -1,0 +1,172 @@
+<h1>Client Report</h1>
+
+<button ng-click="rc.getReportData()">Report it</button>
+
+<h2>Profile</h2>
+<p>Start: <span>{{rc.budgetMonths[0].month}}/{{rc.reportData.profile.budget_start_year}}</span></p>
+<p>Annual Salary: <span>{{rc.reportData.profile.annual_salary}}</span></p>
+
+
+<table class="letterTable">
+  <thead>
+    <tr>
+      <th style="width:9%"></th>
+      <th style="width:7%">{{rc.budgetMonths[0].month}}<br>{{rc.budgetMonths[0].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[1].month}}<br>{{rc.budgetMonths[1].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[2].month}}<br>{{rc.budgetMonths[2].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[3].month}}<br>{{rc.budgetMonths[3].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[4].month}}<br>{{rc.budgetMonths[4].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[5].month}}<br>{{rc.budgetMonths[5].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[6].month}}<br>{{rc.budgetMonths[6].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[7].month}}<br>{{rc.budgetMonths[7].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[8].month}}<br>{{rc.budgetMonths[8].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[9].month}}<br>{{rc.budgetMonths[9].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[10].month}}<br>{{rc.budgetMonths[10].year}}</th>
+      <th style="width:7%">{{rc.budgetMonths[11].month}}<br>{{rc.budgetMonths[11].year}}</th>
+      <th style="width:7%">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="typeRow" colspan="14"><h4>Income</h4></td>
+    </tr>
+    <tr >
+      <td>Take Home</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr>
+    <tr>
+      <td class="typeRow" colspan="14"><h4>Expenses</h4></td>
+    </tr>
+    <tr>
+      <td colspan="14"><h5>Flex Items</h5></td>
+    </tr>
+    <tr ng-repeat="item in rc.reportData.Flex track by $index">
+      <td>{{item.item_name}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.annual_amount}}</td>
+    </tr>
+    <tr>
+      <td colspan="14"><h5>Flow Items</h5></td>
+    </tr>
+    <tr ng-repeat="item in rc.reportData.Flow track by $index">
+      <td>{{item[$index].item_name}}</td>
+      <td ng-repeat="flow in item">{{flow.item_amount}}</td>
+    </tr>
+    <tr>
+      <td colspan="14"><h5>Functional Items</h5></td>
+    </tr>
+    <tr ng-repeat="item in rc.reportData.Functional track by $index">
+      <td>{{item.item_name}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.annual_amount}}</td>
+    </tr>
+    <tr>
+      <td colspan="14"><h5>Financial Items</h5></td>
+    </tr>
+    <tr ng-repeat="item in rc.reportData.Financial track by $index">
+      <td>{{item.item_name}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.item_amount}}</td>
+      <td>{{item.annual_amount}}</td>
+    </tr>
+    <!-- <tr>
+      <td colspan="14"><h5>Summary</h5></td>
+    </tr>
+    <tr>
+      <td>Total Income</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr>
+    <tr>
+      <td>Total Expense</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr>
+    <tr>
+      <td>Net Total</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount}}</td>
+      <td>{{rc.reportData.profile.monthly_take_home_amount * 12}}</td>
+    </tr> -->
+  </tbody>
+</table>
+<h2>Comments</h2>
+<ul ng-repeat="comment in rc.reportData.comment">
+  <li>{{comment.budget_comment}}</li>
+</ul>

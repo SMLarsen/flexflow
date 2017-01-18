@@ -7,9 +7,8 @@
   <li class="active">Financial</li>
 </ol>
 <!-- template for input -->
-<div class="jumbotron">
-<h1 class="financial_header">Financial Spending</h1>
-</div>
+
+<h1 class="jumbotron">Financial Spending</h1>
 <div class="financial_input">
   <div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
     <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/financial-icons/' + item.item_img_src + ')'}"></label>

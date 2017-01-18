@@ -11,15 +11,21 @@
   top: 40px;
   right: 0;
   padding: 10px 10px 10px 10px;
+  background-color: hsla(0,0%,100%,0.95);
   list-style: none;
   width: 250px;
-  background-color: white;
   li {
     font-size: 2em;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $detail-color;
     &:last-of-type{
       border-bottom: none;
     }
+    a {
+      color: $detail-color;
+    }
+  }
+  .active {
+    color: $accent-color;
   }
   @media (min-width: $mobile-width) {
     display: none;

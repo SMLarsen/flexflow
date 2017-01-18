@@ -97,9 +97,12 @@ select {
   border: 1px solid #2c4877;
   border-radius: 15px;
   padding: 20px;
-  padding: 13px; }
+  padding: 13px;
+  margin-top: 20px; }
   .submit_button:hover {
     background-color: #33a4c7; }
+  .submit_button:active {
+    color: white; }
 
 .edit_button {
   background: #59b7d4;
@@ -110,6 +113,8 @@ select {
   padding: 13px; }
   .edit_button:hover {
     background-color: #6dc0d9; }
+  .edit_button:active {
+    color: white; }
 
 .additional_button {
   background: #29839e;
@@ -126,6 +131,8 @@ select {
   margin-bottom: 20px; }
   .additional_button:hover {
     background-color: #33a4c7; }
+  .additional_button:active {
+    color: white; }
 
 .flow_button_months_container {
   width: 500px;
@@ -155,6 +162,8 @@ select {
   .not_empty_flow_month:hover {
     background: #29839e;
     color: white; }
+  .not_empty_flow_month:active {
+    color: white; }
 
 .empty_flow_month {
   width: 100px;
@@ -170,6 +179,8 @@ select {
   color: white; }
   .empty_flow_month:hover {
     background: #309abb;
+    color: white; }
+  .empty_flow_month:active {
     color: white; }
 
 .flow_toggle_container {
@@ -190,6 +201,9 @@ select {
     height: 50px;
     padding: 15px;
     display: block; }
+
+.flow_footer {
+  text-align: center; }
 
 .button_log_in {
   background: #29839e;

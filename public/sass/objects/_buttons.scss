@@ -1,11 +1,18 @@
 .submit_button {
   @include button;
   padding: 13px;
+  margin-top: 20px;
+  &:active {
+    color: white;
+  }
 }
 
 .edit_button {
   @include secondary_button;
   padding: 13px;
+  &:active {
+    color: white;
+  }
 }
 
 .additional_button {
@@ -17,4 +24,7 @@
   border-radius: 50%;
   margin-top: 40px;
   margin-bottom: 20px;
+  &:active {
+    color: white;
+  }
 }

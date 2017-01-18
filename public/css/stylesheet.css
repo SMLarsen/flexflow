@@ -173,7 +173,7 @@ select {
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
-  padding-left: 17px;
+  padding-left: 15px;
   background: #309abb;
   border: 1px solid #29839e;
   width: 100px;
@@ -196,7 +196,7 @@ select {
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
-  padding-left: 17px;
+  padding-left: 15px;
   background: #29839e;
   border: 1px solid #29839e;
   color: white; }

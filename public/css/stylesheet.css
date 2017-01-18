@@ -172,6 +172,8 @@ select {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
+  padding-left: 17px;
   background: #309abb;
   border: 1px solid #29839e;
   width: 100px;
@@ -181,6 +183,8 @@ select {
     color: white; }
   .not_empty_flow_month:active {
     color: white; }
+  .not_empty_flow_month span {
+    margin-left: -5px; }
 
 .empty_flow_month {
   width: 100px;
@@ -191,6 +195,8 @@ select {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
+  padding-left: 17px;
   background: #29839e;
   border: 1px solid #29839e;
   color: white; }

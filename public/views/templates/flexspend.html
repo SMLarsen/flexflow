@@ -4,6 +4,24 @@
   <li class="active">Flex</li>
 </ol>
 
+<button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
+<div class="modal fade" id="hint" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">What is Flex Spending?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Imagine you could spend an amount every month on whatever makes you happy. This could be date nights, dinners with friends, new shoes... whatever you enjoy. That's flex spending!</p>
+      </div>
+      <div class="modal-footer">
+        <button class="submit_button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h1 class="jumbotron">Monthly Flex Allowance</h1>
 <div class="flex_container">
   <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>

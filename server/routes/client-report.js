@@ -296,7 +296,7 @@ function formatFlowItems(itemArray) {
 
 var lastCSV = false;
 var csvContent = '';
-// Route: Create CSV
+// Route: Create Flex CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
     console.log('createCSV Flex');
@@ -305,7 +305,16 @@ router.get("/", function(req, res, next) {
     next();
 });
 
-// Route: Create CSV
+// Route: Create Flow CSV
+router.get("/", function(req, res, next) {
+    var flexCSV = '';
+    console.log('createCSV Flow');
+    converter.json2csv(reportData.Flow, json2csvCallback);
+    console.log('csvContent:', csvContent);
+    next();
+});
+
+// Route: Create Functional CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
     console.log('createCSV Functional');
@@ -314,9 +323,9 @@ router.get("/", function(req, res, next) {
     next();
 });
 
-// Route: Create CSV
+// Route: Create FinancialCSV
 router.get("/", function(req, res, next) {
-    console.log('createCSV Functional');
+    console.log('createCSV Financial');
     lastCSV = true;
     converter.json2csv(reportData.Financial, json2csvCallback);
     console.log('csvContent:', csvContent);

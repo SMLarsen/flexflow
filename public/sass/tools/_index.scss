@@ -2,12 +2,13 @@
 @mixin month_button {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding: 0;
 }
 
 @mixin category_toggle {

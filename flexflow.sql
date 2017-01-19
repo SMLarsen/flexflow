@@ -107,7 +107,8 @@ CREATE TABLE budget (
     budget_start_year integer,
     monthly_take_home_amount integer,
     annual_salary integer,
-    meeting_scheduled boolean default false
+    meeting_scheduled boolean default false,
+    budget_status VARCHAR(20)
 );
 
 INSERT INTO budget (user_id, budget_start_month, budget_start_year, monthly_take_home_amount, annual_salary, meeting_scheduled)

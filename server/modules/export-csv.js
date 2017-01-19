@@ -223,10 +223,7 @@ router.post("/", function(req, res) {
         "FlowTotal: " + req.body.flowTotal + '<br>' +
         "FlexTotal: " + req.body.flexTotal + '<br>' +
         "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
-        "Financial Total: $" + req.body.financialTotal + '<br>' +
-        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
-        "Net Total: $" + req.body.netTotal + '</p>';
-
+        "FinancialTotal: " + req.body.financialTotal + '</p>';
 
     var receivers = req.body.email;
 
@@ -251,6 +248,7 @@ router.post("/", function(req, res) {
         {
             path: filePath, // stream this file
             contentType: "application/csv"
+
         }
       ]
     };
@@ -262,7 +260,6 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        fs.unlink(filePath);
 
         // console.log('Message sent: ' + info.response);
     });

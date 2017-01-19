@@ -67,7 +67,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
 
         $http({
                 method: 'POST',
-                url: '/mail',
+                url: '/csv',
                 headers: {
                     id_token: authFactory.getIdToken()
                 },

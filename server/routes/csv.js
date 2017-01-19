@@ -52,23 +52,14 @@ router.get("/", function(req, res, next) {
 router.get("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT item_name, item_amount, item_year, item_month, item_sort_sequence ";
+            var queryString = "SELECT item_year, item_month, item_name, item_amount, item_sort_sequence ";
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "UNION ";
-            queryString += "SELECT item_name, SUM(item_amount) AS annual_amount, MAX(item_year) + 1 AS item_year, 1 AS item_month, item_sort_sequence ";
-            queryString += "FROM budget_flow_item ";
-            queryString += "WHERE budget_id = $1 ";
-            queryString += "GROUP BY item_name, item_sort_sequence ";
-            queryString += "UNION ";
-            queryString += "SELECT 'Total', SUM(item_amount), item_year, item_month, 99 AS item_sort_sequence ";
+            queryString += "SELECT item_year, item_month, 'Total' AS item_name, SUM(item_amount) AS item_amount, 99 AS item_sort_sequence ";
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "GROUP BY item_year, item_month ";
-            queryString += "UNION ";
-            queryString += "SELECT 'Total', SUM(item_amount) AS annual_amount, MAX(item_year) + 1 AS item_year, 1 AS item_month, 99 AS item_sort_sequence ";
-            queryString += "FROM budget_flow_item ";
-            queryString += "WHERE budget_id = $1 ";
             queryString += "ORDER BY item_sort_sequence, item_year, item_month";
             // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {

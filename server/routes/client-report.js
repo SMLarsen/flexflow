@@ -9,6 +9,9 @@ var pool = new pg.Pool({
     database: config.database
 });
 
+var NAME_LENGTH = 22;
+var AMOUNT_LENGTH = 7;
+
 var reportData = {};
 
 console.log('Report route starting -------------------');
@@ -40,8 +43,8 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting items retrieved');
-                    formatItems(result.rows);
+                    // console.log('Reporting items retrieved');
+                    formattedItems(result.rows);
                     // console.log(result.rows);
                     client.release();
                     next();
@@ -79,7 +82,7 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting flow items retrieved');
+                    // console.log('Reporting flow items retrieved');
                     formatFlowItems(result.rows);
                     client.release();
                     next();
@@ -101,7 +104,7 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting profile retrieved');
+                    // console.log('Reporting profile retrieved');
                     reportData.profile = result.rows[0];
                     client.release();
                     next();
@@ -124,10 +127,10 @@ router.get("/", function(req, res, next) {
                     res.sendStatus(500);
                     next();
                 } else {
-                    console.log('Reporting comment retrieved');
+                    // console.log('Reporting comment retrieved');
                     reportData.comment = result.rows;
                     client.release();
-                    res.send(reportData.Flow);
+                    res.sendStatus(201);
                     next();
                 }
             });
@@ -140,7 +143,7 @@ router.get("/", function(req, res, next) {
 });
 
 
-function formatItems(itemArray) {
+function formattedItems(itemArray) {
     var tempCategoryArray = [];
     var currentCategory = itemArray[0].category_name;
     for (var i = 0; i < itemArray.length; i++) {
@@ -182,7 +185,6 @@ router.get("/", function(req, res, next) {
 
 
 function createPDF() {
-    console.log('starting createPDF');
     var doc = new pdfDocument({
         layout: 'landscape'
     });
@@ -194,19 +196,18 @@ function createPDF() {
         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
 
     // flex items
-    doc.fontSize(12)
+    doc.font('Courier', 12)
         .moveDown()
         .text('Flex Accounts:');
     for (var i = 0; i < reportData.Flex.length; i++) {
         item = reportData.Flex[i];
-        formatItem = item.item_name + " - $" + item.item_amount;
+        formattedItem = formatPDFItem(item);
         doc.font('Courier', 10)
             .moveDown()
-            .text(formatItem, {
-                width: 412,
+            .text(formattedItem, {
+                width: 1412,
                 align: 'justify',
                 indent: 30,
-                columns: 2,
                 height: 300,
                 ellipsis: true
             });
@@ -218,18 +219,17 @@ function createPDF() {
         .text('Flow Accounts:');
     for (var i = 0; i < reportData.Flow.length; i++) {
         item = reportData.Flow[i];
-        formatItem = item.item_name + " - $" + item.amount_1 + ', ' + item.amount_2 + ', ' + item.amount_3 +
-            ', ' + item.amount_4 + ', ' + item.amount_5 + ', ' + item.amount_6 + ', ' + item.amount_7 +
-            ', ' + item.amount_8 + ', ' + item.amount_9 + ', ' + item.amount_10 + ', ' + item.amount_11 +
-            ', ' + item.amount_12 + ', ' + item.annual_amount;
-        doc.font('Times-Roman', 10)
+        formattedItem = textSpacer(item.item_name, NAME_LENGTH) + intSpacer(item.amount_1, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_2, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_3, AMOUNT_LENGTH) +
+            ' | ' + intSpacer(item.amount_4, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_5, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_6, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_7, AMOUNT_LENGTH) +
+            ' | ' + intSpacer(item.amount_8, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_9, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_10, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_11, AMOUNT_LENGTH) +
+            ' | ' + intSpacer(item.amount_12, AMOUNT_LENGTH) + ' | ' + intSpacer(item.annual_amount, AMOUNT_LENGTH);
+        doc.font('Courier', 10)
             .moveDown()
-            .text(formatItem, {
-                width: 1200,
+            .text(formattedItem, {
+                width: 1412,
                 align: 'justify',
                 indent: 30,
-                // columns: 14,
-                height: 200,
+                height: 300,
                 ellipsis: true
             });
     }
@@ -240,14 +240,13 @@ function createPDF() {
         .text('Functional Accounts:');
     for (var i = 0; i < reportData.Functional.length; i++) {
         item = reportData.Functional[i];
-        formatItem = item.item_name + " - $" + item.item_amount;
-        doc.font('Times-Roman', 10)
+        formattedItem = formatPDFItem(item);
+        doc.font('Courier', 10)
             .moveDown()
-            .text(formatItem, {
-                width: 412,
+            .text(formattedItem, {
+                width: 1412,
                 align: 'justify',
                 indent: 30,
-                columns: 2,
                 height: 300,
                 ellipsis: true
             });
@@ -259,50 +258,59 @@ function createPDF() {
         .text('Financial Accounts:');
     for (var i = 0; i < reportData.Financial.length; i++) {
         item = reportData.Financial[i];
-        formatItem = item.item_name + " - $" + item.item_amount;
-        doc.font('Times-Roman', 10)
+        formattedItem = formatPDFItem(item);
+        doc.font('Courier', 10)
             .moveDown()
-            .text(formatItem, {
-                width: 412,
+            .text(formattedItem, {
+                width: 1412,
                 align: 'justify',
                 indent: 30,
-                columns: 2,
                 height: 300,
                 ellipsis: true
             });
     }
-
-    // doc.text('Flexer: ' + reportData.Flex[0].item_name + " - $" + reportData.Flex[0].item_amount, 100, 300)
-    //     .font('Times-Roman', 13)
-    //     .moveDown()
-    //     .text(lorem, {
-    //         width: 412,
-    //         align: 'justify',
-    //         indent: 30,
-    //         columns: 2,
-    //         height: 300,
-    //         ellipsis: true
-    //     });
 
     // end and display the document in the iframe to the right
     doc.end();
     console.log('PDF created:', fileName);
 }
 
-function spacer(value, length) {
+function textSpacer(value, length) {
     if (value.length > length) {
         console.log(1, value, value.substring(0, length));
         return value.substring(0, length);
     } else {
-        if (value.length === length) {
-            return value;
-        } else {
-            var spacesNeeded = length - value.length;
-            for (var i = 0; i < spacesNeeded; i++) {
-                value += ' ';
-            }
+        for (var i = value.length; i <= length; i++) {
+            value += ' ';
         }
+        return value;
     }
+}
+
+function formatPDFItem(item) {
+    item = textSpacer(item.item_name, NAME_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer((item.item_amount * 12), 7);
+    return item;
+}
+
+function intSpacer(value, length) {
+  console.log('value1:', value);
+    var paddedValue = ("         " + value.toString()).slice(-length);
+    console.log('value2:', paddedValue);
+    return paddedValue;
+
 }
 
 module.exports = router;

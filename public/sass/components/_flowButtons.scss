@@ -12,11 +12,10 @@
   margin-bottom: 20px;
 }
 
-.not_empty_flow_month {
+.empty_flow_month {
   @include month_button;
   background: lighten($detail-color, 7%);
-  border: 1px solid $detail-color;
-  width: 100px;
+  border: 2px solid $detail-color;
   color: white;
   &:hover {
     background: $detail-color;
@@ -27,10 +26,10 @@
   }
 }
 
-.empty_flow_month {
+.not_empty_flow_month {
   @include month_button;
   background: $detail-color;
-  border: 1px solid $detail-color;
+  border: 2px solid $detail-color;
   color: white;
   &:hover {
     background: lighten($detail-color, 7%);
@@ -60,6 +59,10 @@
     height: 50px;
     padding: 15px;
     display: block;
+    width: 400px;
+    @media (max-width: $mobile-width) {
+      width: 200px;
+    }
   }
 }
 

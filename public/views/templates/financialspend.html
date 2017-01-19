@@ -1,41 +1,42 @@
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li><a href="#functionalspend">Functional</a></li>
-  <li class="active">Financial</li>
+
+    <li><a href="#">Home</a></li>
+    <li><a href="#flexspend">Flex</a></li>
+    <li><a href="#flowspend">Flow</a></li>
+    <li><a href="#functionalspend">Functional</a></li>
+    <li class="active">Financial</li>
 </ol>
 <!-- template for input -->
 
 <h1 class="jumbotron">Financial Spending</h1>
 <div class="financial_input">
-  <div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
-    <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/financial-icons/' + item.item_img_src + ')'}"></label>
-    <span ng-hide="item.activeItem">{{item.item_name}}</span>
-    <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
-  </div>
-  <button class="additional_button" data-target="#additionalCategories" data-toggle="modal">+</button>
+    <div class="financial_spending toggle_container" ng-repeat="item in fi.itemArray">
+        <label for="item.item_name" ng-click="fi.toggleActive(item)" ng-class="{active_toggle: item.activeItem === true, not_active_toggle: item.activeItem === false}" ng-style="{'background-image': 'url(/assets/images/financial-icons/' + item.item_img_src + ')'}"></label>
+        <span ng-hide="item.activeItem">{{item.item_name}}</span>
+        <input type="number" placeholder="e.g. 150" ng-show="item.activeItem" name="item.item_name" ng-model="item.item_amount" />
+    </div>
+    <button class="additional_button" data-target="#additionalCategories" data-toggle="modal">+</button>
 </div>
 <button class="submit_button" data-toggle="modal" data-target="#financialData">Submit</button>
 
-<div class="modal fade" id="additionalCategories" role="dialog">
+<button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
+<div class="modal fade" id="hint" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
-        <h4 class="modal-title">Enter Your Additional Budget Item</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">What is Financial Spending?</h4>
       </div>
       <div class="modal-body">
-        <input placeholder="New Category" ng-model="fi.newCategory.item_name"/>
-        <input placeholder="e.g. 150" type="number" ng-model="fi.newCategory.item_amount"/>
+        <p>This is all of your investments that you are already making each month.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="submit_button" ng-click="fi.addFinancialItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
+        <button class="submit_button" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-<!-- confirmation/submit modal-->
+
 <div class="modal fade" id="financialData" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -50,25 +51,51 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-        <button class="submit_button" type="button" ng-click="fi.updateFinancialItems()" data-dismiss="modal">Submit</button>
+        <button class="submit_button" type="button" ng-click="fi.updateFinancialItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>
 </div>
 
+<div class="modal fade" id="additionalCategories" role="dialog">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+                <h4 class="modal-title">Enter Your Additional Budget Item</h4>
+            </div>
+            <div class="modal-body">
+                <input placeholder="New Category" ng-model="fi.newCategory.item_name" />
+                <input placeholder="e.g. 150" type="number" ng-model="fi.newCategory.item_amount" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="submit_button" ng-click="fi.addFinancialItem()" data-dismiss="modal" data-toggle="modal">Save New Item</button>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+            <button class="submit_button" type="button" ng-click="fi.updateFinancialItems()" data-dismiss="modal">Submit</button>
+        </div>
+    </div>
+</div>
+
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="71.4" aria-valuemin="0" aria-valuemax="100" style="width: 71.4%;">
-    5/7
-  </div>
+    <div class="progress-bar" role="progressbar" aria-valuenow="71.4" aria-valuemin="0" aria-valuemax="100" style="width: 71.4%;">
+        5/7
+    </div>
 </div>
 
 <ol class="breadcrumb_mobile" ng-show="fi.navActive">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flexspend">Flow</a></li>
-  <li><a href="#fuctionalspend">Functional</a></li>
-  <li class="active">Financial</li>
+
+    <li><a href="#">Home</a></li>
+    <li><a href="#flexspend">Flex</a></li>
+    <li><a href="#flexspend">Flow</a></li>
+    <li><a href="#fuctionalspend">Functional</a></li>
+    <li class="active">Financial</li>
+
 </ol>
 <div class="hamburger" ng-click="fi.activateMobileNav()">
-  <img src="/assets/images/hamburger.svg" alt="hamburger">
+    <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

@@ -34,24 +34,13 @@ router.post("/", function(req, res) {
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
         text: 'You have a submission with the following details from flex flow...',
         html: htmlObject,
-        // attachments: [{
-        //     filename: 'text1.txt',
-        //     content: 'hello world!'
-        // }]
-        // attachments: [{
-        //     fileName: 'file.pdf', //This needs to be the link to the form, or the actual form
-        //     // filePath: './file.pdf',
-        //     streamSource: fs.createReadStream(filePath),
-        //     contentType: "application/pdf"
-        // }]
+
         attachments: [
 
-        {   // file on disk as an attachment
+        {
             filename: 'file.pdf',
             path: filePath, // stream this file
-            //below one not working some time dont know why but its work for me now
-            //  path: 'C:/Users/Me/Desktop/ab.txt',
-            //this also work foo me
+
             contentType: "application/pdf"
 
         }

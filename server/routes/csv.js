@@ -223,7 +223,10 @@ router.post("/", function(req, res) {
         "FlowTotal: " + req.body.flowTotal + '<br>' +
         "FlexTotal: " + req.body.flexTotal + '<br>' +
         "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
-        "FinancialTotal: " + req.body.financialTotal + '</p>';
+        "Financial Total: $" + req.body.financialTotal + '<br>' +
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
+        "Net Total: $" + req.body.netTotal + '</p>';
+
 
     var receivers = req.body.email;
 
@@ -260,7 +263,6 @@ router.post("/", function(req, res) {
             return console.log(error);
         }
         fs.unlink(filePath);
-
 
         // console.log('Message sent: ' + info.response);
     });

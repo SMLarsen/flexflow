@@ -288,6 +288,12 @@ select {
   text-align: center;
   width: 40%;
   margin: 0 auto; }
+  .flex_container input {
+    margin: 0 auto;
+    width: 300px; }
+    @media (max-width: 768px) {
+      .flex_container input {
+        width: 200px; } }
   @media (max-width: 768px) {
     .flex_container {
       width: 65%; } }

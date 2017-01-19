@@ -9,7 +9,12 @@
     overflow: hidden;
     background: white;
     float: left;
-
+    &_negative {
+      background: rgba(red, 0.2);
+    }
+    &_positive {
+      background: rgba($detail-color, 0.2);
+    }
   }
   &_name {
     border-bottom: 1px solid black;
@@ -45,10 +50,4 @@
   button {
     margin-bottom: 20px;
   }
-}
-
-.results_header {
-  width: 70%;
-  text-align: center;
-  margin: 0 auto;
 }

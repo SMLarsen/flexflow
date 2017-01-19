@@ -18,21 +18,29 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
         }
     };
 
-    budgetFactory.getFlowItemTotalByYear().then(function(results) {
-        self.flowTotal = results.sum / 12;
-    });
+    budgetFactory.getFlowItemTotalByYear()
+           .then(function(results) {
+               self.flowTotal = parseInt(results.sum / 12);
+               budgetFactory.getFlexItemTotal()
+                   .then(function(resultsflex) {
+                       self.flexTotal = parseInt(resultsflex.sum);
+                       budgetFactory.getFunctionalItemTotal()
+                           .then(function(resultsfunc) {
+                               self.functionalTotal = parseInt(resultsfunc.sum);
+                               budgetFactory.getFinancialItemTotal()
+                                   .then(function(resultsfin) {
+                                       self.financialTotal = parseInt(resultsfin.sum);
+                                       budgetFactory.getBudget()
+                                        .then(function(resultsbudg){
+                                          self.takeHomeCash = parseInt(resultsbudg.monthly_take_home_amount);
+                                          self.totalSpending = self.flowTotal + self.flexTotal + self.functionalTotal + self.financialTotal;
+                                          self.netTotal = self.takeHomeCash - self.totalSpending;
 
-    budgetFactory.getFlexItemTotal().then(function(results) {
-        self.flexTotal = results.sum;
-    });
-
-    budgetFactory.getFunctionalItemTotal().then(function(results) {
-        self.functionalTotal = results.sum;
-    });
-
-    budgetFactory.getFinancialItemTotal().then(function(results) {
-        self.financialTotal = results.sum;
-    });
+                                        });
+                                   });
+                           });
+                   });
+           });
 
     self.scheduleMeeting = function() {
         console.log('scheduleMeeting clicked');

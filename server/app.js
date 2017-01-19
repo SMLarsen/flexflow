@@ -4,6 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
 var clientReport = require('./routes/client-report');
+var csv = require('./routes/csv');
 var privateData = require('./routes/private-data');
 var admin = require('./routes/admin');
 var templates = require('./routes/template');
@@ -38,6 +39,7 @@ app.use("/total", total);
 app.use("/mail", mail);
 app.use("/comment", comment);
 app.use("/client-report", clientReport);
+app.use("/csv", csv);
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

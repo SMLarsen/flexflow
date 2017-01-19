@@ -151,6 +151,14 @@ select {
       top: 5px;
       left: 5px; } }
 
+.modal-header {
+  background-color: #29839e;
+  font-family: 'Fjalla One', sans-serif;
+  color: white;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #2c4877; }
+
 .flow_button_months_container {
   width: 500px;
   margin: 0 auto;
@@ -163,41 +171,42 @@ select {
 .nav_button_container {
   margin-bottom: 20px; }
 
-.not_empty_flow_month {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin: 5px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: #309abb;
-  border: 1px solid #29839e;
-  width: 100px;
-  color: white; }
-  .not_empty_flow_month:hover {
-    background: #29839e;
-    color: white; }
-  .not_empty_flow_month:active {
-    color: white; }
-
 .empty_flow_month {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: #29839e;
-  border: 1px solid #29839e;
+  padding: 0;
+  background: #309abb;
+  border: 2px solid #29839e;
   color: white; }
   .empty_flow_month:hover {
-    background: #309abb;
+    background: #29839e;
     color: white; }
   .empty_flow_month:active {
+    color: white; }
+
+.not_empty_flow_month {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  margin: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0;
+  background: #29839e;
+  border: 2px solid #29839e;
+  color: white; }
+  .not_empty_flow_month:hover {
+    background: #309abb;
+    color: white; }
+  .not_empty_flow_month:active {
     color: white; }
 
 .flow_toggle_container {
@@ -367,7 +376,10 @@ select {
   padding: 10px 10px 10px 10px;
   background-color: rgba(255, 255, 255, 0.95);
   list-style: none;
-  width: 250px; }
+  width: 250px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family: 'Fjalla One', sans-serif; }
   .breadcrumb_mobile li {
     font-size: 2em;
     border-bottom: 1px solid #29839e; }

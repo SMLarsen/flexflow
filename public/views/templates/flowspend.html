@@ -24,14 +24,14 @@
 
 <h1 class="jumbotron">Flow Spending</h1>
 <div class="flow_button_months_container">
-<button class="btn" ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm">{{month.month}} <br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
+<button class="btn" ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm"><span>{{month.month}}</span><br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
 </div>
 <div class="modal fade" id="monthDataForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
+        <h4>{{fl.currentMonthData.month}} {{fl.currentMonthData.year}}</h4>
       </div>
       <div class="modal-body">
         <div ng-repeat="category in fl.flowCategories" class="flow_toggle_container">

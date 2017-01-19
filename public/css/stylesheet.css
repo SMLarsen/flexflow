@@ -320,6 +320,10 @@ select {
   overflow: hidden;
   background: white;
   float: left; }
+  .results_container_negative {
+    background: rgba(255, 0, 0, 0.2); }
+  .results_container_positive {
+    background: rgba(41, 131, 158, 0.2); }
 
 .results_name {
   border-bottom: 1px solid black;
@@ -351,11 +355,6 @@ select {
   width: 300px; }
   .results_button_container button {
     margin-bottom: 20px; }
-
-.results_header {
-  width: 70%;
-  text-align: center;
-  margin: 0 auto; }
 
 .addl_comment {
   width: 40%;

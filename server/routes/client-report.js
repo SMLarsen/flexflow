@@ -1,8 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-// var connectionString = require('../modules/database-config');
 var config = require('../modules/pg-config');
+var pdfDocument = require('pdfkit');
+var blobStream = require('blob-stream');
+var iframe = require('iframe');
+var fs = require('fs');
+var converter = require('json-2-csv');
 
 var pool = new pg.Pool({
     database: config.database
@@ -123,7 +127,6 @@ router.get("/", function(req, res, next) {
                     console.log('Reporting comment retrieved');
                     reportData.comment = result.rows;
                     client.release();
-                    console.log(reportData);
                     res.send(reportData);
                     next();
                 }
@@ -131,44 +134,13 @@ router.get("/", function(req, res, next) {
         });
 });
 
+// Route: GET comments for a budget
+router.get("/", function(req, res, next) {
+    createPDF();
+});
 
-function formatItems(itemArray) {
-    var tempCategoryArray = [];
-    var currentCategory = itemArray[0].category_name;
-    for (var i = 0; i < itemArray.length; i++) {
-        console.log(i, itemArray[i].item_name, itemArray[i].category_name, currentCategory, itemArray[i]);
-        if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
-            if (i === itemArray.length - 1) {
-                tempCategoryArray.push(itemArray[i]);
-            }
-            reportData[currentCategory] = tempCategoryArray;
-            tempCategoryArray = [];
-            tempCategoryArray.push(itemArray[i]);
-            currentCategory = itemArray[i].category_name;
-            console.log(1);
-        } else {
-            tempCategoryArray.push(itemArray[i]);
-            console.log(2);
-        }
-    }
-}
-
-function formatFlowItems(itemArray) {
-    var tempItemArray = [];
-    var tempCategoryArray = [];
-    var currentName = itemArray[0].item_name;
-    for (var i = 0; i < itemArray.length; i++) {
-        if (itemArray[i].item_name === currentName) {
-            tempItemArray.push(itemArray[i]);
-        } else {
-            tempCategoryArray.push(tempItemArray);
-            tempItemArray = [];
-            tempItemArray.push(itemArray[i]);
-            currentName = itemArray[i].item_name;
-        }
-    }
-    tempCategoryArray.push(tempItemArray);
-    reportData.Flow = tempCategoryArray;
-}
+function createPDF() {
+    console.log('starting createPDF');
+  }
 
 module.exports = router;

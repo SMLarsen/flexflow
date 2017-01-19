@@ -1,0 +1,20 @@
+category_name,item_name,item_amount,annual_amount,item_sort_sequence
+Flex,Steve,500,6000,1
+Flex,Ellen,500,6000,2
+Flex,Total,1000,12000,100
+category_name,item_name,item_amount,annual_amount,item_sort_sequence
+Functional,Rent | Mortgage,1000,12000,1
+Functional,Daycare,700,8400,2
+Functional,Cars,250,3000,3
+Functional,P&C Insurance,135,1620,4
+Functional,Cell Phone,120,1440,5
+Functional,Utilities,200,2400,6
+Functional,Student Loans,200,2400,7
+Functional,Credit Card | Loans,100,1200,8
+Functional,Gas,150,1800,9
+Functional,Total,2855,34260,100
+category_name,item_name,item_amount,annual_amount,item_sort_sequence
+Financial,Insurance,500,6000,1
+Financial,Investments,300,3600,2
+Financial,Emergency Cash,300,3600,3
+Financial,Total,1400,16800,100

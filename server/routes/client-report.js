@@ -6,6 +6,7 @@ var pdfDocument = require('pdfkit');
 var blobStream = require('blob-stream');
 var iframe = require('iframe');
 var fs = require('fs');
+var converter = require('json-2-csv');
 
 var pool = new pg.Pool({
     database: config.database
@@ -171,127 +172,170 @@ function formatFlowItems(itemArray) {
 }
 
 // Route: GET comments for a budget
+// router.get("/", function(req, res, next) {
+//     createPDF();
+// });
+
+
+// function createPDF() {
+//     console.log('starting createPDF');
+//     var doc = new pdfDocument;
+//     doc.pipe(fs.createWriteStream('./flexflow.pdf'));
+//
+//     // draw some text
+//     doc.fontSize(16)
+//         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+//
+//     // flex items
+//     doc.fontSize(12)
+//       .moveDown()
+//         .text('Flex Accounts:');
+//     for (var i = 0; i < reportData.Flex.length; i++) {
+//         item = reportData.Flex[i];
+//         formatItem = item.item_name + " - $" + item.item_amount;
+//         doc.font('Times-Roman', 10)
+//             .moveDown()
+//             .text(formatItem, {
+//                 width: 412,
+//                 align: 'justify',
+//                 indent: 30,
+//                 columns: 2,
+//                 height: 300,
+//                 ellipsis: true
+//             });
+//     }
+//
+//             // flow items
+//             doc.fontSize(12)
+//               .moveDown()
+//                 .text('Flow Accounts:');
+//             for (var i = 0; i < reportData.Flow.length; i++) {
+//                 // item = reportData.Flow[i];
+//                 // formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
+//                 // ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
+//                 // ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
+//                 // item[11].item_amount + ', ' + item[12].item_amount;
+//                 item = reportData.Flow[i];
+//                 formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
+//                 ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
+//                 ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
+//                 item[11].item_amount + ', ' + item[12].item_amount;
+//                 doc.font('Times-Roman', 10)
+//                     .moveDown()
+//                     .text([item[0].item_name item[0].item_amount], {
+//                         width: 1200,
+//                         align: 'justify',
+//                         indent: 30,
+//                         columns: 14,
+//                         height: 200,
+//                         ellipsis: true
+//                     })
+//
+//                     .text(item[1].item_amount)
+//                     .text(item[2].item_amount)
+//                     .text(item[3].item_amount)
+//                     ;
+//             }
+//
+//         // functional items
+//         doc.fontSize(12)
+//           .moveDown()
+//             .text('Functional Accounts:');
+//         for (var i = 0; i < reportData.Functional.length; i++) {
+//             item = reportData.Functional[i];
+//             formatItem = item.item_name + " - $" + item.item_amount;
+//             doc.font('Times-Roman', 10)
+//                 .moveDown()
+//                 .text(formatItem, {
+//                     width: 412,
+//                     align: 'justify',
+//                     indent: 30,
+//                     columns: 2,
+//                     height: 300,
+//                     ellipsis: true
+//                 });
+//         }
+//
+//             // Financial items
+//             doc.fontSize(12)
+//               .moveDown()
+//                 .text('Financial Accounts:');
+//             for (var i = 0; i < reportData.Financial.length; i++) {
+//                 item = reportData.Financial[i];
+//                 formatItem = item.item_name + " - $" + item.item_amount;
+//                 doc.font('Times-Roman', 10)
+//                     .moveDown()
+//                     .text(formatItem, {
+//                         width: 412,
+//                         align: 'justify',
+//                         indent: 30,
+//                         columns: 2,
+//                         height: 300,
+//                         ellipsis: true
+//                     });
+//             }
+//
+//     // doc.text('Flexer: ' + reportData.Flex[0].item_name + " - $" + reportData.Flex[0].item_amount, 100, 300)
+//     //     .font('Times-Roman', 13)
+//     //     .moveDown()
+//     //     .text(lorem, {
+//     //         width: 412,
+//     //         align: 'justify',
+//     //         indent: 30,
+//     //         columns: 2,
+//     //         height: 300,
+//     //         ellipsis: true
+//     //     });
+//
+//     // end and display the document in the iframe to the right
+//     doc.end();
+//     // stream.on('finish', function() {
+//     //   blob = stream.toBlob('application/pdf');
+//     // });
+// }
+
+var lastCSV = false;
+var csvContent = '';
+// Route: Create CSV
 router.get("/", function(req, res, next) {
-    createPDF();
+    var flexCSV = '';
+    console.log('createCSV Flex');
+    converter.json2csv(reportData.Flex, json2csvCallback);
+    console.log('csvContent:', csvContent);
+    next();
 });
 
+// Route: Create CSV
+router.get("/", function(req, res, next) {
+    var flexCSV = '';
+    console.log('createCSV Functional');
+    converter.json2csv(reportData.Functional, json2csvCallback);
+    console.log('csvContent:', csvContent);
+    next();
+});
 
-function createPDF() {
-    console.log('starting createPDF');
-    var doc = new pdfDocument;
-    doc.pipe(fs.createWriteStream('./flexflow.pdf'));
+// Route: Create CSV
+router.get("/", function(req, res, next) {
+    console.log('createCSV Functional');
+    lastCSV = true;
+    converter.json2csv(reportData.Financial, json2csvCallback);
+    console.log('csvContent:', csvContent);
+    next();
+});
 
-    // draw some text
-    doc.fontSize(16)
-        .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+var json2csvCallback = function(err, csv) {
+    if (err) throw err;
+    console.log(123, csv);
+    csvContent += csv;
+    if (lastCSV) {
+      fs.writeFile("./flexflow.csv", csvContent, function(err) {
+          if (err) {
+              console.log(err);
+          }
+          console.log("The file was saved!");
+      });
 
-    // flex items
-    doc.fontSize(12)
-      .moveDown()
-        .text('Flex Accounts:');
-    for (var i = 0; i < reportData.Flex.length; i++) {
-        item = reportData.Flex[i];
-        formatItem = item.item_name + " - $" + item.item_amount;
-        doc.font('Times-Roman', 10)
-            .moveDown()
-            .text(formatItem, {
-                width: 412,
-                align: 'justify',
-                indent: 30,
-                columns: 2,
-                height: 300,
-                ellipsis: true
-            });
     }
-
-            // flow items
-            doc.fontSize(12)
-              .moveDown()
-                .text('Flow Accounts:');
-            for (var i = 0; i < reportData.Flow.length; i++) {
-                // item = reportData.Flow[i];
-                // formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
-                // ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
-                // ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
-                // item[11].item_amount + ', ' + item[12].item_amount;
-                item = reportData.Flow[i];
-                formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
-                ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
-                ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
-                item[11].item_amount + ', ' + item[12].item_amount;
-                doc.font('Times-Roman', 10)
-                    .moveDown()
-                    .text([item[0].item_name item[0].item_amount], {
-                        width: 1200,
-                        align: 'justify',
-                        indent: 30,
-                        columns: 14,
-                        height: 200,
-                        ellipsis: true
-                    })
-
-                    .text(item[1].item_amount)
-                    .text(item[2].item_amount)
-                    .text(item[3].item_amount)
-                    ;
-            }
-
-        // functional items
-        doc.fontSize(12)
-          .moveDown()
-            .text('Functional Accounts:');
-        for (var i = 0; i < reportData.Functional.length; i++) {
-            item = reportData.Functional[i];
-            formatItem = item.item_name + " - $" + item.item_amount;
-            doc.font('Times-Roman', 10)
-                .moveDown()
-                .text(formatItem, {
-                    width: 412,
-                    align: 'justify',
-                    indent: 30,
-                    columns: 2,
-                    height: 300,
-                    ellipsis: true
-                });
-        }
-
-            // Financial items
-            doc.fontSize(12)
-              .moveDown()
-                .text('Financial Accounts:');
-            for (var i = 0; i < reportData.Financial.length; i++) {
-                item = reportData.Financial[i];
-                formatItem = item.item_name + " - $" + item.item_amount;
-                doc.font('Times-Roman', 10)
-                    .moveDown()
-                    .text(formatItem, {
-                        width: 412,
-                        align: 'justify',
-                        indent: 30,
-                        columns: 2,
-                        height: 300,
-                        ellipsis: true
-                    });
-            }
-
-    // doc.text('Flexer: ' + reportData.Flex[0].item_name + " - $" + reportData.Flex[0].item_amount, 100, 300)
-    //     .font('Times-Roman', 13)
-    //     .moveDown()
-    //     .text(lorem, {
-    //         width: 412,
-    //         align: 'justify',
-    //         indent: 30,
-    //         columns: 2,
-    //         height: 300,
-    //         ellipsis: true
-    //     });
-
-    // end and display the document in the iframe to the right
-    doc.end();
-    // stream.on('finish', function() {
-    //   blob = stream.toBlob('application/pdf');
-    // });
-}
-
+};
 
 module.exports = router;

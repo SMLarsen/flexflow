@@ -3,10 +3,15 @@ var router = express.Router();
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require('path');
-var filePath = path.join(__dirname, 'file.pdf');
+var csv = require('../modules/export-csv');
 
 router.post("/", function(req, res) {
     // console.log("im here in send mail");
+    // var name =
+    //csv.router();
+    console.log(csv.router());
+    var filePath = path.join(__dirname, '../csv/flexflow-' + req.budgetID + '.csv');
+
     var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
@@ -34,14 +39,10 @@ router.post("/", function(req, res) {
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
         text: 'You have a submission with the following details from flex flow...',
         html: htmlObject,
-
         attachments: [
-
         {
-            filename: 'file.pdf',
             path: filePath, // stream this file
-
-            contentType: "application/pdf"
+            contentType: "application/csv"
 
         }
       ]

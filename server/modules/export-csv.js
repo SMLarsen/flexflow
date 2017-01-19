@@ -248,6 +248,7 @@ router.post("/", function(req, res) {
         {
             path: filePath, // stream this file
             contentType: "application/csv"
+
         }
       ]
     };
@@ -259,8 +260,6 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        fs.unlink(filePath);
-
 
         // console.log('Message sent: ' + info.response);
     });

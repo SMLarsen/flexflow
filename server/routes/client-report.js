@@ -3,10 +3,7 @@ var router = express.Router();
 var pg = require('pg');
 var config = require('../modules/pg-config');
 var pdfDocument = require('pdfkit');
-var blobStream = require('blob-stream');
-var iframe = require('iframe');
 var fs = require('fs');
-var converter = require('json-2-csv');
 
 var pool = new pg.Pool({
     database: config.database
@@ -16,8 +13,11 @@ var reportData = {};
 
 console.log('Report route starting -------------------');
 
+var budgetID = 0;
+
 // Route: GET item totals for a budget
 router.get("/", function(req, res, next) {
+    budgetID = req.budgetID;
     pool.connect()
         .then(function(client) {
             var queryString = "SELECT category_name, item_name, item_amount, (item_amount * 12) AS annual_amount, item_sort_sequence ";
@@ -139,8 +139,182 @@ router.get("/", function(req, res, next) {
     createPDF();
 });
 
+
+function formatItems(itemArray) {
+    var tempCategoryArray = [];
+    var currentCategory = itemArray[0].category_name;
+    for (var i = 0; i < itemArray.length; i++) {
+        // console.log(i, itemArray[i].item_name, itemArray[i].category_name, currentCategory, itemArray[i]);
+        if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
+            if (i === itemArray.length - 1) {
+                tempCategoryArray.push(itemArray[i]);
+            }
+            reportData[currentCategory] = tempCategoryArray;
+            tempCategoryArray = [];
+            tempCategoryArray.push(itemArray[i]);
+            currentCategory = itemArray[i].category_name;
+        } else {
+            tempCategoryArray.push(itemArray[i]);
+        }
+    }
+}
+
+function formatFlowItems(itemArray) {
+    var tempItemArray = [];
+    var tempCategoryArray = [];
+    var currentName = itemArray[0].item_name;
+    for (var i = 0; i < itemArray.length; i++) {
+        if (itemArray[i].item_name === currentName) {
+            tempItemArray.push(itemArray[i]);
+        } else {
+            tempCategoryArray.push(tempItemArray);
+            tempItemArray = [];
+            tempItemArray.push(itemArray[i]);
+            currentName = itemArray[i].item_name;
+        }
+    }
+    tempCategoryArray.push(tempItemArray);
+    reportData.Flow = tempCategoryArray;
+}
+
+// Route: GET comments for a budget
+router.get("/", function(req, res, next) {
+    createPDF();
+});
+
+
 function createPDF() {
     console.log('starting createPDF');
+    var doc = new pdfDocument({
+      layout: 'landscape'
+    });
+    var fileName = 'flexflow-' + budgetID + '.pdf';
+    doc.pipe(fs.createWriteStream("./server/pdf/" + fileName));
+
+    // draw some text
+    doc.fontSize(16)
+        .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+
+    // flex items
+    doc.fontSize(12)
+      .moveDown()
+        .text('Flex Accounts:');
+    for (var i = 0; i < reportData.Flex.length; i++) {
+        item = reportData.Flex[i];
+        formatItem = item.item_name + " - $" + item.item_amount;
+        doc.font('Courier', 10)
+            .moveDown()
+            .text(formatItem, {
+                width: 412,
+                align: 'justify',
+                indent: 30,
+                columns: 2,
+                height: 300,
+                ellipsis: true
+            });
+    }
+
+            // // flow items
+            doc.fontSize(12)
+              .moveDown()
+                .text('Flow Accounts:');
+            for (var i = 0; i < reportData.Flow.length; i++) {
+                // item = reportData.Flow[i];
+                // formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
+                // ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
+                // ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
+                // item[11].item_amount + ', ' + item[12].item_amount;
+                item = reportData.Flow[i];
+                formatItem = item[0].item_name + " - $" + item[0].item_amount + ', ' + item[1].item_amount + ', ' + item[2].item_amount +
+                ', ' + item[3].item_amount + ', ' + item[4].item_amount + ', ' + item[5].item_amount + ', ' + item[6].item_amount +
+                ', ' + item[7].item_amount + ', ' + item[8].item_amount + ', ' + item[9].item_amount + ', ' + item[10].item_amount + ', ' +
+                item[11].item_amount + ', ' + item[12].item_amount;
+                doc.font('Times-Roman', 10)
+                    .moveDown()
+                    .text([item[0].item_name, item[0].item_amount], {
+                        width: 1200,
+                        align: 'justify',
+                        indent: 30,
+                        columns: 14,
+                        height: 200,
+                        ellipsis: true
+                    })
+
+                    .text(item[1].item_amount)
+                    .text(item[2].item_amount)
+                    .text(item[3].item_amount)
+                    ;
+            }
+
+        // functional items
+        doc.fontSize(12)
+          .moveDown()
+            .text('Functional Accounts:');
+        for (var i = 0; i < reportData.Functional.length; i++) {
+            item = reportData.Functional[i];
+            formatItem = item.item_name + " - $" + item.item_amount;
+            doc.font('Times-Roman', 10)
+                .moveDown()
+                .text(formatItem, {
+                    width: 412,
+                    align: 'justify',
+                    indent: 30,
+                    columns: 2,
+                    height: 300,
+                    ellipsis: true
+                });
+        }
+
+            // Financial items
+            doc.fontSize(12)
+              .moveDown()
+                .text('Financial Accounts:');
+            for (var i = 0; i < reportData.Financial.length; i++) {
+                item = reportData.Financial[i];
+                formatItem = item.item_name + " - $" + item.item_amount;
+                doc.font('Times-Roman', 10)
+                    .moveDown()
+                    .text(formatItem, {
+                        width: 412,
+                        align: 'justify',
+                        indent: 30,
+                        columns: 2,
+                        height: 300,
+                        ellipsis: true
+                    });
+            }
+
+    // doc.text('Flexer: ' + reportData.Flex[0].item_name + " - $" + reportData.Flex[0].item_amount, 100, 300)
+    //     .font('Times-Roman', 13)
+    //     .moveDown()
+    //     .text(lorem, {
+    //         width: 412,
+    //         align: 'justify',
+    //         indent: 30,
+    //         columns: 2,
+    //         height: 300,
+    //         ellipsis: true
+    //     });
+
+    // end and display the document in the iframe to the right
+    doc.end();
+    console.log('PDF created:', fileName);
+}
+
+function spacer(value, length) {
+  if (value.length > length) {
+    console.log(1, value, value.substring(0, length));
+    return value.substring(0, length);
+  } else {
+    if (value.length === length) {
+      return value;
+    } else {
+      var spacesNeeded = length - value.length;
+      for (var i = 0; i < spacesNeeded; i++) {
+        value += ' ';
+      }
+    }
   }
+}
 
 module.exports = router;

@@ -134,6 +134,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
     }; //end getBudget
 
+
     // function to update budget profile
     updateBudget = function(profile) {
         console.log('updateBudget');
@@ -547,7 +548,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         updateBudgetStatus: function(status) {
             return updateBudgetStatus(status);
         }
-
+        
     };
 
     return publicApi;

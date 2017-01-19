@@ -193,27 +193,15 @@ select {
   outline: none;
   background: #309abb;
   border: 2px solid #29839e;
-  color: white;
-  outline: none;
-  user-select: none; }
+  color: white; }
   .empty_flow_month:target {
     outline: none; }
   .empty_flow_month:active {
     outline: none; }
   .empty_flow_month:target {
-    outline: none;
-    color: white; }
-  .empty_flow_month:active {
     outline: none;
     color: white; }
   .empty_flow_month:hover {
-    background: #29839e;
-    color: white; }
-  .empty_flow_month:focus {
-    outline: none;
-    background: #29839e;
-    color: white; }
-  .empty_flow_month::selection {
     background: #29839e;
     color: white; }
 

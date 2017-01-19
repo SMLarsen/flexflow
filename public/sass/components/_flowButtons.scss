@@ -17,26 +17,11 @@
   background: lighten($detail-color, 7%);
   border: 2px solid $detail-color;
   color: white;
-  outline: none;
-  user-select: none;
   &:target {
     outline: none;
     color: white;
   }
-  &:active {
-    outline: none;
-    color: white;
-  }
   &:hover {
-    background: $detail-color;
-    color: white;
-  }
-  &:focus {
-    outline: none;
-    background: $detail-color;
-    color: white;
-  }
-  &::selection {
     background: $detail-color;
     color: white;
   }

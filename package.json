@@ -16,6 +16,7 @@
     "express": "^4.14.0",
     "firebase-admin": "^4.0.3",
     "iframe": "^1.0.0",
+    "json-2-csv": "^2.1.0",
     "node-sass": "^4.3.0",
     "nodemailer": "^2.7.0",
     "nodemailer-smtp-transport": "^2.7.2",

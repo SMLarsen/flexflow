@@ -22,7 +22,9 @@ app.controller('FlexSpendController', ['BudgetFactory', function(BudgetFactory) 
   // Function for submitting flex info to DB
   self.submitFlex = function(){
     console.log(self.flexArray);
-    budgetFactory.updateFlexItems(self.flexArray);
+    budgetFactory.updateFlexItems(self.flexArray).then(function(result){
+      budgetFactory.updateBudgetStatus("Flex");
+    });
   }; // End: submitFlex
 
 }]); // END: FlexSpendController

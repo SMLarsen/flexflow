@@ -1,41 +1,63 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
-
-router.get('/send', function(req, res){
-  console.log("im here in send mail");
-
-  // create reusable transporter object using SMTP transport
-  var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
-    }
-  });
-
-  var mailOptions = {
-    from: 'Hien Le ✔ <lhien11@gmail.com>', // sender address
-    to: 'lhien04@gmail.com, lhien4635@gmail.com', // list of receivers
-    subject: 'Website Submission', // Subject line
-    // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
-    // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-    text: 'You have a submission with the following details',
-    html: '<p>You have a submission with the folowing details... </p>'
-};
-
-// send mail with defined transport object
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        res.redirect('/');
-        return console.log(error);
-    }
-    res.sendStatus(200);
-    console.log('Message sent: ' + info.response);
-
+var fs = require('fs');
+var path = require('path');
+var filePath = path.join(__dirname, 'file.pdf');
+router.post("/", function (req, res) {
+    // console.log("im here in send mail");
+    var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
+        "Name: " + req.body.displayName + '<br>' +
+        "Email: " + req.body.email + '<br>' +
+        "FlowTotal: " + req.body.flowTotal + '<br>' +
+        "FlexTotal: " + req.body.flexTotal + '<br>' +
+        "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
+        "FinancialTotal: " + req.body.financialTotal + '</p>';
+    var receivers = req.body.email;
+    // create reusable transporter object using SMTP transport
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'lhien11@gmail.com',
+            pass: 'at582465'
+        }
+    });
+    var mailOptions = {
+        from: 'Hien Le ✔ <lhien11@gmail.com>', // sender address
+        to: receivers, // list of receivers
+        subject: 'Flex Flow', // Subject line
+        // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
+        // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
+        text: 'You have a submission with the following details from flex flow...',
+        html: htmlObject,
+        // attachments: [{
+        //     filename: 'text1.txt',
+        //     content: 'hello world!'
+        // }]
+        // attachments: [{
+        //     fileName: 'file.pdf', //This needs to be the link to the form, or the actual form
+        //     // filePath: './file.pdf',
+        //     streamSource: fs.createReadStream(filePath),
+        //     contentType: "application/pdf"
+        // }]
+        attachments: [
+            { // file on disk as an attachment
+                filename: 'file.pdf',
+                path: filePath, // stream this file
+                //below one not working some time dont know why but its work for me now
+                //  path: 'C:/Users/Me/Desktop/ab.txt',
+                //this also work foo me
+                contentType: "application/pdf"
+            }
+        ]
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            res.redirect('/');
+            return console.log(error);
+        }
+        // console.log('Message sent: ' + info.response);
+    });
 });
- res.sendStatus(200);
-
-});
-
 module.exports = router;

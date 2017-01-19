@@ -160,6 +160,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
     }; //end updateBudget
 
+    updateBudgetStatus = function(status) {
+      profile.budget_status = status;
+      return updateBudget(profile);
+    };
+
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
@@ -538,6 +543,9 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
+        },
+        updateBudgetStatus: function(status) {
+            return updateBudgetStatus(status);
         }
 
     };

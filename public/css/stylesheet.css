@@ -75,6 +75,7 @@ select {
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
+  outline: none;
   background-color: #29839e;
   background-size: 80%; }
 
@@ -88,6 +89,7 @@ select {
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
+  outline: none;
   background-color: #2c4877;
   background-size: 80%; }
 
@@ -97,8 +99,10 @@ select {
   border: 1px solid #2c4877;
   border-radius: 15px;
   padding: 20px;
+  outline: none;
   padding: 13px;
-  margin-top: 20px; }
+  margin-top: 20px;
+  outline: none; }
   .submit_button:hover {
     background-color: #33a4c7; }
   .submit_button:active {
@@ -110,7 +114,9 @@ select {
   border: 1px solid #2c4877;
   border-radius: 15px;
   padding: 20px;
-  padding: 13px; }
+  outline: none;
+  padding: 13px;
+  outline: none; }
   .edit_button:hover {
     background-color: #6dc0d9; }
   .edit_button:active {
@@ -122,13 +128,15 @@ select {
   border: 1px solid #2c4877;
   border-radius: 15px;
   padding: 20px;
+  outline: none;
   height: 50px;
   width: 50px;
   padding: 0;
   font-size: 30px;
   border-radius: 50%;
   margin-top: 40px;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  outline: none; }
   .additional_button:hover {
     background-color: #33a4c7; }
   .additional_button:active {
@@ -145,7 +153,8 @@ select {
   position: absolute;
   top: 60px;
   left: 40px;
-  font-size: 20px; }
+  font-size: 20px;
+  outline: none; }
   @media (max-width: 768px) {
     .hint_button {
       top: 5px;
@@ -181,13 +190,31 @@ select {
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0;
+  outline: none;
   background: #309abb;
   border: 2px solid #29839e;
-  color: white; }
+  color: white;
+  outline: none;
+  user-select: none; }
+  .empty_flow_month:target {
+    outline: none; }
+  .empty_flow_month:active {
+    outline: none; }
+  .empty_flow_month:target {
+    outline: none;
+    color: white; }
+  .empty_flow_month:active {
+    outline: none;
+    color: white; }
   .empty_flow_month:hover {
     background: #29839e;
     color: white; }
-  .empty_flow_month:active {
+  .empty_flow_month:focus {
+    outline: none;
+    background: #29839e;
+    color: white; }
+  .empty_flow_month::selection {
+    background: #29839e;
     color: white; }
 
 .not_empty_flow_month {
@@ -200,9 +227,14 @@ select {
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0;
+  outline: none;
   background: #29839e;
   border: 2px solid #29839e;
   color: white; }
+  .not_empty_flow_month:target {
+    outline: none; }
+  .not_empty_flow_month:active {
+    outline: none; }
   .not_empty_flow_month:hover {
     background: #309abb;
     color: white; }
@@ -241,6 +273,7 @@ select {
   border: 1px solid #2c4877;
   border-radius: 15px;
   padding: 20px;
+  outline: none;
   width: 200px;
   font-size: 2em;
   margin-top: 150px; }

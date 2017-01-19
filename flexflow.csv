@@ -2,16 +2,17 @@ category_name,item_name,item_amount
 Flex,Steve,500
 Flex,Ellen,500
 Flex,Total,1000
-
-
-
-
-
-
-
-
-
-
+category_name,item_name,amount_1,amount_2,amount_3,amount_4,amount_5,amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12
+Flow,Holidays,0,100,0,0,100,50,50,0,0,100,0,200
+Flow,Birthdays,0,100,0,0,35,0,100,0,0,0,100,50
+Flow,Stuff for Kids,50,50,50,50,50,50,50,50,50,50,50,50
+Flow,P&C Insurance,0,0,0,0,1000,0,0,0,0,0,1000,0
+Flow,Trips/ Vacation,0,0,1000,0,0,0,0,0,0,0,0,500
+Flow,Car/Home Maintenance,40,40,40,40,40,40,40,40,40,40,40,40
+Flow,Auto Registration,0,0,0,0,200,0,0,0,200,0,0,0
+Flow,Personal Care,150,40,40,40,40,40,40,150,40,40,40,40
+Flow,Cash (Other / Random),50,50,50,50,50,50,50,50,50,50,50,50
+Flow,Total,290,380,1180,180,1515,230,330,290,380,280,1280,930
 category_name,item_name,item_amount
 Functional,Rent | Mortgage,1000
 Functional,Daycare,700

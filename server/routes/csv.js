@@ -143,21 +143,34 @@ function formatItems(itemArray) {
     }
 }
 
+/*
+var tempItem = {
+  category_name: 'Flex',
+  item_name: 'Holidays',
+  amount_1: 0,
+  amount_2: 0,
+  ...
+  amount_12: 0,
+}
+*/
+
 function formatFlowItems(itemArray) {
+  console.log('formatFlowItems=============');
     var tempCategoryArray = [];
-    var currentName = itemArray[0].item_name;
-    var tempItem = "'" + currentName + "'";
-    for (var i = 0; i < itemArray.length; i++) {
-        if (i === 0) {
+    var tempItem = {};
+    for (var i = 0; i < itemArray.length; i += 12) {
+        tempItem.category_name = 'Flow';
+        tempItem.item_name = itemArray[i].item_name;
+        for (var j = 0; j < 12; j++) {
+            tempItem['amount_' + (j + 1)] = itemArray[i + j].item_amount;
+            console.log(j, 'Inside', tempItem);
         }
-        tempItem += "," + itemArray[i].item_amount;
-        if (itemArray[i].item_name !== currentName) {
-            tempCategoryArray.push(tempItem);
-            currentName = itemArray[i].item_name;
-            tempItem = "'" + currentName + "'";
-        }
+        console.log(i, 'tempItem:', tempItem);
+          tempCategoryArray.push(tempItem);
+          tempItem = {};
     }
     csvData.Flow = tempCategoryArray;
+    console.log('tempCategoryArray:', tempCategoryArray, '==================');
 }
 
 var lastCSV = false;

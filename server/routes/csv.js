@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var config = require('../modules/pg-config');
-var pdfDocument = require('pdfkit');
-var blobStream = require('blob-stream');
-var iframe = require('iframe');
 var fs = require('fs');
 var converter = require('json-2-csv');
 
@@ -13,9 +10,11 @@ var pool = new pg.Pool({
 });
 
 var csvData = {};
+var budgetID = '';
 
 // Route: GET profile for a budget
 router.get("/", function(req, res, next) {
+    budgetID = req.budgetID;
     pool.connect()
         .then(function(client) {
             var queryString = "SELECT budget_start_year, budget_start_month, annual_salary, monthly_take_home_amount, meeting_scheduled, budget_status FROM budget ";
@@ -27,7 +26,7 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting profile retrieved');
+                    // console.log('Reporting profile retrieved');
                     csvData.profile = result.rows[0];
                     client.release();
                     next();
@@ -58,7 +57,7 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting items retrieved');
+                    // console.log('Reporting items retrieved');
                     formatItems(result.rows);
                     // console.log(result.rows);
                     client.release();
@@ -88,7 +87,7 @@ router.get("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    console.log('Reporting flow items retrieved');
+                    // console.log('Reporting flow items retrieved');
                     formatFlowItems(result.rows);
                     client.release();
                     next();
@@ -111,10 +110,10 @@ router.get("/", function(req, res, next) {
                     res.sendStatus(500);
                     next();
                 } else {
-                    console.log('Reporting comment retrieved');
+                    // console.log('Reporting comment retrieved');
                     csvData.comment = result.rows;
                     client.release();
-                    res.send(csvData);
+                    res.sendStatus(201);
                     next();
                 }
             });
@@ -142,7 +141,6 @@ function formatItems(itemArray) {
 }
 
 function formatFlowItems(itemArray) {
-  console.log('formatFlowItems=============');
     var tempCategoryArray = [];
     var tempItem = {};
     for (var i = 0; i < itemArray.length; i += 12) {
@@ -150,26 +148,21 @@ function formatFlowItems(itemArray) {
         tempItem.item_name = itemArray[i].item_name;
         for (var j = 0; j < 12; j++) {
             tempItem['amount_' + (j + 1)] = itemArray[i + j].item_amount;
-            console.log(j, 'Inside', tempItem);
         }
-        console.log(i, 'tempItem:', tempItem);
-          tempCategoryArray.push(tempItem);
-          tempItem = {};
+        tempCategoryArray.push(tempItem);
+        tempItem = {};
     }
     csvData.Flow = tempCategoryArray;
-    console.log('tempCategoryArray:', tempCategoryArray, '==================');
 }
 
-var lastCSV = false;
 var csvContent = '';
 
 // Route: Create Customer CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
-    console.log(req);
     var csvUser = {
-      userName: req.decodedToken.name,
-      email: req.decodedToken.email
+        userName: req.decodedToken.name,
+        email: req.decodedToken.email
     };
     converter.json2csv(csvUser, json2csvCallback);
     next();
@@ -211,23 +204,25 @@ router.get("/", function(req, res, next) {
 
 // Route: Create Comments CSV
 router.get("/", function(req, res, next) {
-    lastCSV = true;
-    converter.json2csv(csvData.comment, json2csvCallback);
+    converter.json2csv(csvData.comment, json2csvLastCallback);
     next();
 });
 
 var json2csvCallback = function(err, csv) {
     if (err) throw err;
     csvContent += csv;
-    if (lastCSV) {
-        fs.writeFile("./flexflow.csv", csvContent, function(err) {
-            if (err) {
-                console.log(err);
-            }
-            console.log("The file was saved!");
-        });
+};
 
-    }
+var json2csvLastCallback = function(err, csv) {
+    if (err) throw err;
+    csvContent += csv;
+    var fileName = 'flexflow-' + budgetID + '.csv';
+    fs.writeFile("./server/csv/" + fileName, csvContent, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("CSV file saved as:", fileName);
+    });
 };
 
 module.exports = router;

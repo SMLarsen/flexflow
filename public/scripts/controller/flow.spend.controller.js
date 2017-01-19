@@ -136,7 +136,7 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.saveAndClose = function() {
     setInactiveValuesToZero();
     self.updateFlowItems();
-  }
+  };
 
   // advances to the next month
   self.nextMonth = function() {

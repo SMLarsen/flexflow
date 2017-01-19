@@ -2,12 +2,20 @@
 @mixin month_button {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
   margin: 5px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding: 0;
+  outline: none;
+  &:target {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
 }
 
 @mixin category_toggle {
@@ -20,6 +28,7 @@
   margin-left: -65px;
   background-position: center;
   background-repeat: no-repeat;
+  outline: none;
 }
 
 @mixin header_text {
@@ -42,6 +51,7 @@
   border: 1px solid $accent-color;
   border-radius: 15px;
   padding: 20px;
+  outline: none;
   &:hover {
     background-color: lighten($detail-color, 10%);
   }
@@ -53,6 +63,7 @@
   border: 1px solid $accent-color;
   border-radius: 15px;
   padding: 20px;
+  outline: none;
   &:hover {
     background-color: lighten($detail-color, 25%);
   }

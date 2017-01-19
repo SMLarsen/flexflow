@@ -18,25 +18,32 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
         }
     };
 
-    budgetFactory.getFlowItemTotalByYear().then(function(results) {
-        self.flowTotal = results.sum / 12;
-    });
-
-    budgetFactory.getFlexItemTotal().then(function(results) {
-        self.flexTotal = results.sum;
-    });
-
-    budgetFactory.getFunctionalItemTotal().then(function(results) {
-        self.functionalTotal = results.sum;
-    });
-
-    budgetFactory.getFinancialItemTotal().then(function(results) {
-        self.financialTotal = results.sum;
-    });
+    budgetFactory.getFlowItemTotalByYear()
+           .then(function(results) {
+               self.flowTotal = parseInt(results.sum / 12);
+               budgetFactory.getFlexItemTotal()
+                   .then(function(resultsflex) {
+                       self.flexTotal = parseInt(resultsflex.sum);
+                       budgetFactory.getFunctionalItemTotal()
+                           .then(function(resultsfunc) {
+                               self.functionalTotal = parseInt(resultsfunc.sum);
+                               budgetFactory.getFinancialItemTotal()
+                                   .then(function(resultsfin) {
+                                       self.financialTotal = parseInt(resultsfin.sum);
+                                       budgetFactory.getBudget()
+                                        .then(function(resultsbudg){
+                                          self.takeHomeCash = parseInt(resultsbudg.monthly_take_home_amount);
+                                          self.totalSpending = self.flowTotal + self.flexTotal + self.functionalTotal + self.financialTotal;
+                                          self.netTotal = self.takeHomeCash - self.totalSpending;
+                                        });
+                                   });
+                           });
+                   });
+           });
 
     self.scheduleMeeting = function() {
         console.log('scheduleMeeting clicked');
-        var link = "mailto:" + scheduleEmail +
+        var link = "mailto:" + "isaiah@becomingfinancial.com" +
             "?cc=" + currentUser.email +
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");
@@ -52,13 +59,15 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             flowTotal: self.flowTotal,
             flexTotal: self.flexTotal,
             functionalTotal: self.functionalTotal,
-            financialTotal: self.financialTotal
+            financialTotal: self.financialTotal,
+            takeHomeCash: self.takeHomeCash,
+            netTotal: self.netTotal
         };
         // console.log("SendObject ", sendObject);
 
         $http({
                 method: 'POST',
-                url: '/mail',
+                url: '/csv',
                 headers: {
                     id_token: authFactory.getIdToken()
                 },

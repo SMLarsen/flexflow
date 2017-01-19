@@ -11,6 +11,7 @@ var pool = new pg.Pool({
 
 var NAME_LENGTH = 22;
 var AMOUNT_LENGTH = 7;
+var MONTHS_ARRAY = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 var reportData = {};
 
@@ -106,12 +107,23 @@ router.get("/", function(req, res, next) {
                 } else {
                     // console.log('Reporting profile retrieved');
                     reportData.profile = result.rows[0];
+                    reportData.months = formatMonths(reportData.profile.budget_start_month);
                     client.release();
                     next();
                 }
             });
         });
 });
+
+function formatMonths(startMonth) {
+    var tempMonthArray = MONTHS_ARRAY;
+    if (startMonth === 1) {
+        return tempMonthArray;
+    } else {
+        var newMonthArray = tempMonthArray.splice(0, startMonth - 1);
+        return tempMonthArray.concat(newMonthArray);
+    }
+}
 
 // Route: GET comments for a budget
 router.get("/", function(req, res, next) {
@@ -130,7 +142,7 @@ router.get("/", function(req, res, next) {
                     // console.log('Reporting comment retrieved');
                     reportData.comment = result.rows;
                     client.release();
-                    res.sendStatus(201);
+                    // res.sendStatus(201);
                     next();
                 }
             });
@@ -181,8 +193,8 @@ function formatFlowItems(itemArray) {
 // Route: GET comments for a budget
 router.get("/", function(req, res, next) {
     createPDF();
+    res.sendStatus(201);
 });
-
 
 function createPDF() {
     var doc = new pdfDocument({
@@ -194,6 +206,22 @@ function createPDF() {
     // draw some text
     doc.fontSize(16)
         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+
+    // months
+    var months = textSpacer('    ', NAME_LENGTH) + intSpacer(reportData.months[0], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[1], AMOUNT_LENGTH) + intSpacer(reportData.months[2], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[3], AMOUNT_LENGTH) + intSpacer(reportData.months[4], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[5], AMOUNT_LENGTH) + intSpacer(reportData.months[6], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[7], AMOUNT_LENGTH) + intSpacer(reportData.months[8], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[9], AMOUNT_LENGTH) + intSpacer(reportData.months[10], AMOUNT_LENGTH) +
+        intSpacer(reportData.months[11], AMOUNT_LENGTH) + intSpacer('Annual', AMOUNT_LENGTH);
+    doc.font('Courier', 10)
+        .moveDown()
+        .text(months, {
+            width: 1412,
+            align: 'justify',
+            indent: 10
+        });
 
     // flex items
     doc.font('Courier', 12)
@@ -207,8 +235,7 @@ function createPDF() {
             .text(formattedItem, {
                 width: 1412,
                 align: 'justify',
-                indent: 30,
-                height: 300,
+                indent: 10,
                 ellipsis: true
             });
     }
@@ -219,17 +246,16 @@ function createPDF() {
         .text('Flow Accounts:');
     for (var i = 0; i < reportData.Flow.length; i++) {
         item = reportData.Flow[i];
-        formattedItem = textSpacer(item.item_name, NAME_LENGTH) + intSpacer(item.amount_1, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_2, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_3, AMOUNT_LENGTH) +
-            ' | ' + intSpacer(item.amount_4, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_5, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_6, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_7, AMOUNT_LENGTH) +
-            ' | ' + intSpacer(item.amount_8, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_9, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_10, AMOUNT_LENGTH) + ' | ' + intSpacer(item.amount_11, AMOUNT_LENGTH) +
-            ' | ' + intSpacer(item.amount_12, AMOUNT_LENGTH) + ' | ' + intSpacer(item.annual_amount, AMOUNT_LENGTH);
+        formattedItem = textSpacer(item.item_name, NAME_LENGTH) + intSpacer(item.amount_1, AMOUNT_LENGTH) + intSpacer(item.amount_2, AMOUNT_LENGTH) + intSpacer(item.amount_3, AMOUNT_LENGTH) +
+            intSpacer(item.amount_4, AMOUNT_LENGTH) + intSpacer(item.amount_5, AMOUNT_LENGTH) + intSpacer(item.amount_6, AMOUNT_LENGTH) + intSpacer(item.amount_7, AMOUNT_LENGTH) +
+            intSpacer(item.amount_8, AMOUNT_LENGTH) + intSpacer(item.amount_9, AMOUNT_LENGTH) + intSpacer(item.amount_10, AMOUNT_LENGTH) + intSpacer(item.amount_11, AMOUNT_LENGTH) +
+            intSpacer(item.amount_12, AMOUNT_LENGTH) + intSpacer(item.annual_amount, AMOUNT_LENGTH);
         doc.font('Courier', 10)
             .moveDown()
             .text(formattedItem, {
                 width: 1412,
                 align: 'justify',
-                indent: 30,
-                height: 300,
+                indent: 10,
                 ellipsis: true
             });
     }
@@ -246,8 +272,7 @@ function createPDF() {
             .text(formattedItem, {
                 width: 1412,
                 align: 'justify',
-                indent: 30,
-                height: 300,
+                indent: 10,
                 ellipsis: true
             });
     }
@@ -264,8 +289,7 @@ function createPDF() {
             .text(formattedItem, {
                 width: 1412,
                 align: 'justify',
-                indent: 30,
-                height: 300,
+                indent: 10,
                 ellipsis: true
             });
     }
@@ -289,26 +313,24 @@ function textSpacer(value, length) {
 
 function formatPDFItem(item) {
     item = textSpacer(item.item_name, NAME_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) + ' | ' +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
+        intSpacer(item.item_amount, AMOUNT_LENGTH) +
         intSpacer((item.item_amount * 12), 7);
     return item;
 }
 
 function intSpacer(value, length) {
-  console.log('value1:', value);
     var paddedValue = ("         " + value.toString()).slice(-length);
-    console.log('value2:', paddedValue);
     return paddedValue;
 
 }

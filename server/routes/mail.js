@@ -6,19 +6,16 @@ var path = require('path');
 var csv = require('../modules/export-csv');
 
 router.post("/", function(req, res) {
-    // console.log("im here in send mail");
-    // var name =
-    //csv.router();
-    console.log(csv.router());
-    var filePath = path.join(__dirname, '../csv/flexflow-' + req.budgetID + '.csv');
 
-    var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
+    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
-        "FlowTotal: " + req.body.flowTotal + '<br>' +
-        "FlexTotal: " + req.body.flexTotal + '<br>' +
-        "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
-        "FinancialTotal: " + req.body.financialTotal + '</p>';
+        "Flow Total: $" + req.body.flowTotal + '<br>' +
+        "Flex Total: $" + req.body.flexTotal + '<br>' +
+        "Functional Total: $" + req.body.functionalTotal + '<br>' +
+        "Financial Total: $" + req.body.financialTotal + '<br>' +
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
+        "Net Total: $" + req.body.netTotal + '</p>';
 
     var receivers = req.body.email;
 

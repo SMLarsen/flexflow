@@ -35,7 +35,6 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
                                           self.takeHomeCash = parseInt(resultsbudg.monthly_take_home_amount);
                                           self.totalSpending = self.flowTotal + self.flexTotal + self.functionalTotal + self.financialTotal;
                                           self.netTotal = self.takeHomeCash - self.totalSpending;
-
                                         });
                                    });
                            });
@@ -60,7 +59,9 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             flowTotal: self.flowTotal,
             flexTotal: self.flexTotal,
             functionalTotal: self.functionalTotal,
-            financialTotal: self.financialTotal
+            financialTotal: self.financialTotal,
+            takeHomeCash: self.takeHomeCash,
+            netTotal: self.netTotal
         };
         // console.log("SendObject ", sendObject);
 

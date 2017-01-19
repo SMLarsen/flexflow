@@ -1,3 +1,7 @@
+userName,email
+Steve Larsen,stevelarsen01@gmail.com
+budget_start_year,budget_start_month,annual_salary,monthly_take_home_amount,meeting_scheduled,budget_status
+2017,1,100000,5000,true,Finished
 category_name,item_name,item_amount
 Flex,Steve,500
 Flex,Ellen,500
@@ -29,3 +33,5 @@ Financial,Insurance,500
 Financial,Investments,300
 Financial,Emergency Cash,300
 Financial,Total,1400
+budget_comment
+Lorem ipsum dolor sit amet, ad mel persius labores perfecto.

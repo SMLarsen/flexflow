@@ -14,7 +14,27 @@ var pool = new pg.Pool({
 
 var csvData = {};
 
-console.log('CSV route starting -------------------');
+// Route: GET profile for a budget
+router.get("/", function(req, res, next) {
+    pool.connect()
+        .then(function(client) {
+            var queryString = "SELECT budget_start_year, budget_start_month, annual_salary, monthly_take_home_amount, meeting_scheduled, budget_status FROM budget ";
+            queryString += "WHERE id = $1 ";
+            // console.log('queryString:', queryString);
+            client.query(queryString, [req.budgetID], function(err, result) {
+                if (err) {
+                    console.log('Error getting profile for reporting', err);
+                    client.release();
+                    next();
+                } else {
+                    console.log('Reporting profile retrieved');
+                    csvData.profile = result.rows[0];
+                    client.release();
+                    next();
+                }
+            });
+        });
+});
 
 // Route: GET item totals for a budget
 router.get("/", function(req, res, next) {
@@ -77,33 +97,11 @@ router.get("/", function(req, res, next) {
         });
 });
 
-// Route: GET profile for a budget
-router.get("/", function(req, res, next) {
-    pool.connect()
-        .then(function(client) {
-            var queryString = "SELECT * FROM budget ";
-            queryString += "WHERE id = $1 ";
-            // console.log('queryString:', queryString);
-            client.query(queryString, [req.budgetID], function(err, result) {
-                if (err) {
-                    console.log('Error getting profile for reporting', err);
-                    client.release();
-                    next();
-                } else {
-                    console.log('Reporting profile retrieved');
-                    csvData.profile = result.rows[0];
-                    client.release();
-                    next();
-                }
-            });
-        });
-});
-
 // Route: GET comments for a budget
 router.get("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT * FROM budget_comment ";
+            var queryString = "SELECT budget_comment FROM budget_comment ";
             queryString += "WHERE id = $1 ";
             // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
@@ -143,17 +141,6 @@ function formatItems(itemArray) {
     }
 }
 
-/*
-var tempItem = {
-  category_name: 'Flex',
-  item_name: 'Holidays',
-  amount_1: 0,
-  amount_2: 0,
-  ...
-  amount_12: 0,
-}
-*/
-
 function formatFlowItems(itemArray) {
   console.log('formatFlowItems=============');
     var tempCategoryArray = [];
@@ -175,45 +162,62 @@ function formatFlowItems(itemArray) {
 
 var lastCSV = false;
 var csvContent = '';
+
+// Route: Create Customer CSV
+router.get("/", function(req, res, next) {
+    var flexCSV = '';
+    console.log(req);
+    var csvUser = {
+      userName: req.decodedToken.name,
+      email: req.decodedToken.email
+    };
+    converter.json2csv(csvUser, json2csvCallback);
+    next();
+});
+
+// Route: Create Profile CSV
+router.get("/", function(req, res, next) {
+    var flexCSV = '';
+    converter.json2csv(csvData.profile, json2csvCallback);
+    next();
+});
+
 // Route: Create Flex CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
-    console.log('createCSV Flex');
     converter.json2csv(csvData.Flex, json2csvCallback);
-    console.log('csvContent:', csvContent);
     next();
 });
 
 // Route: Create Flow CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
-    console.log('createCSV Flow');
     converter.json2csv(csvData.Flow, json2csvCallback);
-    console.log('csvContent:', csvContent);
     next();
 });
 
 // Route: Create Functional CSV
 router.get("/", function(req, res, next) {
     var flexCSV = '';
-    console.log('createCSV Functional');
     converter.json2csv(csvData.Functional, json2csvCallback);
-    console.log('csvContent:', csvContent);
     next();
 });
 
 // Route: Create FinancialCSV
 router.get("/", function(req, res, next) {
-    console.log('createCSV Financial');
-    lastCSV = true;
     converter.json2csv(csvData.Financial, json2csvCallback);
-    console.log('csvContent:', csvContent);
+    next();
+});
+
+// Route: Create Comments CSV
+router.get("/", function(req, res, next) {
+    lastCSV = true;
+    converter.json2csv(csvData.comment, json2csvCallback);
     next();
 });
 
 var json2csvCallback = function(err, csv) {
     if (err) throw err;
-    console.log(123, csv);
     csvContent += csv;
     if (lastCSV) {
         fs.writeFile("./flexflow.csv", csvContent, function(err) {

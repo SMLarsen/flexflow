@@ -35,7 +35,6 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
                                           self.takeHomeCash = parseInt(resultsbudg.monthly_take_home_amount);
                                           self.totalSpending = self.flowTotal + self.flexTotal + self.functionalTotal + self.financialTotal;
                                           self.netTotal = self.takeHomeCash - self.totalSpending;
-
                                         });
                                    });
                            });

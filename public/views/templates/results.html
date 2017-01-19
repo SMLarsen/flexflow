@@ -27,10 +27,10 @@
     <span class="results_value">{{rc.financialTotal | currency:"$":0}}</span>
   </div>
   <div class="results_container">
-    <h4 class="results_name">Monthly Take Home</h4>
+    <h4 class="results_name">Income</h4>
     <span class="results_value">{{rc.takeHomeCash | currency:"$":0}}</span>
   </div>
-  <div class="results_container">
+  <div class="results_container" ng-class="{'results_container_positive': rc.netTotal > 0, 'results_container_negative': rc.netTotal < 0}">
     <h4 class="results_name">Net Total</h4>
     <span class="results_value">{{rc.netTotal | currency:"$":0}}</span>
   </div>

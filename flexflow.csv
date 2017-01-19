@@ -2,17 +2,16 @@ category_name,item_name,item_amount
 Flex,Steve,500
 Flex,Ellen,500
 Flex,Total,1000
-0.item_name,0.item_amount,0.item_year,0.item_month,0.item_sort_sequence,1.item_name,1.item_amount,1.item_year,1.item_month,1.item_sort_sequence,2.item_name,2.item_amount,2.item_year,2.item_month,2.item_sort_sequence,3.item_name,3.item_amount,3.item_year,3.item_month,3.item_sort_sequence,4.item_name,4.item_amount,4.item_year,4.item_month,4.item_sort_sequence,5.item_name,5.item_amount,5.item_year,5.item_month,5.item_sort_sequence,6.item_name,6.item_amount,6.item_year,6.item_month,6.item_sort_sequence,7.item_name,7.item_amount,7.item_year,7.item_month,7.item_sort_sequence,8.item_name,8.item_amount,8.item_year,8.item_month,8.item_sort_sequence,9.item_name,9.item_amount,9.item_year,9.item_month,9.item_sort_sequence,10.item_name,10.item_amount,10.item_year,10.item_month,10.item_sort_sequence,11.item_name,11.item_amount,11.item_year,11.item_month,11.item_sort_sequence,12.item_name,12.item_amount,12.item_year,12.item_month,12.item_sort_sequence
-Holidays,0,2017,1,1,Holidays,100,2017,2,1,Holidays,0,2017,3,1,Holidays,0,2017,4,1,Holidays,100,2017,5,1,Holidays,50,2017,6,1,Holidays,50,2017,7,1,Holidays,0,2017,8,1,Holidays,0,2017,9,1,Holidays,100,2017,10,1,Holidays,0,2017,11,1,Holidays,200,2017,12,1,Holidays,600,2018,1,1
-Birthdays,0,2017,1,2,Birthdays,100,2017,2,2,Birthdays,0,2017,3,2,Birthdays,0,2017,4,2,Birthdays,35,2017,5,2,Birthdays,0,2017,6,2,Birthdays,100,2017,7,2,Birthdays,0,2017,8,2,Birthdays,0,2017,9,2,Birthdays,0,2017,10,2,Birthdays,100,2017,11,2,Birthdays,50,2017,12,2,Birthdays,385,2018,1,2
-Stuff for Kids,50,2017,1,3,Stuff for Kids,50,2017,2,3,Stuff for Kids,50,2017,3,3,Stuff for Kids,50,2017,4,3,Stuff for Kids,50,2017,5,3,Stuff for Kids,50,2017,6,3,Stuff for Kids,50,2017,7,3,Stuff for Kids,50,2017,8,3,Stuff for Kids,50,2017,9,3,Stuff for Kids,50,2017,10,3,Stuff for Kids,50,2017,11,3,Stuff for Kids,50,2017,12,3,Stuff for Kids,600,2018,1,3
-P&C Insurance,0,2017,1,4,P&C Insurance,0,2017,2,4,P&C Insurance,0,2017,3,4,P&C Insurance,0,2017,4,4,P&C Insurance,1000,2017,5,4,P&C Insurance,0,2017,6,4,P&C Insurance,0,2017,7,4,P&C Insurance,0,2017,8,4,P&C Insurance,0,2017,9,4,P&C Insurance,0,2017,10,4,P&C Insurance,1000,2017,11,4,P&C Insurance,0,2017,12,4,P&C Insurance,2000,2018,1,4
-Trips/ Vacation,0,2017,1,5,Trips/ Vacation,0,2017,2,5,Trips/ Vacation,1000,2017,3,5,Trips/ Vacation,0,2017,4,5,Trips/ Vacation,0,2017,5,5,Trips/ Vacation,0,2017,6,5,Trips/ Vacation,0,2017,7,5,Trips/ Vacation,0,2017,8,5,Trips/ Vacation,0,2017,9,5,Trips/ Vacation,0,2017,10,5,Trips/ Vacation,0,2017,11,5,Trips/ Vacation,500,2017,12,5,Trips/ Vacation,1500,2018,1,5
-Car/Home Maintenance,40,2017,1,6,Car/Home Maintenance,40,2017,2,6,Car/Home Maintenance,40,2017,3,6,Car/Home Maintenance,40,2017,4,6,Car/Home Maintenance,40,2017,5,6,Car/Home Maintenance,40,2017,6,6,Car/Home Maintenance,40,2017,7,6,Car/Home Maintenance,40,2017,8,6,Car/Home Maintenance,40,2017,9,6,Car/Home Maintenance,40,2017,10,6,Car/Home Maintenance,40,2017,11,6,Car/Home Maintenance,40,2017,12,6,Car/Home Maintenance,480,2018,1,6
-Auto Registration,0,2017,1,7,Auto Registration,0,2017,2,7,Auto Registration,0,2017,3,7,Auto Registration,0,2017,4,7,Auto Registration,200,2017,5,7,Auto Registration,0,2017,6,7,Auto Registration,0,2017,7,7,Auto Registration,0,2017,8,7,Auto Registration,200,2017,9,7,Auto Registration,0,2017,10,7,Auto Registration,0,2017,11,7,Auto Registration,0,2017,12,7,Auto Registration,400,2018,1,7
-Personal Care,150,2017,1,8,Personal Care,40,2017,2,8,Personal Care,40,2017,3,8,Personal Care,40,2017,4,8,Personal Care,40,2017,5,8,Personal Care,40,2017,6,8,Personal Care,40,2017,7,8,Personal Care,150,2017,8,8,Personal Care,40,2017,9,8,Personal Care,40,2017,10,8,Personal Care,40,2017,11,8,Personal Care,40,2017,12,8,Personal Care,700,2018,1,8
-Cash (Other / Random),50,2017,1,9,Cash (Other / Random),50,2017,2,9,Cash (Other / Random),50,2017,3,9,Cash (Other / Random),50,2017,4,9,Cash (Other / Random),50,2017,5,9,Cash (Other / Random),50,2017,6,9,Cash (Other / Random),50,2017,7,9,Cash (Other / Random),50,2017,8,9,Cash (Other / Random),50,2017,9,9,Cash (Other / Random),50,2017,10,9,Cash (Other / Random),50,2017,11,9,Cash (Other / Random),50,2017,12,9,Cash (Other / Random),600,2018,1,9
-Total,290,2017,1,99,Total,380,2017,2,99,Total,1180,2017,3,99,Total,180,2017,4,99,Total,1515,2017,5,99,Total,230,2017,6,99,Total,330,2017,7,99,Total,290,2017,8,99,Total,380,2017,9,99,Total,280,2017,10,99,Total,1280,2017,11,99,Total,930,2017,12,99,Total,7265,2018,1,99
+
+
+
+
+
+
+
+
+
+
 category_name,item_name,item_amount
 Functional,Rent | Mortgage,1000
 Functional,Daycare,700

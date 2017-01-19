@@ -153,20 +153,19 @@ function formatItems(itemArray) {
 }
 
 function formatFlowItems(itemArray) {
-    var tempItemArray = [];
     var tempCategoryArray = [];
     var currentName = itemArray[0].item_name;
+    var tempItem = "'" + currentName + "'";
     for (var i = 0; i < itemArray.length; i++) {
-        if (itemArray[i].item_name === currentName) {
-            tempItemArray.push(itemArray[i]);
-        } else {
-            tempCategoryArray.push(tempItemArray);
-            tempItemArray = [];
-            tempItemArray.push(itemArray[i]);
+        if (i === 0) {
+        }
+        tempItem += "," + itemArray[i].item_amount;
+        if (itemArray[i].item_name !== currentName) {
+            tempCategoryArray.push(tempItem);
             currentName = itemArray[i].item_name;
+            tempItem = "'" + currentName + "'";
         }
     }
-    tempCategoryArray.push(tempItemArray);
     csvData.Flow = tempCategoryArray;
 }
 

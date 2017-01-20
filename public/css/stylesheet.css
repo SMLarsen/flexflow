@@ -76,7 +76,7 @@ select {
   background-position: center;
   background-repeat: no-repeat;
   outline: none;
-  background-color: #29839e;
+  background-color: #44afcf;
   background-size: 80%; }
 
 .not_active_toggle {
@@ -151,8 +151,8 @@ select {
   border-radius: 50%;
   text-align: center;
   position: absolute;
-  top: 60px;
-  left: 40px;
+  top: 90px;
+  right: 30%;
   font-size: 20px;
   outline: none; }
   @media (max-width: 768px) {

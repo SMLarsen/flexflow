@@ -29,9 +29,7 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
       function(err){
         console.log('Error inserting comment for', currentUser.email, ': ', err);
         return;
-      }); // end budgetFactory
-
-
+      });
   };
 
 }]);

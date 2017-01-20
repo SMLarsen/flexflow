@@ -1,19 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
-var fs = require('fs');
-var path = require('path');
-var filePath = path.join(__dirname, 'file.pdf');
 router.post("/", function (req, res) {
-    // console.log("im here in send mail");
-    var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
-        "Name: " + req.body.displayName + '<br>' +
-        "Email: " + req.body.email + '<br>' +
-        "FlowTotal: " + req.body.flowTotal + '<br>' +
-        "FlexTotal: " + req.body.flexTotal + '<br>' +
-        "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
-        "FinancialTotal: " + req.body.financialTotal + '</p>';
-    var receivers = req.body.email;
+    console.log("im here in send mail");
     // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -24,32 +13,12 @@ router.post("/", function (req, res) {
     });
     var mailOptions = {
         from: 'Hien Le ✔ <lhien11@gmail.com>', // sender address
-        to: receivers, // list of receivers
-        subject: 'Flex Flow', // Subject line
+        to: 'lhien04@gmail.com, lhien4635@gmail.com', // list of receivers
+        subject: 'Website Submission', // Subject line
         // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-        text: 'You have a submission with the following details from flex flow...',
-        html: htmlObject,
-        // attachments: [{
-        //     filename: 'text1.txt',
-        //     content: 'hello world!'
-        // }]
-        // attachments: [{
-        //     fileName: 'file.pdf', //This needs to be the link to the form, or the actual form
-        //     // filePath: './file.pdf',
-        //     streamSource: fs.createReadStream(filePath),
-        //     contentType: "application/pdf"
-        // }]
-        attachments: [
-            { // file on disk as an attachment
-                filename: 'file.pdf',
-                path: filePath, // stream this file
-                //below one not working some time dont know why but its work for me now
-                //  path: 'C:/Users/Me/Desktop/ab.txt',
-                //this also work foo me
-                contentType: "application/pdf"
-            }
-        ]
+        text: 'You have a submission with the following details from flex flow',
+        html: '<p>You have a submission with the folowing details... </p>'
     };
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function (error, info) {
@@ -57,7 +26,8 @@ router.post("/", function (req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        // console.log('Message sent: ' + info.response);
+        res.sendStatus(200);
+        console.log('Message sent: ' + info.response);
     });
 });
 module.exports = router;

@@ -8,12 +8,14 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
     self.budget = {};
     self.flexArray = [];
     self.numPeople = 0;
+    self.savings = undefined;
+    self.monthSavings = undefined;
+    self.navActive = false;
 
     var currentTime = new Date();
 
     var year = currentTime.getFullYear();
     self.nextFiveYears = [];
-    self.navActive = false;
 
     self.activateMobileNav = function() {
       if(self.navActive === false){
@@ -63,10 +65,7 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
             });
     }; // End: postBudget
 
-    self.budget = {};
-    self.savings = undefined;
-    self.monthSavings = undefined;
-
+    // Function to get current years for selecting budget start date
     function getYears() {
         self.nextFiveYears.push(year);
         for (var i = 0; i < 4; i++) {
@@ -74,6 +73,6 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
             self.nextFiveYears.push(year);
         }
         console.log(self.nextFiveYears);
-    }
+    }; // End: getYears
 
 }]); // END: ClientProfileController

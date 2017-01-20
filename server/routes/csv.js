@@ -110,13 +110,11 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting comment for reporting', err);
                     client.release();
-                    res.sendStatus(500);
                     next();
                 } else {
                     // console.log('Reporting comment retrieved');
                     csvData.comment = result.rows;
                     client.release();
-                    res.sendStatus(201);
                     next();
                 }
             });
@@ -217,12 +215,12 @@ router.post("/", function(req, res) {
     //csv.router();
     var filePath = path.join(__dirname, './flexflow-' + req.budgetID + '.csv');
 
-    var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
+    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
-        "FlowTotal: " + req.body.flowTotal + '<br>' +
-        "FlexTotal: " + req.body.flexTotal + '<br>' +
-        "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
+        "Flow Total: $" + req.body.flowTotal + '<br>' +
+        "Flex Total: $" + req.body.flexTotal + '<br>' +
+        "Functional Total: $" + req.body.functionalTotal + '<br>' +
         "Financial Total: $" + req.body.financialTotal + '<br>' +
         "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
         "Net Total: $" + req.body.netTotal + '</p>';

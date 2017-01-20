@@ -118,6 +118,7 @@ router.put("/flowitems/:month/:item_name", function(req, res) {
 
 // Route: Insert flow items for a budget
 router.post("/flowitems", function(req, res) {
+  console.log('post flowitems:', req.body);
     pool.connect()
         .then(function(client) {
             var queryString = 'INSERT INTO budget_flow_item (budget_id, budget_template_category_id, item_month, item_year, item_img_src, item_amount, item_name, item_sort_sequence) VALUES ';
@@ -288,23 +289,21 @@ router.delete("/items/:categoryID", function(req, res) {
 // *********************************** Comment routes ************************** //
 // Route: Get comment items for a budget
 router.get("/comments", function(req, res) {
-    //console.log("i got here");
 
-    pool.connect()
-        .then(function(client) {
-            var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';
-            client.query(queryString, [req.budgetID], function(err, result) {
-                if (err) {
-                    client.release();
-                    console.log('Error getting financial items', err);
-                    res.sendStatus(500);
-                } else {
-                    client.release();
-                    res.send(result.rows);
-                    // console.log('Comment items retrieved');
-                }
-            }); // end inside client.query
-        }); // end pg.connect
+  pool.connect()
+      .then(function(client) {
+          var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';
+          client.query(queryString, [req.budgetID])
+              .then(function(result) {
+                  client.release();
+                  res.send(result.rows);
+              }).catch(function(err) {
+                  // error
+                  client.release();
+                  console.log('Error on get comment', err);
+                  res.sendStatus(500);
+              }); // end inner then
+      }); // end first then
 }); // end route.get
 
 router.post("/comments", function(req, res) {

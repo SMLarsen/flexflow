@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
@@ -225,7 +227,6 @@ router.post("/", function(req, res) {
         "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
         "Net Total: $" + req.body.netTotal + '</p>';
 
-
     var receivers = req.body.email;
 
     // create reusable transporter object using SMTP transport
@@ -238,9 +239,9 @@ router.post("/", function(req, res) {
     });
 
     var mailOptions = {
-        from: 'Flex/Flow Admin ✔ <flexflowplanner@gmail.com>', // sender address
-        to: 'flexflowplanner@gmail.com', // list of receivers
-        subject: 'Flex Flow', // Subject line
+        from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
+        to: "flexflowplanner@gmail.com",  // list of receivers
+        subject: 'Flex Flow',
         // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
         text: 'You have a submission with the following details from flex flow...',

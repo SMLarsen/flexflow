@@ -15,9 +15,22 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
     }
   };
 
+
   budgetFactory.getBudget().then(function(results){
     self.budget = results;
   });
+
+  budgetFactory.getAdditionalInfo()
+    .then(function(result){
+      //console.log("I'm here in getAdditionalInfo controller");
+      // console.log("result ", result.data[0].budget_comment);
+      self.comment = result.data[0].budget_comment;
+    },
+    function(err){
+      console.log('Error getting comment for', currentUser.email, ': ', err);
+    }
+  );
+
 
   self.postAdditionalInfo = function() {
 
@@ -44,5 +57,7 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
         return;
       });
   };
+
+
 
 }]);

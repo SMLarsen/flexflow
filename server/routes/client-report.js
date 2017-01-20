@@ -150,7 +150,6 @@ function formattedItems(itemArray) {
     var tempCategoryArray = [];
     var currentCategory = itemArray[0].category_name;
     for (var i = 0; i < itemArray.length; i++) {
-        // console.log(i, itemArray[i].item_name, itemArray[i].category_name, currentCategory, itemArray[i]);
         if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
             if (i === itemArray.length - 1) {
                 tempCategoryArray.push(itemArray[i]);
@@ -312,28 +311,81 @@ function createPDF() {
             });
     }
 
-        // Summary
-        doc.font('Courier', 12)
-            .moveDown()
-            .text('Summary:');
-        var takeHome = padLeft(reportData.profile.monthly_take_home_amount, AMOUNT_LENGTH);
-        item = padRight('Monthly Takehome', NAME_LENGTH) + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + padLeft((reportData.profile.monthly_take_home_amount * 12), AMOUNT_LENGTH);
-        doc.font('Courier', 10)
-            .moveDown()
-            .text(item, {
-                width: 1412,
-                align: 'justify',
-                indent: 10
-            });
+    // Summary
+    buildSummaryTotals();
+    doc.font('Courier', 12)
+        .moveDown()
+        .text('Summary:');
+    var takeHome = padLeft(reportData.profile.monthly_take_home_amount, AMOUNT_LENGTH);
+    item = padRight('Monthly Takehome', NAME_LENGTH) + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + padLeft((reportData.profile.monthly_take_home_amount * 12), AMOUNT_LENGTH);
+    doc.font('Courier', 10)
+        .moveDown()
+        .text(item, {
+            width: 1412,
+            align: 'justify',
+            indent: 10
+        });
+    item = reportData.totals.expenses;
+    formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
+        padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
+        padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
+        padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
+    doc.font('Courier', 10)
+        .moveDown()
+        .text(formattedItem, {
+            width: 1412,
+            align: 'justify',
+            indent: 10,
+            ellipsis: true
+        });
+    item = reportData.totals.net;
+    formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
+        padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
+        padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
+        padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
+    doc.font('Courier', 10)
+        .moveDown()
+        .text(formattedItem, {
+            width: 1412,
+            align: 'justify',
+            indent: 10,
+            ellipsis: true
+        });
+
+
+
 
     // end and display the document in the iframe to the right
     doc.end();
     console.log('PDF created:', fileName);
 }
 
+function buildSummaryTotals() {
+    reportData.totals = {};
+    reportData.totals.expenses = {};
+    reportData.totals.net = {};
+
+    var nonFlowTotal = parseInt(reportData.Flex[reportData.Flex.length - 1].item_amount) +
+        parseInt(reportData.Functional[reportData.Functional.length - 1].item_amount) +
+        parseInt(reportData.Financial[reportData.Financial.length - 1].item_amount);
+    var flowTotals = reportData.Flow[reportData.Flow.length - 1];
+
+    reportData.totals.expenses.item_name = 'Expenses';
+    reportData.totals.expenses.annual_amount = (nonFlowTotal * 12) + parseInt(flowTotals.annual_amount);
+    for (var i = 1; i <= 12; i++) {
+        reportData.totals.expenses['amount_' + (i)] = parseInt(flowTotals['amount_' + (i)]) + nonFlowTotal;
+    }
+
+    reportData.totals.net.item_name = 'Net Total';
+    reportData.totals.net.annual_amount = (parseInt(reportData.profile.monthly_take_home_amount) * 12) - reportData.totals.expenses.annual_amount;
+    for (var i = 1; i <= 12; i++) {
+        reportData.totals.net['amount_' + (i)] = parseInt(reportData.profile.monthly_take_home_amount) - (reportData.totals.expenses['amount_' + (i)]);
+    }
+    console.log(reportData.totals);
+}
+
 function padRight(value, length) {
     if (value.length > length) {
-        console.log(1, value, value.substring(0, length));
         return value.substring(0, length);
     } else {
         for (var i = value.length; i <= length; i++) {

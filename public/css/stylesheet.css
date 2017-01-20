@@ -18,6 +18,10 @@ h1 {
       font-size: 40px;
       letter-spacing: 8px; } }
 
+h3 {
+  font-size: 2em;
+  line-height: 1.4em; }
+
 .jumbotron {
   background: url("/assets/images/header.png") center bottom no-repeat;
   color: white;

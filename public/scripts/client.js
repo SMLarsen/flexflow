@@ -49,11 +49,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'ResultsController',
 			controllerAs: 'rc'
 		})
-		.when('/savingsgoals', {
-			templateUrl: '/views/templates/savingsgoals.html',
-			controller: 'SavingsGoalsController',
-			controllerAs: 'sg'
-		})
 		.when('/report', {
 			templateUrl: '/views/templates/report.html',
 			controller: 'ResultsController',

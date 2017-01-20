@@ -14,9 +14,6 @@ var AMOUNT_LENGTH = 7;
 var MONTHS_ARRAY = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 var reportData = {};
-
-console.log('Report route starting -------------------');
-
 var budgetID = 0;
 
 // Route: GET item totals for a budget
@@ -149,12 +146,6 @@ router.get("/", function(req, res, next) {
         });
 });
 
-// Route: GET comments for a budget
-router.get("/", function(req, res, next) {
-    createPDF();
-});
-
-
 function formattedItems(itemArray) {
     var tempCategoryArray = [];
     var currentCategory = itemArray[0].category_name;
@@ -194,6 +185,7 @@ function formatFlowItems(itemArray) {
 router.get("/", function(req, res, next) {
     createPDF();
     res.sendStatus(201);
+    next();
 });
 
 function createPDF() {
@@ -208,13 +200,13 @@ function createPDF() {
         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
 
     // months
-    var months = textSpacer('    ', NAME_LENGTH) + intSpacer(reportData.months[0], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[1], AMOUNT_LENGTH) + intSpacer(reportData.months[2], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[3], AMOUNT_LENGTH) + intSpacer(reportData.months[4], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[5], AMOUNT_LENGTH) + intSpacer(reportData.months[6], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[7], AMOUNT_LENGTH) + intSpacer(reportData.months[8], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[9], AMOUNT_LENGTH) + intSpacer(reportData.months[10], AMOUNT_LENGTH) +
-        intSpacer(reportData.months[11], AMOUNT_LENGTH) + intSpacer('Annual', AMOUNT_LENGTH);
+    var months = padRight('    ', NAME_LENGTH) + padLeft(reportData.months[0], AMOUNT_LENGTH) +
+        padLeft(reportData.months[1], AMOUNT_LENGTH) + padLeft(reportData.months[2], AMOUNT_LENGTH) +
+        padLeft(reportData.months[3], AMOUNT_LENGTH) + padLeft(reportData.months[4], AMOUNT_LENGTH) +
+        padLeft(reportData.months[5], AMOUNT_LENGTH) + padLeft(reportData.months[6], AMOUNT_LENGTH) +
+        padLeft(reportData.months[7], AMOUNT_LENGTH) + padLeft(reportData.months[8], AMOUNT_LENGTH) +
+        padLeft(reportData.months[9], AMOUNT_LENGTH) + padLeft(reportData.months[10], AMOUNT_LENGTH) +
+        padLeft(reportData.months[11], AMOUNT_LENGTH) + padLeft('Annual', AMOUNT_LENGTH);
     doc.font('Courier', 10)
         .moveDown()
         .text(months, {
@@ -246,10 +238,10 @@ function createPDF() {
         .text('Flow Accounts:');
     for (var i = 0; i < reportData.Flow.length; i++) {
         item = reportData.Flow[i];
-        formattedItem = textSpacer(item.item_name, NAME_LENGTH) + intSpacer(item.amount_1, AMOUNT_LENGTH) + intSpacer(item.amount_2, AMOUNT_LENGTH) + intSpacer(item.amount_3, AMOUNT_LENGTH) +
-            intSpacer(item.amount_4, AMOUNT_LENGTH) + intSpacer(item.amount_5, AMOUNT_LENGTH) + intSpacer(item.amount_6, AMOUNT_LENGTH) + intSpacer(item.amount_7, AMOUNT_LENGTH) +
-            intSpacer(item.amount_8, AMOUNT_LENGTH) + intSpacer(item.amount_9, AMOUNT_LENGTH) + intSpacer(item.amount_10, AMOUNT_LENGTH) + intSpacer(item.amount_11, AMOUNT_LENGTH) +
-            intSpacer(item.amount_12, AMOUNT_LENGTH) + intSpacer(item.annual_amount, AMOUNT_LENGTH);
+        formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
+            padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
+            padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
+            padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
         doc.font('Courier', 10)
             .moveDown()
             .text(formattedItem, {
@@ -299,7 +291,7 @@ function createPDF() {
     console.log('PDF created:', fileName);
 }
 
-function textSpacer(value, length) {
+function padRight(value, length) {
     if (value.length > length) {
         console.log(1, value, value.substring(0, length));
         return value.substring(0, length);
@@ -312,24 +304,24 @@ function textSpacer(value, length) {
 }
 
 function formatPDFItem(item) {
-    item = textSpacer(item.item_name, NAME_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer(item.item_amount, AMOUNT_LENGTH) +
-        intSpacer((item.item_amount * 12), 7);
+    item = padRight(item.item_name, NAME_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft(item.item_amount, AMOUNT_LENGTH) +
+        padLeft((item.item_amount * 12), 7);
     return item;
 }
 
-function intSpacer(value, length) {
+function padLeft(value, length) {
     var paddedValue = ("         " + value.toString()).slice(-length);
     return paddedValue;
 

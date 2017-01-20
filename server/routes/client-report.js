@@ -25,25 +25,20 @@ router.get("/", function(req, res, next) {
             queryString += "FROM budget_item, budget_template_category ";
             queryString += "WHERE budget_template_category.id = budget_template_category_id ";
             queryString += "AND budget_id = $1 ";
-            // queryString += "AND budget_template_category.id = $2 ";
             queryString += "UNION ";
             queryString += "SELECT budget_template_category.category_name, 'Total', SUM(item_amount) AS monthly_total, SUM(item_amount) * 12 AS annual_amount, 100 AS item_sort_sequence ";
             queryString += "FROM budget_item, budget_template_category ";
             queryString += "WHERE budget_template_category.id = budget_template_category_id ";
             queryString += "AND budget_id = $1 ";
-            // queryString += "AND budget_template_category.id = $2 ";
             queryString += "GROUP BY budget_template_category.category_name ";
             queryString += "ORDER BY 1, item_sort_sequence";
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting items for reporting', err);
                     client.release();
                     next();
                 } else {
-                    // console.log('Reporting items retrieved');
                     formattedItems(result.rows);
-                    // console.log(result.rows);
                     client.release();
                     next();
                 }
@@ -73,14 +68,12 @@ router.get("/", function(req, res, next) {
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "ORDER BY item_sort_sequence, item_year, item_month";
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting flow items for reporting', err);
                     client.release();
                     next();
                 } else {
-                    // console.log('Reporting flow items retrieved');
                     formatFlowItems(result.rows);
                     client.release();
                     next();
@@ -95,14 +88,12 @@ router.get("/", function(req, res, next) {
         .then(function(client) {
             var queryString = "SELECT * FROM budget ";
             queryString += "WHERE id = $1 ";
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting profile for reporting', err);
                     client.release();
                     next();
                 } else {
-                    // console.log('Reporting profile retrieved');
                     reportData.profile = result.rows[0];
                     reportData.months = formatMonths(reportData.profile.budget_start_month);
                     client.release();
@@ -128,7 +119,6 @@ router.get("/", function(req, res, next) {
         .then(function(client) {
             var queryString = "SELECT * FROM budget_comment ";
             queryString += "WHERE id = $1 ";
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
                     console.log('Error getting comment for reporting', err);
@@ -136,10 +126,8 @@ router.get("/", function(req, res, next) {
                     res.sendStatus(500);
                     next();
                 } else {
-                    // console.log('Reporting comment retrieved');
                     reportData.comment = result.rows;
                     client.release();
-                    // res.sendStatus(201);
                     next();
                 }
             });
@@ -262,11 +250,7 @@ function createPDF() {
         .moveDown()
         .text('Flow Accounts:');
     for (var i = 0; i < reportData.Flow.length; i++) {
-        item = reportData.Flow[i];
-        formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
-            padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
-            padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
-            padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
+        formattedItem = formatMonthlyItems(reportData.Flow[i]);
         doc.font('Courier', 10)
             .moveDown()
             .text(formattedItem, {
@@ -325,11 +309,7 @@ function createPDF() {
             align: 'justify',
             indent: 10
         });
-    item = reportData.totals.expenses;
-    formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
-        padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
-        padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
-        padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
+    formattedItem = formatMonthlyItems(reportData.totals.expenses);
     doc.font('Courier', 10)
         .moveDown()
         .text(formattedItem, {
@@ -338,11 +318,7 @@ function createPDF() {
             indent: 10,
             ellipsis: true
         });
-    item = reportData.totals.net;
-    formattedItem = padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
-        padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
-        padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
-        padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
+    formattedItem = formatMonthlyItems(reportData.totals.net);
     doc.font('Courier', 10)
         .moveDown()
         .text(formattedItem, {
@@ -351,13 +327,17 @@ function createPDF() {
             indent: 10,
             ellipsis: true
         });
-
-
-
 
     // end and display the document in the iframe to the right
     doc.end();
     console.log('PDF created:', fileName);
+}
+
+function formatMonthlyItems(item) {
+    return padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
+        padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
+        padLeft(item.amount_8, AMOUNT_LENGTH) + padLeft(item.amount_9, AMOUNT_LENGTH) + padLeft(item.amount_10, AMOUNT_LENGTH) + padLeft(item.amount_11, AMOUNT_LENGTH) +
+        padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
 }
 
 function buildSummaryTotals() {
@@ -381,7 +361,6 @@ function buildSummaryTotals() {
     for (var i = 1; i <= 12; i++) {
         reportData.totals.net['amount_' + (i)] = parseInt(reportData.profile.monthly_take_home_amount) - (reportData.totals.expenses['amount_' + (i)]);
     }
-    console.log(reportData.totals);
 }
 
 function padRight(value, length) {
@@ -396,21 +375,12 @@ function padRight(value, length) {
 }
 
 function formatPDFItem(item) {
-    item = padRight(item.item_name, NAME_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft(item.item_amount, AMOUNT_LENGTH) +
-        padLeft((item.item_amount * 12), 7);
-    return item;
+    newItem = padRight(item.item_name, NAME_LENGTH);
+    for (var i = 1; i <= 12; i++) {
+        newItem += padLeft(item.item_amount, AMOUNT_LENGTH);
+    }
+    newItem += padLeft((item.item_amount * 12), 7);
+    return newItem;
 }
 
 function padLeft(value, length) {

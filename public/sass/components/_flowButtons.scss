@@ -17,11 +17,12 @@
   background: lighten($detail-color, 7%);
   border: 2px solid $detail-color;
   color: white;
-  &:hover {
-    background: $detail-color;
+  &:target {
+    outline: none;
     color: white;
   }
-  &:active {
+  &:hover {
+    background: $detail-color;
     color: white;
   }
 }

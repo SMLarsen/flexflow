@@ -3,17 +3,19 @@ var router = express.Router();
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require('path');
-var filePath = path.join(__dirname, 'file.pdf');
+var csv = require('../modules/export-csv');
 
 router.post("/", function(req, res) {
-    // console.log("im here in send mail");
-    var htmlObject = '<p>You have a submission with the folowing details...' + '<br>' +
+
+    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
-        "FlowTotal: " + req.body.flowTotal + '<br>' +
-        "FlexTotal: " + req.body.flexTotal + '<br>' +
-        "FunctionalTotal: " + req.body.functionalTotal + '<br>' +
-        "FinancialTotal: " + req.body.financialTotal + '</p>';
+        "Flow Total: $" + req.body.flowTotal + '<br>' +
+        "Flex Total: $" + req.body.flexTotal + '<br>' +
+        "Functional Total: $" + req.body.functionalTotal + '<br>' +
+        "Financial Total: $" + req.body.financialTotal + '<br>' +
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
+        "Net Total: $" + req.body.netTotal + '</p>';
 
     var receivers = req.body.email;
 
@@ -34,25 +36,10 @@ router.post("/", function(req, res) {
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
         text: 'You have a submission with the following details from flex flow...',
         html: htmlObject,
-        // attachments: [{
-        //     filename: 'text1.txt',
-        //     content: 'hello world!'
-        // }]
-        // attachments: [{
-        //     fileName: 'file.pdf', //This needs to be the link to the form, or the actual form
-        //     // filePath: './file.pdf',
-        //     streamSource: fs.createReadStream(filePath),
-        //     contentType: "application/pdf"
-        // }]
         attachments: [
-
-        {   // file on disk as an attachment
-            filename: 'file.pdf',
+        {
             path: filePath, // stream this file
-            //below one not working some time dont know why but its work for me now
-            //  path: 'C:/Users/Me/Desktop/ab.txt',
-            //this also work foo me
-            contentType: "application/pdf"
+            contentType: "application/csv"
 
         }
       ]

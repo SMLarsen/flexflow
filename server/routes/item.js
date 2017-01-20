@@ -118,6 +118,7 @@ router.put("/flowitems/:month/:item_name", function(req, res) {
 
 // Route: Insert flow items for a budget
 router.post("/flowitems", function(req, res) {
+  console.log('post flowitems:', req.body);
     pool.connect()
         .then(function(client) {
             var queryString = 'INSERT INTO budget_flow_item (budget_id, budget_template_category_id, item_month, item_year, item_img_src, item_amount, item_name, item_sort_sequence) VALUES ';

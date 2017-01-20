@@ -291,9 +291,14 @@ select {
     .people_button_container button:hover {
       background: #33a4c7; }
 
+.num_label {
+  width: 150px;
+  display: inline-block;
+  margin-bottom: 20px; }
+
 .client_names {
   text-align: center;
-  width: 40%;
+  width: 30%;
   margin: 0 auto; }
   @media (max-width: 768px) {
     .client_names {

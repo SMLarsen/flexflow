@@ -22,7 +22,7 @@
 
 .active_toggle {
   @include category_toggle;
-  background-color: $detail-color;
+  background-color: lighten($detail-color, 15%);
   background-size: 80%;
 }
 

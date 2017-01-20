@@ -198,6 +198,7 @@ function createPDF() {
     // draw some text
     doc.font('Courier', 16)
         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+
     doc.fontSize(12)
         .moveDown()
         .text(padRight('Flex Account:', NAME_LENGTH) + '$' + padLeft(reportData.Flex[reportData.Flex.length - 1].item_amount, AMOUNT_LENGTH), {
@@ -253,8 +254,7 @@ function createPDF() {
             .text(formattedItem, {
                 width: 1412,
                 align: 'justify',
-                indent: 10,
-                ellipsis: true
+                indent: 10
             });
     }
 
@@ -311,6 +311,20 @@ function createPDF() {
                 ellipsis: true
             });
     }
+
+        // Summary
+        doc.font('Courier', 12)
+            .moveDown()
+            .text('Summary:');
+        var takeHome = padLeft(reportData.profile.monthly_take_home_amount, AMOUNT_LENGTH);
+        item = padRight('Monthly Takehome', NAME_LENGTH) + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + padLeft((reportData.profile.monthly_take_home_amount * 12), AMOUNT_LENGTH);
+        doc.font('Courier', 10)
+            .moveDown()
+            .text(item, {
+                width: 1412,
+                align: 'justify',
+                indent: 10
+            });
 
     // end and display the document in the iframe to the right
     doc.end();

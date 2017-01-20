@@ -18,7 +18,7 @@ router.get("/category", function(req, res) {
                 client.release();
             } else {
                 res.send(result.rows);
-                console.log('retrieved categories');
+                // console.log('retrieved categories');
                 client.release();
             }
         });
@@ -42,7 +42,7 @@ router.get("/item", function(req, res) {
                     client.release();
                 } else {
                     res.send(result.rows);
-                    console.log('retrieved items');
+                    // console.log('retrieved items');
                     client.release();
                 }
             });

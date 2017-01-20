@@ -1,11 +1,5 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li><a href="#functionalspend">Functional</a></li>
-  <li><a href="#financialspend">Financial</a></li>
-  <li class="active">Comments</li>
-</ol>
+<div ng-include="'views/templates/nav.html'">
+</div>
 
 <h1 class="jumbotron">Questions for Flex/Flow?</h1>
 
@@ -17,12 +11,6 @@
     </div>
     <button type="button" class="submit_button" ng-click="ai.postAdditionalInfo()">Submit</button>
   </form>
-</div>
-
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="85.7" aria-valuemin="0" aria-valuemax="100" style="width: 85.7%;">
-    6/7
-  </div>
 </div>
 
 <ol class="breadcrumb_mobile" ng-show="ai.navActive">

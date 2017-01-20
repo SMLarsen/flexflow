@@ -1,7 +1,5 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li class="active">Flex</li>
-</ol>
+<div ng-include="'views/templates/nav.html'">
+</div>
 
 <button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
 <div class="modal fade" id="hint" role="dialog">
@@ -62,16 +60,12 @@
   </div>
 </div>
 
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="28.6" aria-valuemin="0" aria-valuemax="100" style="width: 28.6%;">
-    2/7
-  </div>
-</div>
-
 <ol class="breadcrumb_mobile" ng-show="fx.navActive">
   <li><a href="#">Home</a></li>
   <li class="active">Flex</li>
 </ol>
 <div class="hamburger" ng-click="fx.activateMobileNav()">
   <img src="/assets/images/hamburger.svg" alt="hamburger">
+</div>
+<div ng-include="views/templates/nav.html">
 </div>

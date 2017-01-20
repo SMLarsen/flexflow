@@ -1,12 +1,5 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li><a href="#functionalspend">Functional</a></li>
-  <li><a href="#financialspend">Financial</a></li>
-  <li><a href="#additionalinfo">Comments</a></li>
-  <li class="active">Results</li>
-</ol>
+<div ng-include="'views/templates/nav.html'">
+</div>
 
 <h1 class="jumbotron">Flex/Flow Results</h1>
 <div class="full_results_container">
@@ -38,12 +31,6 @@
 <div class="results_button_container">
   <button class="edit_button" ng-click="rc.scheduleMeeting()" type="button">Schedule Meeting with an Advisor</button>
   <button class="submit_button" ng-click="rc.logOut()" type="button">Complete Flex/Flow</button>
-</div>
-
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-    7/7
-  </div>
 </div>
 
 <ol class="breadcrumb_mobile" ng-show="rc.navActive">

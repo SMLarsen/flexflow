@@ -15,6 +15,10 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 		}
 	};
 
+	budgetFactory.getBudget().then(function(results){
+		self.budget = results;
+	});
+
 	budgetFactory.getFunctionalItems().then(function(result) {
 		self.itemArray = result;
 		setToggles();
@@ -60,7 +64,22 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 	self.updateFunctionalItems = function() {
 		console.log("update functional clicked");
 		budgetFactory.updateFunctionalItems(self.itemArray).then(function(result){
-			budgetFactory.updateBudgetStatus("Functional");
+			switch (self.budget.budget_status) {
+        case "Finished":
+        budgetFactory.updateBudgetStatus("Finished");
+        break;
+        case "Comments":
+        budgetFactory.updateBudgetStatus("Comments");
+        break;
+        case "Financial":
+        budgetFactory.updateBudgetStatus("Financial");
+        break;
+        case "Functional":
+        budgetFactory.updateBudgetStatus("Functional");
+        break;
+        default:
+        budgetFactory.updateBudgetStatus("Functional");
+      }
 		});
 	};
 

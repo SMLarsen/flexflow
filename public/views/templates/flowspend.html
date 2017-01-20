@@ -1,8 +1,5 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li class="active">Flow</li>
-</ol>
+<div ng-include="'views/templates/nav.html'">
+</div>
 
 <button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
 <div class="modal fade" id="hint" role="dialog">
@@ -80,7 +77,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-        <button type="button" class="submit_button" data-dismiss="modal" data-toggle="modal" data-target="#congratsForm">Submit</button>
+        <button ng-click="fl.updateBudgetStatus()" type="button" class="submit_button" data-dismiss="modal" data-toggle="modal" data-target="#congratsForm">Submit</button>
       </div>
     </div>
   </div>
@@ -106,12 +103,6 @@
 <div class="nav_button_container">
   <button class="submit_button" ng-click="fl.prevPage()">Back to Flex</button>
   <button ng-click="self.findCategoryTotals()" class="submit_button" data-toggle="modal" data-target="#submitForm">Continue</button>
-</div>
-
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="42.9" aria-valuemin="0" aria-valuemax="100" style="width: 42.9%;">
-    3/7
-  </div>
 </div>
 
 <ol class="breadcrumb_mobile" ng-show="fl.navActive">

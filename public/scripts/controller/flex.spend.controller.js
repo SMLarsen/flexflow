@@ -5,6 +5,10 @@ app.controller('FlexSpendController', ['BudgetFactory', function(BudgetFactory) 
 
   var budgetFactory = BudgetFactory;
 
+  budgetFactory.getBudget().then(function(results){
+    self.budget = results;
+  });
+  
   self.navActive = false;
 
   self.activateMobileNav = function() {
@@ -23,7 +27,28 @@ app.controller('FlexSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.submitFlex = function(){
     console.log(self.flexArray);
     budgetFactory.updateFlexItems(self.flexArray).then(function(result){
-      budgetFactory.updateBudgetStatus("Flex");
+      switch (self.budget.budget_status) {
+        case "Finished":
+        budgetFactory.updateBudgetStatus("Finished");
+        break;
+        case "Comments":
+        budgetFactory.updateBudgetStatus("Comments");
+        break;
+        case "Financial":
+        budgetFactory.updateBudgetStatus("Financial");
+        break;
+        case "Functional":
+        budgetFactory.updateBudgetStatus("Functional");
+        break;
+        case "Flow":
+        budgetFactory.updateBudgetStatus("Flow");
+        break;
+        case "Flex":
+        budgetFactory.updateBudgetStatus("Flex");
+        break;
+        default:
+        budgetFactory.updateBudgetStatus("Flex");
+      }
     });
   }; // End: submitFlex
 

@@ -15,6 +15,10 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 		}
 	};
 
+	budgetFactory.getBudget().then(function(results){
+		self.budget = results;
+	});
+
 	budgetFactory.getFinancialItems().then(function(result) {
 		self.itemArray = result;
 		setToggles();
@@ -60,7 +64,19 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 	self.updateFinancialItems = function() {
 		console.log("updateFinancialItems is clicked");
 		budgetFactory.updateFinancialItems(self.itemArray).then(function(result){
-			budgetFactory.updateBudgetStatus("Financial");
+			switch (self.budget.budget_status) {
+        case "Finished":
+        budgetFactory.updateBudgetStatus("Finished");
+        break;
+        case "Comments":
+        budgetFactory.updateBudgetStatus("Comments");
+        break;
+        case "Financial":
+        budgetFactory.updateBudgetStatus("Financial");
+        break;
+        default:
+        budgetFactory.updateBudgetStatus("Financial");
+      }
 		});
 		window.location = '/#/additionalinfo';
 	};

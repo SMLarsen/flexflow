@@ -68,6 +68,10 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   };
   var budgetFactory = BudgetFactory;
 
+  budgetFactory.getBudget().then(function(results){
+    self.budget = results;
+  });
+
   self.navActive = false;
 
   self.activateMobileNav = function() {
@@ -96,9 +100,30 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
     budgetFactory.updateFlowItems(self.flowCategories).then(function(result){
-      budgetFactory.updateBudgetStatus("Flow");
       self.getFlowItems();
     });
+  };
+
+  self.updateBudgetStatus = function() {
+    switch (self.budget.budget_status) {
+      case "Finished":
+      budgetFactory.updateBudgetStatus("Finished");
+      break;
+      case "Comments":
+      budgetFactory.updateBudgetStatus("Comments");
+      break;
+      case "Financial":
+      budgetFactory.updateBudgetStatus("Financial");
+      break;
+      case "Functional":
+      budgetFactory.updateBudgetStatus("Functional");
+      break;
+      case "Flow":
+      budgetFactory.updateBudgetStatus("Flow");
+      break;
+      default:
+      budgetFactory.updateBudgetStatus("Flow");
+    }
   };
 
   self.postFlowItems = function() {

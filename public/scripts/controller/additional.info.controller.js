@@ -15,13 +15,26 @@ app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFact
     }
   };
 
+  budgetFactory.getBudget().then(function(results){
+    self.budget = results;
+  });
+
   self.postAdditionalInfo = function() {
 
     var sendObject = {budget_comment: self.comment};
 
     budgetFactory.postAdditionalInfo(sendObject)
       .then(function(result){
-        budgetFactory.updateBudgetStatus("Comments");
+        switch (self.budget.budget_status) {
+          case "Finished":
+          budgetFactory.updateBudgetStatus("Finished");
+          break;
+          case "Comments":
+          budgetFactory.updateBudgetStatus("Comments");
+          break;
+          default:
+          budgetFactory.updateBudgetStatus("Comments");
+        }
           //console.log('Comment Inserted on Client Side');
           // console.log("in postAdditionalInfo ", sendObject);
           window.location = '/#/results';

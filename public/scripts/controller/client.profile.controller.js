@@ -1,5 +1,5 @@
 app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFactory) {
-    console.log('Client Profile controller started');
+    // console.log('Client Profile controller started');
 
     var self = this;
 
@@ -18,14 +18,14 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
     self.nextFiveYears = [];
 
     self.activateMobileNav = function() {
-      if(self.navActive === false){
-        self.navActive = true;
-      } else {
-        self.navActive = false;
-      }
+        if (self.navActive === false) {
+            self.navActive = true;
+        } else {
+            self.navActive = false;
+        }
     };
 
-    console.log(year);
+    // console.log(year);
     getYears();
 
     // Function to build array of people in flex budget
@@ -75,7 +75,6 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
         self.budget.budget_status = "Profile";
 
       }
-
         budgetFactory.postBudget(self.budget)
             .then(function(budgetResponse) {
                 budgetFactory.postFlexItems(self.flexArray)
@@ -98,7 +97,7 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
             year++;
             self.nextFiveYears.push(year);
         }
-        console.log(self.nextFiveYears);
-    }; // End: getYears
+        // console.log(self.nextFiveYears);
+    } // End: getYears
 
 }]); // END: ClientProfileController

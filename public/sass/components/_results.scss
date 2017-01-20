@@ -10,10 +10,12 @@
     background: white;
     float: left;
     &_negative {
-      background: rgba(red, 0.2);
+      background: red;
+      color: white;
     }
     &_positive {
-      background: rgba($detail-color, 0.2);
+      background: green;
+      color: white;
     }
   }
   &_name {

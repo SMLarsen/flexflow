@@ -1,5 +1,5 @@
 app.factory("AdminFactory", function($http) {
-    console.log('AdminFactory started');
+    // console.log('AdminFactory started');
 
     var adminData = {
         adminArray: []
@@ -13,7 +13,6 @@ app.factory("AdminFactory", function($http) {
             })
             .then(function(response) {
                     adminData.adminArray = response.data;
-                    console.log('adminData:', adminData);
                     return;
                 },
                 function(err) {

@@ -59,13 +59,15 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
             flowTotal: self.flowTotal,
             flexTotal: self.flexTotal,
             functionalTotal: self.functionalTotal,
-            financialTotal: self.financialTotal
+            financialTotal: self.financialTotal,
+            takeHomeCash: self.takeHomeCash,
+            netTotal: self.netTotal
         };
         // console.log("SendObject ", sendObject);
 
         $http({
                 method: 'POST',
-                url: '/mail',
+                url: '/csv',
                 headers: {
                     id_token: authFactory.getIdToken()
                 },

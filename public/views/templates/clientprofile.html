@@ -35,7 +35,7 @@
     <option ng-repeat="year in cp.nextFiveYears">{{year}}</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled"> I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
-  <button class="submit_button" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit</button>
+  <button class="submit_button" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Continue</button>
   <div class="modal fade" id="clientProfileForm" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -49,7 +49,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-          <button ng-click="cp.postBudget()" class="submit_button" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Submit</button>
+          <button ng-click="cp.postBudget()" class="submit_button" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Continue</button>
         </div>
       </div>
     </div>

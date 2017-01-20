@@ -172,9 +172,13 @@ select {
   background-color: #29839e;
   font-family: 'Fjalla One', sans-serif;
   color: white;
+  font-size: 3em;
   letter-spacing: 2px;
   text-transform: uppercase;
   text-shadow: 1px 1px #2c4877; }
+
+.modal-body {
+  font-size: 1em; }
 
 .flow_button_months_container {
   width: 500px;
@@ -361,9 +365,11 @@ select {
   background: white;
   float: left; }
   .results_container_negative {
-    background: rgba(255, 0, 0, 0.2); }
+    background: red;
+    color: white; }
   .results_container_positive {
-    background: rgba(41, 131, 158, 0.2); }
+    background: green;
+    color: white; }
 
 .results_name {
   border-bottom: 1px solid black;

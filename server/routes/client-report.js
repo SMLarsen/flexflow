@@ -196,8 +196,33 @@ function createPDF() {
     doc.pipe(fs.createWriteStream("./server/pdf/" + fileName));
 
     // draw some text
-    doc.fontSize(16)
+    doc.font('Courier', 16)
         .text('Here are your FlexFlow budgeting numbers:', 40, 40);
+    doc.fontSize(12)
+        .moveDown()
+        .text(padRight('Flex Account:', NAME_LENGTH) + '$' + padLeft(reportData.Flex[reportData.Flex.length - 1].item_amount, AMOUNT_LENGTH), {
+            width: 1412,
+            align: 'justify',
+            indent: 40
+        });
+    doc.moveDown()
+        .text(padRight('Flow Account:', NAME_LENGTH) + '$' + padLeft(reportData.Flow[reportData.Flow.length - 1].amount_1, AMOUNT_LENGTH), {
+            width: 1412,
+            align: 'justify',
+            indent: 40
+        });
+    doc.moveDown()
+        .text(padRight('Functional Account:', NAME_LENGTH) + '$' + padLeft(reportData.Functional[reportData.Functional.length - 1].item_amount, AMOUNT_LENGTH), {
+            width: 1412,
+            align: 'justify',
+            indent: 40
+        });
+    doc.moveDown()
+        .text(padRight('Financial Account:', NAME_LENGTH) + '$' + padLeft(reportData.Financial[reportData.Financial.length - 1].item_amount, AMOUNT_LENGTH), {
+            width: 1412,
+            align: 'justify',
+            indent: 40
+        });
 
     // months
     var months = padRight('    ', NAME_LENGTH) + padLeft(reportData.months[0], AMOUNT_LENGTH) +
@@ -207,7 +232,8 @@ function createPDF() {
         padLeft(reportData.months[7], AMOUNT_LENGTH) + padLeft(reportData.months[8], AMOUNT_LENGTH) +
         padLeft(reportData.months[9], AMOUNT_LENGTH) + padLeft(reportData.months[10], AMOUNT_LENGTH) +
         padLeft(reportData.months[11], AMOUNT_LENGTH) + padLeft('Annual', AMOUNT_LENGTH);
-    doc.font('Courier', 10)
+    doc.fontSize(10)
+        .moveDown()
         .moveDown()
         .text(months, {
             width: 1412,

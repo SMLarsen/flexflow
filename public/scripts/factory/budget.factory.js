@@ -415,11 +415,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 });
     };
     //**************************** AddiontalInfo Item Functions ******************************//
-    // function to insert financial items
+    // function to insert comments items
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
-        console.log("email user ", currentUser);
+        //console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -440,7 +440,34 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         } else {
             console.log('User not signed in');
         }
-    }; //end postFinancialItems
+    }; //end comments items
+
+    // function to insert comments items
+    getAdditionalInfo = function() {
+        //console.log("budgetArray: ", budgetArray);
+        var currentUser = authFactory.getCurrentUser();
+        //console.log("email user ", currentUser);
+        console.log("I'm here in getAdditionalInfo");
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/item/comments',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        console.log('get comment');
+                        return response;
+                    },
+                    function(err) {
+                        console.log('Error adding comment for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end comments items
 
 
 
@@ -523,6 +550,9 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
+        },
+        getAdditionalInfo: function() {
+            return getAdditionalInfo();
         },
         updateBudgetStatus: function(status) {
             return updateBudgetStatus(status);

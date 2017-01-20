@@ -12,6 +12,11 @@ h1 {
   @include header_text;
 }
 
+h3 {
+  font-size: 2em;
+  line-height: 1.4em;
+}
+
 .jumbotron {
   background: url('/assets/images/header.png') center bottom no-repeat;
   color: white;

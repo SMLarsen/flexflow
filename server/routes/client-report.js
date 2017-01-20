@@ -1,9 +1,14 @@
+/*jshint esversion: 6 */
+
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var config = require('../modules/pg-config');
 var pdfDocument = require('pdfkit');
 var fs = require('fs');
+
+var nodemailer = require('nodemailer');
+var path = require('path');
 
 var pool = new pg.Pool({
     database: config.database
@@ -17,7 +22,7 @@ var reportData = {};
 var budgetID = 0;
 
 // Route: GET item totals for a budget
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     budgetID = req.budgetID;
     pool.connect()
         .then(function(client) {
@@ -47,7 +52,7 @@ router.get("/", function(req, res, next) {
 });
 
 // Route: GET flow item totals for a budget
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
             var queryString = "SELECT item_name, item_amount, item_year, item_month, item_sort_sequence ";
@@ -83,7 +88,7 @@ router.get("/", function(req, res, next) {
 });
 
 // Route: GET profile for a budget
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
             var queryString = "SELECT * FROM budget ";
@@ -114,7 +119,7 @@ function formatMonths(startMonth) {
 }
 
 // Route: GET comments for a budget
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
             var queryString = "SELECT * FROM budget_comment ";
@@ -169,7 +174,7 @@ function formatFlowItems(itemArray) {
 }
 
 // Route: GET comments for a budget
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     createPDF();
     res.sendStatus(201);
     next();
@@ -179,8 +184,8 @@ function createPDF() {
     var doc = new pdfDocument({
         layout: 'landscape'
     });
-    var fileName = 'flexflow-' + budgetID + '.pdf';
-    doc.pipe(fs.createWriteStream("./server/pdf/" + fileName));
+    var fileName = 'flexflow.pdf';
+    doc.pipe(fs.createWriteStream("./server/routes/" + fileName));
 
     // draw some text
     doc.font('Courier', 16)
@@ -265,7 +270,7 @@ function createPDF() {
     doc.fontSize(12)
         .moveDown()
         .text('Functional Accounts:');
-    for (var i = 0; i < reportData.Functional.length; i++) {
+    for (i = 0; i < reportData.Functional.length; i++) {
         item = reportData.Functional[i];
         formattedItem = formatPDFItem(item);
         doc.font('Courier', 10)
@@ -282,7 +287,7 @@ function createPDF() {
     doc.fontSize(12)
         .moveDown()
         .text('Financial Accounts:');
-    for (var i = 0; i < reportData.Financial.length; i++) {
+    for (i = 0; i < reportData.Financial.length; i++) {
         item = reportData.Financial[i];
         formattedItem = formatPDFItem(item);
         doc.font('Courier', 10)
@@ -388,5 +393,60 @@ function padLeft(value, length) {
     return paddedValue;
 
 }
+
+router.post("/", function(req, res) {
+    // console.log("im here in send mail");
+    // var name =
+    //csv.router();
+    var filePath = path.join(__dirname, './flexflow.pdf');
+
+    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
+        "Name: " + req.body.displayName + '<br>' +
+        "Email: " + req.body.email + '<br>' +
+        "Flow Total: $" + req.body.flowTotal + '<br>' +
+        "Flex Total: $" + req.body.flexTotal + '<br>' +
+        "Functional Total: $" + req.body.functionalTotal + '<br>' +
+        "Financial Total: $" + req.body.financialTotal + '<br>' +
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
+        "Net Total: $" + req.body.netTotal + '</p>';
+
+    var receivers = req.body.email;
+
+    // create reusable transporter object using SMTP transport
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'flexflowplanner@gmail.com',
+            pass: 'flexflow!'
+        }
+    });
+
+    var mailOptions = {
+        from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
+        to: "flexflowplanner@gmail.com", receivers,  // list of receivers
+        subject: 'Flex Flow', // Subject line
+        // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
+        // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
+        text: 'You have a submission with the following details from flex flow...',
+        html: htmlObject,
+        attachments: [
+        {
+            path: filePath, // stream this file
+            contentType: "application/pdf"
+        }
+      ]
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            res.redirect('/');
+            return console.log(error);
+        }
+        fs.unlink(filePath);
+
+        // console.log('Message sent: ' + info.response);
+    });
+});
 
 module.exports = router;

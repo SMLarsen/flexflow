@@ -64,22 +64,17 @@ router.get("/flowitems/:month", function(req, res) {
 // Route: Update flow items for a budget within certain month
 router.put("/flowitems/:month", function(req, res) {
     var month = req.params.month;
-    console.log("In edit flowitems: month = ", month );
-    // console.log("In edit flowitems: year = ", req.body.item_year);
     var data = [
-      item_name = req.body.item_name,
-      item_amount = req.body.item_amount,
-      item_year = req.body.item_year
+        item_name = req.body.item_name,
+        item_amount = req.body.item_amount,
+        item_year = req.body.item_year
     ];
-
-    // console.log("In edit flowitems: item_name = ", data.item_name );
-
     pool.connect()
         .then(function(client) {
             client.query('UPDATE budget_flow_item SET item_name = $1, item_amount = $2 WHERE budget_id = $3 AND item_month = $4 AND item_name = $5', [req.body.item_name, req.body.item_amount, req.budgetID, month, req.body.item_name])
                 .then(function(result) {
-                  client.release();
-                  res.sendStatus(200);
+                    client.release();
+                    res.sendStatus(200);
                 }).catch(function(err) {
                     // error
                     client.release();
@@ -91,22 +86,17 @@ router.put("/flowitems/:month", function(req, res) {
 // Route: Update flow items for a budget within certain month
 router.put("/flowitems/:month/:item_name", function(req, res) {
     var month = req.params.month;
-    console.log("In edit flowitems: month = ", month );
-    // console.log("In edit flowitems: year = ", req.body.item_year);
     var data = [
-      item_name = req.body.item_name,
-      item_amount = req.body.item_amount,
-      item_year = req.body.item_year
+        item_name = req.body.item_name,
+        item_amount = req.body.item_amount,
+        item_year = req.body.item_year
     ];
-
-    // console.log("In edit flowitems: item_name = ", data.item_name );
-
     pool.connect()
         .then(function(client) {
             client.query('UPDATE budget_flow_item SET item_amount = $1 WHERE budget_id = $2 AND item_month = $3 AND item_name = $4', [req.body.item_amount, req.budgetID, req.params.month, req.params.item_name])
                 .then(function(result) {
-                  client.release();
-                  res.sendStatus(200);
+                    client.release();
+                    res.sendStatus(200);
                 }).catch(function(err) {
                     // error
                     client.release();
@@ -142,9 +132,6 @@ router.post("/flowitems", function(req, res) {
             queryString += "', " + lastItem.item_amount;
             queryString += ", '" + lastItem.item_name;
             queryString += "', " + lastItem.item_sort_sequence + ")";
-
-            console.log(queryString);
-
             // make query
             client.query(queryString,
                 function(err, result) {
@@ -156,7 +143,6 @@ router.post("/flowitems", function(req, res) {
                     } else {
                         client.release();
                         res.sendStatus(201);
-                        console.log('Flow items inserted');
                     }
                 });
         });
@@ -167,7 +153,6 @@ router.delete("/flowitems/:month", function(req, res) {
     pool.connect()
         .then(function(client) {
             var queryString = 'DELETE FROM budget_flow_item WHERE budget_id = $1 AND item_month = $2';
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID, month], function(err, result) {
                 if (err) {
                     client.release();
@@ -176,7 +161,6 @@ router.delete("/flowitems/:month", function(req, res) {
                 } else {
                     client.release();
                     res.send(result.rows);
-                    console.log('Flow items deleted');
                 }
             });
         });
@@ -187,7 +171,6 @@ router.delete("/flowitems/:month", function(req, res) {
 // Route: GET items for a budget
 router.get("/items/:categoryID", function(req, res) {
     var categoryID = req.params.categoryID;
-    console.log("here in item categoryID", categoryID);
     pool.connect()
         .then(function(client) {
             var queryString = 'SELECT category_name, budget_template_category_id, item_name, item_img_src, item_amount, item_sort_sequence ';
@@ -196,7 +179,6 @@ router.get("/items/:categoryID", function(req, res) {
             queryString += 'AND budget_id = $1 ';
             queryString += 'AND budget_template_category_id = $2 ';
             queryString += 'ORDER BY item_sort_sequence';
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID, categoryID], function(err, result) {
                 if (err) {
                     client.release();
@@ -205,7 +187,6 @@ router.get("/items/:categoryID", function(req, res) {
                 } else {
                     client.release();
                     res.send(result.rows);
-                    console.log('Budget items retrieved');
                 }
             });
         });
@@ -241,9 +222,7 @@ router.post("/items", function(req, res) {
                 queryString += "', '" + lastItem.item_name;
                 queryString += "', " + lastItem.item_amount;
                 queryString += ", " + lastItem.item_sort_sequence + ")";
-
             }
-            console.log(queryString);
             client.query(queryString,
                 function(err, result) {
                     if (err) {
@@ -255,7 +234,6 @@ router.post("/items", function(req, res) {
                         client.release();
 
                         res.sendStatus(201);
-                        console.log('Budget items inserted');
                     }
                 }
             );
@@ -268,18 +246,14 @@ router.delete("/items/:categoryID", function(req, res) {
     pool.connect()
         .then(function(client) {
             var queryString = 'DELETE FROM budget_item WHERE budget_id = $1 AND budget_template_category_id = $2';
-            // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID, categoryID], function(err, result) {
                 if (err) {
                     client.release();
-
                     console.log('Error deleting budget items', err);
                     res.sendStatus(500);
                 } else {
                     client.release();
-
                     res.send(result.rows);
-                    console.log('Budget items deleted');
                 }
             });
         });
@@ -288,29 +262,26 @@ router.delete("/items/:categoryID", function(req, res) {
 // *********************************** Comment routes ************************** //
 // Route: Get comment items for a budget
 router.get("/comments", function(req, res) {
-    //console.log("i got here");
 
     pool.connect()
         .then(function(client) {
             var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';
-            client.query(queryString, [req.budgetID], function(err, result) {
-                if (err) {
-                    client.release();
-                    console.log('Error getting financial items', err);
-                    res.sendStatus(500);
-                } else {
+            client.query(queryString, [req.budgetID])
+                .then(function(result) {
                     client.release();
                     res.send(result.rows);
-                    // console.log('Comment items retrieved');
-                }
-            }); // end inside client.query
-        }); // end pg.connect
+                }).catch(function(err) {
+                    // error
+                    client.release();
+                    console.log('Error on get comment', err);
+                    res.sendStatus(500);
+                }); // end inner then
+        }); // end first then
 }); // end route.get
 
 router.post("/comments", function(req, res) {
     pool.connect()
         .then(function(client) {
-            //console.log("im in post");
             client.query('INSERT INTO budget_comment (budget_id, budget_comment) VALUES($1, $2)', [req.budgetID, req.body.budget_comment], (err, result) => {
                 if (err) {
                     client.release();
@@ -319,7 +290,6 @@ router.post("/comments", function(req, res) {
                 } else {
                     client.release();
                     res.sendStatus(201);
-                    console.log('Comment inserted');
                 }
             });
         });

@@ -254,7 +254,7 @@ function createPDF() {
     doc.fontSize(12)
         .moveDown()
         .text('Flow Accounts:');
-    for (var i = 0; i < reportData.Flow.length; i++) {
+    for (i = 0; i < reportData.Flow.length; i++) {
         formattedItem = formatMonthlyItems(reportData.Flow[i]);
         doc.font('Courier', 10)
             .moveDown()
@@ -363,7 +363,7 @@ function buildSummaryTotals() {
 
     reportData.totals.net.item_name = 'Net Total';
     reportData.totals.net.annual_amount = (parseInt(reportData.profile.monthly_take_home_amount) * 12) - reportData.totals.expenses.annual_amount;
-    for (var i = 1; i <= 12; i++) {
+    for (i = 1; i <= 12; i++) {
         reportData.totals.net['amount_' + (i)] = parseInt(reportData.profile.monthly_take_home_amount) - (reportData.totals.expenses['amount_' + (i)]);
     }
 }

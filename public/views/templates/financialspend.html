@@ -1,5 +1,12 @@
-<div ng-include="'views/templates/nav.html'">
-</div>
+<ol class="breadcrumb">
+  <li ng-show="fi.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="fi.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
+</ol>
 
 <h1 class="jumbotron">Financial Spending</h1>
 <div class="financial_input">

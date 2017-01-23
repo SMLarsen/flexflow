@@ -81,7 +81,7 @@
         <h4 class="modal-title">Your Flow Budget</h4>
       </div>
       <div class="modal-body">
-        <p ng-repeat="month in fl.budgetMonths" ng-hide="month.item_amount === null"><b>{{month.month}}:</b> ${{month.month_total}}</p>
+        <p ng-repeat="month in fl.budgetMonths" ng-hide="month.month_total === null"><b>{{month.month}}:</b> ${{month.month_total}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>

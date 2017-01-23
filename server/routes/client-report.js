@@ -408,15 +408,16 @@ function padLeft(value, length) {
 router.post("/", function(req, res) {
     var filePath = path.join(__dirname, './flexflow.pdf');
 
-    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
+    var htmlObject = '<h4>Here is your FlexFlow budget summary:</h4>' + '<p>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
         "Flow Total: $" + req.body.flowTotal + '<br>' +
         "Flex Total: $" + req.body.flexTotal + '<br>' +
         "Functional Total: $" + req.body.functionalTotal + '<br>' +
         "Financial Total: $" + req.body.financialTotal + '<br>' +
-        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
-        "Net Total: $" + req.body.netTotal + '</p>';
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br><br>' +
+        "Net Total: $" + req.body.netTotal + '</p>' +
+        "<h4> Check out your budget in the attached PDF file</h4>";
 
     var receivers = req.body.email;
     var maillist = [
@@ -437,10 +438,7 @@ router.post("/", function(req, res) {
     var mailOptions = {
         from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
         to: maillist,  // list of receivers
-        subject: 'Flex Flow', // Subject line
-        // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
-        // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-        text: 'You have a submission with the following details from flex flow...',
+        subject: 'Congratulations ' + req.body.displayName + ' on Completing Your FlexFlow Budget!', // Subject line
         html: htmlObject,
         attachments: [
         {

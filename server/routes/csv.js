@@ -246,15 +246,13 @@ router.post("/", function(req, res) {
 
     var mailOptions = {
         from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
-        to: "flexflowplanner@gmail.com",  // list of receivers
-        subject: 'You have a new FlexFlow csv file for ' + req.body.displayName ,
+        to: "flexflowplanner@gmail.com", // list of receivers
+        subject: 'You have a new FlexFlow csv file for ' + req.body.displayName,
         html: htmlObject,
-        attachments: [
-        {
+        attachments: [{
             path: filePath, // stream this file
             contentType: "application/csv"
-        }
-      ]
+        }]
     };
 
     // send mail with defined transport object

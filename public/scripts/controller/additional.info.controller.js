@@ -1,19 +1,50 @@
 app.controller('AdditionalInfoController', ['BudgetFactory', function(BudgetFactory) {
-    console.log('Additional Info controller started');
+console.log('Additional Info controller started');
 
-    var self = this;
+  var self = this;
 
-    var budgetFactory = BudgetFactory;
+  var budgetFactory = BudgetFactory;
 
-    self.navActive = false;
+  self.navActive = false;
 
-    self.activateMobileNav = function() {
-        if (self.navActive === false) {
-            self.navActive = true;
-        } else {
-            self.navActive = false;
-        }
-    };
+  self.activateMobileNav = function() {
+    if(self.navActive === false){
+      self.navActive = true;
+    } else {
+      self.navActive = false;
+    }
+  };
+
+
+  budgetFactory.getBudget().then(function(results){
+    self.budget = results;
+    self.budgetStatus = self.budget.budget_status;
+    switch (self.budgetStatus) {
+      case "Finished":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Comments":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Financial":
+      self.budgetStatusIndex = 5;
+      break;
+      case "Functional":
+      self.budgetStatusIndex = 4;
+      break;
+      case "Flow":
+      self.budgetStatusIndex = 3;
+      break;
+      case "Flex":
+      self.budgetStatusIndex = 2;
+      break;
+      case "Profile":
+      self.budgetStatusIndex = 1;
+      break;
+      default:
+      self.budgetStatusIndex = 0;
+    }
+  });
 
     budgetFactory.getAdditionalInfo()
         .then(function(result) {

@@ -48,8 +48,33 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
 
     // Function for posting salary info to DB
     self.postBudget = function() {
-        // self.budget.meeting_scheduled = false;
+      // self.budget.meeting_scheduled = false;
+      switch (self.budget.budget_status) {
+        case "Finished":
+        self.budget.budget_status = "Finished";
+        break;
+        case "Comments":
+        self.budget.budget_status = "Comments";
+        break;
+        case "Financial":
+        self.budget.budget_status = "Financial";
+        break;
+        case "Functional":
+        self.budget.budget_status = "Functional";
+        break;
+        case "Flow":
+        self.budget.budget_status = "Flow";
+        break;
+        case "Flex":
+        self.budget.budget_status = "Flex";
+        break;
+        case "Profile":
         self.budget.budget_status = "Profile";
+        break;
+        default:
+        self.budget.budget_status = "Profile";
+
+      }
         budgetFactory.postBudget(self.budget)
             .then(function(budgetResponse) {
                 budgetFactory.postFlexItems(self.flexArray)

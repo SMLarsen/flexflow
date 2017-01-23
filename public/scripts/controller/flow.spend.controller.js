@@ -68,6 +68,37 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   };
   var budgetFactory = BudgetFactory;
 
+  budgetFactory.getBudget().then(function(results){
+    self.budget = results;
+    self.budgetStatus = self.budget.budget_status;
+    switch (self.budgetStatus) {
+      case "Finished":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Comments":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Financial":
+      self.budgetStatusIndex = 5;
+      break;
+      case "Functional":
+      self.budgetStatusIndex = 4;
+      break;
+      case "Flow":
+      self.budgetStatusIndex = 3;
+      break;
+      case "Flex":
+      self.budgetStatusIndex = 2;
+      break;
+      case "Profile":
+      self.budgetStatusIndex = 1;
+      break;
+      default:
+      self.budgetStatusIndex = 0;
+    }
+    console.log(self.budgetStatusIndex);
+  });
+
   self.navActive = false;
 
   self.activateMobileNav = function() {
@@ -96,9 +127,30 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
   self.updateFlowItems = function() {
     console.log('update flow items clicked');
     budgetFactory.updateFlowItems(self.flowCategories).then(function(result){
-      budgetFactory.updateBudgetStatus("Flow");
       self.getFlowItems();
     });
+  };
+
+  self.updateBudgetStatus = function() {
+    switch (self.budget.budget_status) {
+      case "Finished":
+      budgetFactory.updateBudgetStatus("Finished");
+      break;
+      case "Comments":
+      budgetFactory.updateBudgetStatus("Comments");
+      break;
+      case "Financial":
+      budgetFactory.updateBudgetStatus("Financial");
+      break;
+      case "Functional":
+      budgetFactory.updateBudgetStatus("Functional");
+      break;
+      case "Flow":
+      budgetFactory.updateBudgetStatus("Flow");
+      break;
+      default:
+      budgetFactory.updateBudgetStatus("Flow");
+    }
   };
 
   self.postFlowItems = function() {

@@ -40,7 +40,7 @@ router.post("/", function(req, res, next) {
         });
 });
 
-// Route: GET item totals for a budget
+// Route: GET items (flex, functional, financial) for a budget with "total" row for each category
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
@@ -62,9 +62,7 @@ router.post("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    // console.log('Reporting items retrieved');
                     formatItems(result.rows);
-                    // console.log(result.rows);
                     client.release();
                     next();
                 }
@@ -72,7 +70,7 @@ router.post("/", function(req, res, next) {
         });
 });
 
-// Route: GET flow item totals for a budget
+// Route: GET flow items tfor a budget with total rows for each month
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
@@ -92,7 +90,6 @@ router.post("/", function(req, res, next) {
                     client.release();
                     next();
                 } else {
-                    // console.log('Reporting flow items retrieved');
                     formatFlowItems(result.rows);
                     client.release();
                     next();
@@ -123,6 +120,7 @@ router.post("/", function(req, res, next) {
         });
 });
 
+// Function: format flex, functional, and financial items and add array for each category to csvData object
 function formatItems(itemArray) {
     var tempCategoryArray = [];
     var currentCategory = itemArray[0].category_name;
@@ -143,6 +141,7 @@ function formatItems(itemArray) {
     }
 }
 
+// Function: format flow items and add array to csvData object
 function formatFlowItems(itemArray) {
     var tempCategoryArray = [];
     var tempItem = {};
@@ -157,7 +156,6 @@ function formatFlowItems(itemArray) {
     }
     csvData.Flow = tempCategoryArray;
 }
-
 var csvContent = '';
 
 // Route: Create Customer CSV
@@ -211,23 +209,31 @@ router.post("/", function(req, res, next) {
     next();
 });
 
+// Function: use json2csv library to add category to csvContent
+var json2csvCallback = function(err, csv) {
+    if (err) throw err;
+    csvContent += csv;
+};
+
+// Function: use json2csv library to add category to csvContent then write file
+var json2csvLastCallback = function(err, csv) {
+    if (err) throw err;
+    csvContent += csv;
+    var fileName = 'flexflow-' + budgetID + '.csv';
+    fs.writeFile("./server/routes/" + fileName, csvContent, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("CSV file saved as:", fileName);
+    });
+};
+
+// Route: Send email to planner with csv file
 router.post("/", function(req, res) {
-    // console.log("im here in send mail");
-    // var name =
-    //csv.router();
     var filePath = path.join(__dirname, './flexflow-' + req.budgetID + '.csv');
 
-    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
-        "Name: " + req.body.displayName + '<br>' +
-        "Email: " + req.body.email + '<br>' +
-        "Flow Total: $" + req.body.flowTotal + '<br>' +
-        "Flex Total: $" + req.body.flexTotal + '<br>' +
-        "Functional Total: $" + req.body.functionalTotal + '<br>' +
-        "Financial Total: $" + req.body.financialTotal + '<br>' +
-        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
-        "Net Total: $" + req.body.netTotal + '</p>';
-
-    var receivers = req.body.email;
+    var htmlObject = '<p>You have a new csv file for ' + req.body.displayName + '<br>' +
+        "Email: " + req.body.email;
 
     // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
@@ -241,10 +247,7 @@ router.post("/", function(req, res) {
     var mailOptions = {
         from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
         to: "flexflowplanner@gmail.com",  // list of receivers
-        subject: 'Flex Flow',
-        // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
-        // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-        text: 'You have a submission with the following details from flex flow...',
+        subject: 'You have a new FlexFlow csv file for ' + req.body.displayName ,
         html: htmlObject,
         attachments: [
         {
@@ -253,7 +256,6 @@ router.post("/", function(req, res) {
         }
       ]
     };
-
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info) {
@@ -266,23 +268,5 @@ router.post("/", function(req, res) {
         // console.log('Message sent: ' + info.response);
     });
 });
-
-
-var json2csvCallback = function(err, csv) {
-    if (err) throw err;
-    csvContent += csv;
-};
-
-var json2csvLastCallback = function(err, csv) {
-    if (err) throw err;
-    csvContent += csv;
-    var fileName = 'flexflow-' + budgetID + '.csv';
-    fs.writeFile("./server/routes/" + fileName, csvContent, function(err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log("CSV file saved as:", fileName);
-    });
-};
 
 module.exports = router;

@@ -1,0 +1,11 @@
+<nav class="nav" ng-controller="NavController as nc">
+<ol class="breadcrumb">
+  <li ng-show="nc.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="nc.budgetStatusIndex >= 6">Results</li>
+</ol>
+</nav>

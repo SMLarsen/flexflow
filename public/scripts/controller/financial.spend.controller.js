@@ -89,6 +89,7 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 
 	self.updateFinancialItems = function() {
 		console.log("updateFinancialItems is clicked");
+		setInactiveValuesToZero();
 		budgetFactory.updateFinancialItems(self.itemArray).then(function(result){
 			switch (self.budget.budget_status) {
         case "Finished":
@@ -120,5 +121,13 @@ app.controller('FinancialSpendController', ['BudgetFactory', function (BudgetFac
 			self.newCategory = {};
 		}
 	};
+
+	function setInactiveValuesToZero() {
+    for ( i = 0; i < self.itemArray.length; i++) {
+      if(self.itemArray[i].activeItem === false) {
+        self.itemArray[i].item_amount = 0;
+      }
+    }
+  }
 
 }]);

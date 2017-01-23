@@ -1,20 +1,25 @@
 // globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
 @mixin month_button {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
-  margin: 5px;
+  margin: 10px;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 0;
   outline: none;
   &:target {
     outline: none;
   }
   &:active {
     outline: none;
+  }
+  @media (max-width: $mobile-width) {
+    width: 100px;
+    height: 100px;
+    padding: 0px;
+    margin: 5px;
   }
 }
 

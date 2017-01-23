@@ -419,6 +419,11 @@ router.post("/", function(req, res) {
         "Net Total: $" + req.body.netTotal + '</p>';
 
     var receivers = req.body.email;
+    var maillist = [
+      'flexflowplanner@gmail.com',
+      receivers,
+    ];
+    maillist.toString();
 
     // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
@@ -431,7 +436,7 @@ router.post("/", function(req, res) {
 
     var mailOptions = {
         from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
-        to: "flexflowplanner@gmail.com", receivers,  // list of receivers
+        to: maillist,  // list of receivers
         subject: 'Flex Flow', // Subject line
         // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
         // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body

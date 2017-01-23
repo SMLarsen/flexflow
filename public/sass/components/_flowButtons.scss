@@ -1,5 +1,5 @@
 .flow_button_months_container {
-  width: 500px;
+  width: 560px;
   margin: 0 auto;
   text-align: center;
   margin-bottom: 20px;
@@ -30,14 +30,21 @@
 .not_empty_flow_month {
   @include month_button;
   background: $detail-color;
-  border: 2px solid $detail-color;
+  border: 2px solid $accent-color;
   color: white;
+  &:target {
+    outline: none;
+    color: white;
+  }
   &:hover {
     background: lighten($detail-color, 7%);
     color: white;
   }
   &:active {
     color: white;
+  }
+  span {
+    display: block;
   }
 }
 

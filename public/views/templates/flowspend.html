@@ -1,5 +1,12 @@
-<div ng-include="'views/templates/nav.html'">
-</div>
+<ol class="breadcrumb">
+  <li ng-show="fl.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="fl.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
+</ol>
 
 <button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
 <div class="modal fade" id="hint" role="dialog">
@@ -20,6 +27,7 @@
 </div>
 
 <h1 class="jumbotron">Flow Spending</h1>
+
 <div class="flow_button_months_container">
 <button ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm"><span>{{month.month}}</span><br /><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
 </div>

@@ -77,13 +77,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         if (profile.meeting_scheduled === null) {
           profile.meeting_scheduled = FALSE;
         }
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'POST',
                     url: '/profile',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     },
                     data: profile
                 })
@@ -103,13 +103,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget profile
     getBudget = function() {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/profile',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -128,13 +128,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to update budget profile
     updateBudget = function(profile) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'PUT',
                     url: '/profile',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: authFactory.currentUser.authIdToken
                     },
                     data: profile
                 })
@@ -158,13 +158,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'POST',
                     url: '/item/flowitems',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     },
                     data: month
                 })
@@ -182,13 +182,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getFlowItems = function() {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/item/flowitems',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -207,13 +207,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals
     getFlowItemTotalsByMonth = function() {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/total/flowitems/totalbymonth',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -231,14 +231,14 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals for year
     getFlowItemTotalByYear = function() {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
 
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/total/flowitems/totalbyyear',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -256,13 +256,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete flow items
     deleteFlowItems = function(month) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
                     url: '/item/flowitems/' + month,
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -303,13 +303,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         for (var i = 0; i < budgetArray.length; i++) {
             budgetArray[i].budget_template_category_id = categoryID;
         }
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'POST',
                     url: '/item/items',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     },
                     data: budgetArray
                 })
@@ -327,13 +327,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/item/items/' + categoryID,
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -351,13 +351,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget items totals for year
     getBudgetItemTotal = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'GET',
                     url: '/total/items/' + categoryID,
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -375,13 +375,13 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete budget items
     deleteBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         if (currentUser) {
             return $http({
                     method: 'DELETE',
                     url: '/item/items/' + categoryID,
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -418,14 +418,14 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // function to insert comments items
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         //console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
                     method: 'POST',
                     url: '/item/comments',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     },
                     data: budgetArray
                 })
@@ -445,7 +445,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // function to insert comments items
     getAdditionalInfo = function() {
         //console.log("budgetArray: ", budgetArray);
-        var currentUser = authFactory.getCurrentUser();
+        var currentUser = authFactory.currentUser;
         //console.log("email user ", currentUser);
         console.log("I'm here in getAdditionalInfo");
         if (currentUser) {
@@ -453,7 +453,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     method: 'GET',
                     url: '/item/comments',
                     headers: {
-                        id_token: authFactory.getIdToken()
+                        id_token: currentUser.authIdToken
                     }
                 })
                 .then(function(response) {
@@ -473,6 +473,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // ******************************** APIs ************************************//
     var publicApi = {
+        profile: profile,
         // update budget profile
         updateBudget: function(profile) {
             return updateBudget(profile);

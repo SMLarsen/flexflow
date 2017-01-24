@@ -181,7 +181,7 @@ select {
   font-size: 1em; }
 
 .flow_button_months_container {
-  width: 500px;
+  width: 560px;
   margin: 0 auto;
   text-align: center;
   margin-bottom: 20px; }
@@ -193,15 +193,14 @@ select {
   margin-bottom: 20px; }
 
 .empty_flow_month {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
-  margin: 5px;
+  margin: 10px;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 0;
   outline: none;
   background: #309abb;
   border: 2px solid #29839e;
@@ -210,6 +209,12 @@ select {
     outline: none; }
   .empty_flow_month:active {
     outline: none; }
+  @media (max-width: 768px) {
+    .empty_flow_month {
+      width: 100px;
+      height: 100px;
+      padding: 0px;
+      margin: 5px; } }
   .empty_flow_month:target {
     outline: none;
     color: white; }
@@ -218,28 +223,41 @@ select {
     color: white; }
 
 .not_empty_flow_month {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
-  margin: 5px;
+  margin: 10px;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 0;
   outline: none;
   background: #29839e;
-  border: 2px solid #29839e;
-  color: white; }
+  border: 2px solid #2c4877;
+  color: white;
+  margin-bottom: 0;
+  margin-top: 0; }
   .not_empty_flow_month:target {
     outline: none; }
   .not_empty_flow_month:active {
     outline: none; }
+  @media (max-width: 768px) {
+    .not_empty_flow_month {
+      width: 100px;
+      height: 100px;
+      padding: 0px;
+      margin: 5px; } }
+  .not_empty_flow_month:target {
+    outline: none;
+    color: white; }
   .not_empty_flow_month:hover {
     background: #309abb;
     color: white; }
   .not_empty_flow_month:active {
     color: white; }
+  .not_empty_flow_month span {
+    display: block;
+    margin: 0; }
 
 .flow_toggle_container {
   text-align: left;

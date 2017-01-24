@@ -16,7 +16,6 @@ app.factory("TemplateFactory", function($http) {
         templateData.financialTemplateItems = [];
         getCategories();
         getItems();
-        console.log(templateData);
     }; // end loadTemplateData
 
     // function to get categories for initial load

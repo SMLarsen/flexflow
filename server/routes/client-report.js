@@ -21,7 +21,7 @@ var MONTHS_ARRAY = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 var reportData = {};
 var budgetID = 0;
 
-// Route: GET item totals for a budget
+// Route: GET item totals for a budget - include additional "Total" row with sum of amounts for each category
 router.post("/", function(req, res, next) {
     budgetID = req.budgetID;
     pool.connect()
@@ -41,9 +41,9 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
-                    formattedItems(result.rows);
+                    formatItems(result.rows);
                     client.release();
                     next();
                 }
@@ -51,7 +51,7 @@ router.post("/", function(req, res, next) {
         });
 });
 
-// Route: GET flow item totals for a budget
+// Route: GET flow item totals for a budget include "Total" row with sums of each month's flow amounts
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
@@ -77,7 +77,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting flow items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     formatFlowItems(result.rows);
                     client.release();
@@ -97,7 +97,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting profile for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     reportData.profile = result.rows[0];
                     reportData.months = formatMonths(reportData.profile.budget_start_month);
@@ -107,16 +107,6 @@ router.post("/", function(req, res, next) {
             });
         });
 });
-
-function formatMonths(startMonth) {
-    var tempMonthArray = MONTHS_ARRAY;
-    if (startMonth === 1) {
-        return tempMonthArray;
-    } else {
-        var newMonthArray = tempMonthArray.splice(0, startMonth - 1);
-        return tempMonthArray.concat(newMonthArray);
-    }
-}
 
 // Route: GET comments for a budget
 router.post("/", function(req, res, next) {
@@ -129,7 +119,6 @@ router.post("/", function(req, res, next) {
                     console.log('Error getting comment for reporting', err);
                     client.release();
                     res.sendStatus(500);
-                    next();
                 } else {
                     reportData.comment = result.rows;
                     client.release();
@@ -139,7 +128,25 @@ router.post("/", function(req, res, next) {
         });
 });
 
-function formattedItems(itemArray) {
+// Route: GET comments for a budget
+router.post("/", function(req, res, next) {
+    createPDF();
+    next();
+});
+
+// Function: Order month labels where startMonth is index = 0
+function formatMonths(startMonth) {
+    var tempMonthArray = MONTHS_ARRAY;
+    if (startMonth === 1) {
+        return tempMonthArray;
+    } else {
+        var newMonthArray = tempMonthArray.splice(0, startMonth - 1);
+        return tempMonthArray.concat(newMonthArray);
+    }
+}
+
+//Function: Formats functional, financial, and flex items by category and puts them in reportData object
+function formatItems(itemArray) {
     var tempCategoryArray = [];
     var currentCategory = itemArray[0].category_name;
     for (var i = 0; i < itemArray.length; i++) {
@@ -157,6 +164,7 @@ function formattedItems(itemArray) {
     }
 }
 
+//Function: Formats fow items and puts them in reportData object
 function formatFlowItems(itemArray) {
     var tempCategoryArray = [];
     var tempItem = {};
@@ -173,13 +181,8 @@ function formatFlowItems(itemArray) {
     reportData.Flow = tempCategoryArray;
 }
 
-// Route: GET comments for a budget
-router.post("/", function(req, res, next) {
-    createPDF();
-    res.sendStatus(201);
-    next();
-});
-
+// Function: use pdfkit library to create client report pdf -
+// note that pdfkit does not support tables at this time, therefore a non-proportional font is used with much manual formatting
 function createPDF() {
     var doc = new pdfDocument({
         layout: 'landscape'
@@ -335,9 +338,10 @@ function createPDF() {
 
     // end and display the document in the iframe to the right
     doc.end();
-    console.log('PDF created:', fileName);
+    console.log('PDF file saved as:', fileName);
 }
 
+//Function: format flex, financial, and functional items with correct padding
 function formatMonthlyItems(item) {
     return padRight(item.item_name, NAME_LENGTH) + padLeft(item.amount_1, AMOUNT_LENGTH) + padLeft(item.amount_2, AMOUNT_LENGTH) + padLeft(item.amount_3, AMOUNT_LENGTH) +
         padLeft(item.amount_4, AMOUNT_LENGTH) + padLeft(item.amount_5, AMOUNT_LENGTH) + padLeft(item.amount_6, AMOUNT_LENGTH) + padLeft(item.amount_7, AMOUNT_LENGTH) +
@@ -345,6 +349,7 @@ function formatMonthlyItems(item) {
         padLeft(item.amount_12, AMOUNT_LENGTH) + padLeft(item.annual_amount, AMOUNT_LENGTH);
 }
 
+//Function: Build totals for summary section
 function buildSummaryTotals() {
     reportData.totals = {};
     reportData.totals.expenses = {};
@@ -368,6 +373,17 @@ function buildSummaryTotals() {
     }
 }
 
+// Function: format flex, functional, and financial items for report
+function formatPDFItem(item) {
+    newItem = padRight(item.item_name, NAME_LENGTH);
+    for (var i = 1; i <= 12; i++) {
+        newItem += padLeft(item.item_amount, AMOUNT_LENGTH);
+    }
+    newItem += padLeft((item.item_amount * 12), 7);
+    return newItem;
+}
+
+// Function: right pad items
 function padRight(value, length) {
     if (value.length > length) {
         return value.substring(0, length);
@@ -379,38 +395,34 @@ function padRight(value, length) {
     }
 }
 
-function formatPDFItem(item) {
-    newItem = padRight(item.item_name, NAME_LENGTH);
-    for (var i = 1; i <= 12; i++) {
-        newItem += padLeft(item.item_amount, AMOUNT_LENGTH);
-    }
-    newItem += padLeft((item.item_amount * 12), 7);
-    return newItem;
-}
-
+// Function: left pad items
 function padLeft(value, length) {
     var paddedValue = ("         " + value.toString()).slice(-length);
     return paddedValue;
 
 }
 
+// Route: Send email with pdf attachment to client
 router.post("/", function(req, res) {
-    // console.log("im here in send mail");
-    // var name =
-    //csv.router();
     var filePath = path.join(__dirname, './flexflow.pdf');
 
-    var htmlObject = '<p>You have a submission with the following details...' + '<br>' +
+    var htmlObject = '<h4>Here is your FlexFlow budget summary:</h4>' + '<p>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
         "Flow Total: $" + req.body.flowTotal + '<br>' +
         "Flex Total: $" + req.body.flexTotal + '<br>' +
         "Functional Total: $" + req.body.functionalTotal + '<br>' +
         "Financial Total: $" + req.body.financialTotal + '<br>' +
-        "Monthly Take Home: $" + req.body.takeHomeCash + '<br>' +
-        "Net Total: $" + req.body.netTotal + '</p>';
+        "Monthly Take Home: $" + req.body.takeHomeCash + '<br><br>' +
+        "Net Total: $" + req.body.netTotal + '</p>' +
+        "<h4> Check out your budget in the attached PDF file</h4>";
 
     var receivers = req.body.email;
+    var maillist = [
+      'flexflowplanner@gmail.com',
+      receivers,
+    ];
+    maillist.toString();
 
     // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
@@ -423,11 +435,8 @@ router.post("/", function(req, res) {
 
     var mailOptions = {
         from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
-        to: "flexflowplanner@gmail.com", receivers,  // list of receivers
-        subject: 'Flex Flow', // Subject line
-        // text: 'You have a submission with the folowing details... Name: '+req.body.name + ' Email: '+req.body.email+ ' Message: '+req.body.message, // plaintext body
-        // html: '<p>You have a submission with the folowing details... </p> <ul><li>Name: '+req.body.name + ' </li><li>Email: '+req.body.email+ ' </li><li>Message: '+req.body.message+'</li></ul>'// html body
-        text: 'You have a submission with the following details from flex flow...',
+        to: maillist,  // list of receivers
+        subject: 'Congratulations ' + req.body.displayName + ' on Completing Your FlexFlow Budget!', // Subject line
         html: htmlObject,
         attachments: [
         {
@@ -443,8 +452,13 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        fs.unlink(filePath);
-
+        fs.unlink(filePath, function(err) {
+          if (err) {
+            res.sendStatus(500);
+            console.log('Error deleting pdf file', err);
+          }
+        });
+        res.sendStatus(201);
         // console.log('Message sent: ' + info.response);
     });
 });

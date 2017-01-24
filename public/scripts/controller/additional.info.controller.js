@@ -51,7 +51,7 @@ console.log('Additional Info controller started');
                 //console.log("I'm here in getAdditionalInfo controller");
                 // console.log("result ", result.data[0].budget_comment);
                 var length = result.data.length;
-                console.log("length in AddiontalInfo ", length);
+                // console.log("length in AddiontalInfo ", length);
                 if (length > 0) {
                     self.comment = result.data[length-1].budget_comment;
                 }

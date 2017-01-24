@@ -89,6 +89,7 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 
 	self.updateFunctionalItems = function() {
 		console.log("update functional clicked");
+		setInactiveValuesToZero();
 		budgetFactory.updateFunctionalItems(self.itemArray).then(function(result){
 			switch (self.budget.budget_status) {
         case "Finished":
@@ -123,5 +124,12 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 		}
 	};
 
+	function setInactiveValuesToZero() {
+    for ( i = 0; i < self.itemArray.length; i++) {
+      if(self.itemArray[i].activeItem === false) {
+        self.itemArray[i].item_amount = 0;
+      }
+    }
+  }
 
 }]);

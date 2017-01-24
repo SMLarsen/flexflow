@@ -41,7 +41,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     formatItems(result.rows);
                     client.release();
@@ -77,7 +77,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting flow items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     formatFlowItems(result.rows);
                     client.release();
@@ -97,7 +97,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting profile for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     reportData.profile = result.rows[0];
                     reportData.months = formatMonths(reportData.profile.budget_start_month);
@@ -119,7 +119,6 @@ router.post("/", function(req, res, next) {
                     console.log('Error getting comment for reporting', err);
                     client.release();
                     res.sendStatus(500);
-                    next();
                 } else {
                     reportData.comment = result.rows;
                     client.release();
@@ -132,7 +131,6 @@ router.post("/", function(req, res, next) {
 // Route: GET comments for a budget
 router.post("/", function(req, res, next) {
     createPDF();
-    res.sendStatus(201);
     next();
 });
 
@@ -340,7 +338,7 @@ function createPDF() {
 
     // end and display the document in the iframe to the right
     doc.end();
-    console.log('PDF created:', fileName);
+    console.log('PDF file saved as:', fileName);
 }
 
 //Function: format flex, financial, and functional items with correct padding
@@ -454,8 +452,13 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        fs.unlink(filePath);
-
+        fs.unlink(filePath, function(err) {
+          if (err) {
+            res.sendStatus(500);
+            console.log('Error deleting pdf file', err);
+          }
+        });
+        res.sendStatus(201);
         // console.log('Message sent: ' + info.response);
     });
 });

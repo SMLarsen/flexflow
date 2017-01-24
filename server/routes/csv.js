@@ -29,7 +29,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting profile for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     // console.log('Reporting profile retrieved');
                     csvData.profile = result.rows[0];
@@ -60,7 +60,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     formatItems(result.rows);
                     client.release();
@@ -88,7 +88,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting flow items for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     formatFlowItems(result.rows);
                     client.release();
@@ -109,7 +109,7 @@ router.post("/", function(req, res, next) {
                 if (err) {
                     console.log('Error getting comment for reporting', err);
                     client.release();
-                    next();
+                    res.sendStatus(500);
                 } else {
                     // console.log('Reporting comment retrieved');
                     csvData.comment = result.rows;
@@ -159,77 +159,18 @@ function formatFlowItems(itemArray) {
 var csvContent = '';
 
 // Route: Create Customer CSV
-router.post("/", function(req, res, next) {
-    var flexCSV = '';
+router.post("/", function(req, res) {
     var csvUser = {
         userName: req.decodedToken.name,
         email: req.decodedToken.email
     };
     converter.json2csv(csvUser, json2csvCallback);
-    next();
-});
-
-// Route: Create Profile CSV
-router.post("/", function(req, res, next) {
-    var flexCSV = '';
     converter.json2csv(csvData.profile, json2csvCallback);
-    next();
-});
-
-// Route: Create Flex CSV
-router.post("/", function(req, res, next) {
-    var flexCSV = '';
     converter.json2csv(csvData.Flex, json2csvCallback);
-    next();
-});
-
-// Route: Create Flow CSV
-router.post("/", function(req, res, next) {
-    var flexCSV = '';
     converter.json2csv(csvData.Flow, json2csvCallback);
-    next();
-});
-
-// Route: Create Functional CSV
-router.post("/", function(req, res, next) {
-    var flexCSV = '';
     converter.json2csv(csvData.Functional, json2csvCallback);
-    next();
-});
-
-// Route: Create FinancialCSV
-router.post("/", function(req, res, next) {
     converter.json2csv(csvData.Financial, json2csvCallback);
-    next();
-});
-
-// Route: Create Comments CSV
-router.post("/", function(req, res, next) {
     converter.json2csv(csvData.comment, json2csvLastCallback);
-    next();
-});
-
-// Function: use json2csv library to add category to csvContent
-var json2csvCallback = function(err, csv) {
-    if (err) throw err;
-    csvContent += csv;
-};
-
-// Function: use json2csv library to add category to csvContent then write file
-var json2csvLastCallback = function(err, csv) {
-    if (err) throw err;
-    csvContent += csv;
-    var fileName = 'flexflow-' + budgetID + '.csv';
-    fs.writeFile("./server/routes/" + fileName, csvContent, function(err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log("CSV file saved as:", fileName);
-    });
-};
-
-// Route: Send email to planner with csv file
-router.post("/", function(req, res) {
     var filePath = path.join(__dirname, './flexflow-' + req.budgetID + '.csv');
 
     var htmlObject = '<p>You have a new csv file for ' + req.body.displayName + '<br>' +
@@ -261,10 +202,35 @@ router.post("/", function(req, res) {
             res.redirect('/');
             return console.log(error);
         }
-        fs.unlink(filePath);
+        fs.unlink(filePath, function(err) {
+          if (err) {
+            res.sendStatus(500);
+            console.log('Error deleting csv file', err);
+          }
+        });
+        res.sendStatus(201);
 
         // console.log('Message sent: ' + info.response);
     });
 });
+
+// Function: use json2csv library to add category to csvContent
+var json2csvCallback = function(err, csv) {
+    if (err) throw err;
+    csvContent += csv;
+};
+
+// Function: use json2csv library to add category to csvContent then write file
+var json2csvLastCallback = function(err, csv) {
+    if (err) throw err;
+    csvContent += csv;
+    var fileName = 'flexflow-' + budgetID + '.csv';
+    fs.writeFile("./server/routes/" + fileName, csvContent, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("CSV file saved as:", fileName);
+    });
+};
 
 module.exports = router;

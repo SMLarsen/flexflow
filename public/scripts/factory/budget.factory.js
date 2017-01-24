@@ -444,10 +444,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to insert comments items
     getAdditionalInfo = function() {
-        //console.log("budgetArray: ", budgetArray);
         var currentUser = authFactory.getCurrentUser();
-        //console.log("email user ", currentUser);
-        console.log("I'm here in getAdditionalInfo");
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -457,7 +454,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     }
                 })
                 .then(function(response) {
-                        console.log('get comment');
                         return response;
                     },
                     function(err) {

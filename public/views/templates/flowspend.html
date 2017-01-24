@@ -29,8 +29,9 @@
 <h1 class="jumbotron">Flow Spending</h1>
 
 <div class="flow_button_months_container">
-<button ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm"><span>{{month.month}}</span><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span></button>
+<button ng-class="{empty_flow_month: month.month_total === null, not_empty_flow_month: month.month_total != null}" ng-repeat="month in fl.budgetMonths" ng-click="fl.enterMonthFlowData(month, $index)" data-toggle="modal" data-target="#monthDataForm"><span>{{month.month}}</span><span class="flow_month_total" ng-hide="month.month_total === null">${{month.month_total}}</span><span class="flow_month_total" ng-show="month.month_total === null"><br /></span></button>
 </div>
+
 <div class="modal fade" id="monthDataForm" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

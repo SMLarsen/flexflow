@@ -204,7 +204,8 @@ select {
   outline: none;
   background: #309abb;
   border: 2px solid #29839e;
-  color: white; }
+  color: white;
+  overflow: hidden; }
   .empty_flow_month:target {
     outline: none; }
   .empty_flow_month:active {
@@ -221,6 +222,8 @@ select {
   .empty_flow_month:hover {
     background: #29839e;
     color: white; }
+  .empty_flow_month span {
+    display: block; }
 
 .not_empty_flow_month {
   width: 120px;
@@ -236,7 +239,8 @@ select {
   border: 2px solid #2c4877;
   color: white;
   margin-bottom: 0;
-  margin-top: 0; }
+  margin-top: 0;
+  overflow: hidden; }
   .not_empty_flow_month:target {
     outline: none; }
   .not_empty_flow_month:active {
@@ -256,8 +260,7 @@ select {
   .not_empty_flow_month:active {
     color: white; }
   .not_empty_flow_month span {
-    display: block;
-    margin: 0; }
+    display: block; }
 
 .flow_toggle_container {
   text-align: left;

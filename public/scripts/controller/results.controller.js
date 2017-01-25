@@ -1,11 +1,10 @@
 /*jshint esversion: 6 */
-app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', 'ReportFactory', function($http, AuthFactory, BudgetFactory, AdminFactory, ReportFactory) {
+app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', function($http, AuthFactory, BudgetFactory, AdminFactory) {
     // console.log('Results controller started');
     let self = this;
     const budgetFactory = BudgetFactory;
     const authFactory = AuthFactory;
     const adminFactory = AdminFactory;
-    const reportFactory = ReportFactory;
     const scheduleEmail = adminFactory.getAdminParameter('Scheduling_email');
     const currentUser = authFactory.getCurrentUser();
 

@@ -13,8 +13,6 @@ const templates = require('./routes/template');
 const profile = require('./routes/profile');
 const item = require('./routes/item');
 const total = require('./routes/total');
-const mail = require('./routes/mail');
-const comment = require('./routes/comment');
 
 const portDecision = process.env.PORT || 5000;
 
@@ -38,8 +36,6 @@ app.get("/privateData", privateData);
 app.use("/profile", profile);
 app.use("/item", item);
 app.use("/total", total);
-app.use("/mail", mail);
-app.use("/comment", comment);
 app.use("/client-report", clientReport);
 app.use("/csv", csv);
 

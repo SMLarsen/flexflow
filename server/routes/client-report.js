@@ -10,9 +10,11 @@ var fs = require('fs');
 var nodemailer = require('nodemailer');
 var path = require('path');
 
-var pool = new pg.Pool({
-    database: config.database
-});
+var pool = new pg.Pool(config.config);
+
+// var pool = new pg.Pool({
+//     database: config.database
+// });
 
 var NAME_LENGTH = 22;
 var AMOUNT_LENGTH = 7;

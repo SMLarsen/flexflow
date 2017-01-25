@@ -4,9 +4,11 @@ var pg = require('pg');
 // var connectionString = require('../modules/database-config');
 var config = require('../modules/pg-config');
 
-var pool = new pg.Pool({
-    database: config.database
-});
+var pool = new pg.Pool(config.config);
+
+// var pool = new pg.Pool({
+//     database: config.database
+// });
 
 // *********************************** BUDGET PROFILE routes **************************
 router.get("/", function(req, res) {

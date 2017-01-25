@@ -5,9 +5,11 @@ var router = express.Router();
 var pg = require('pg');
 var config = require('../modules/pg-config');
 
-var pool = new pg.Pool({
-    database: config.database
-});
+var pool = new pg.Pool(config.config);
+
+// var pool = new pg.Pool({
+//     database: config.database
+// });
 
 router.get('/', function(req, res) {
     console.log("here in comment ", pool);

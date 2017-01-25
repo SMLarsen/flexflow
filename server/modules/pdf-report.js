@@ -2,7 +2,7 @@ var fs = require('fs');
 var pg = require('pg');
 var config = require('../modules/pg-config');
 
-var pool = new pg.Pool(config.config);
+var pool = new pg.Pool(config.pg);
 
 // var pool = new pg.Pool({
 //     database: config.database

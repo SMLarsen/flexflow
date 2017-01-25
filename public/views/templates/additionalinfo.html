@@ -1,11 +1,42 @@
-  <h1 class="jumbotron">Questions for Flex/Flow?</h1>
+<ol class="breadcrumb">
+  <li ng-show="ai.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="ai.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
+</ol>
+
+<h1 class="jumbotron">Questions for Flex/Flow?</h1>
 
 <div class="container">
+  <h3>Do you have any questions for a Flex/Flow financial planner?</h3>
   <form>
     <div class="form-group">
       <label for="comment"></label>
-      <textarea class="form-control addl_comment" rows="5" id="comment" ng-model="ai.comment" placeholder="Enter your questions or comments here!"></textarea>
+      <textarea class="form-control addl_comment" rows="5" id="comment" ng-model="ai.comment" placeholder="Enter your questions or comments here!">
+        {{ai.comment}}
+      </textarea>
     </div>
-    <button type="button" class="btn btn-primary" ng-click="ai.postAdditionalInfo()">Submit</button>
+    <button type="button" class="submit_button" ng-click="ai.postAdditionalInfo()">Submit</button>
   </form>
+</div>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="85.7" aria-valuemin="0" aria-valuemax="100" style="width: 85.7%;">
+    6/7
+  </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="ai.navActive">
+  <li><a href="#">Home</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flowspend">Flow</a></li>
+  <li><a href="#functionalspend">Functional</a></li>
+  <li><a href="#financialspend">Financial</a></li>
+  <li class="active">Comments</li>
+</ol>
+<div class="hamburger" ng-click="ai.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

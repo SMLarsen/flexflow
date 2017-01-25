@@ -2,23 +2,43 @@ main {
   text-align: center; }
 
 body {
-  font-family: 'Open Sans', sans-serif; }
+  font-family: 'Open Sans', sans-serif;
+  background: #f7f1e4; }
+
+h1 {
+  font-size: 5em;
+  padding: 100px;
+  letter-spacing: 15px;
+  color: white;
+  margin-bottom: 100px;
+  text-shadow: 3px 3px #2c4877;
+  text-align: center; }
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 40px;
+      letter-spacing: 8px; } }
+
+h3 {
+  font-size: 2em;
+  line-height: 1.4em; }
 
 .jumbotron {
-  margin-top: -20px;
   background: url("/assets/images/header.png") center bottom no-repeat;
   color: white;
   background-size: cover;
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;
   letter-spacing: 5px;
-  line-height: 50px;
-  border-bottom: 1px solid black; }
+  border-bottom: 1px solid #2c4877;
+  text-align: center;
+  width: 100%;
+  margin-top: -20px;
+  padding: 70px; }
 
 .progress {
   width: 60%;
   margin: 40px auto;
-  background: lightblue; }
+  background: #f7f1e4; }
 
 select {
   background-color: white;
@@ -30,8 +50,146 @@ select {
       width: 140px;
       text-align: center; } }
 
+.toggle_container {
+  text-align: left;
+  width: 60%;
+  margin: 20px auto 0 auto;
+  padding-left: 25%; }
+  @media (max-width: 768px) {
+    .toggle_container {
+      margin-left: 150px;
+      padding-left: 0; } }
+  .toggle_container input {
+    height: 50px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+    padding-left: 20px; }
+  .toggle_container span {
+    height: 50px;
+    padding: 15px;
+    display: block; }
+
+.active_toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  position: absolute;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+  outline: none;
+  background-color: #44afcf;
+  background-size: 80%; }
+
+.not_active_toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  position: absolute;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+  outline: none;
+  background-color: #2c4877;
+  background-size: 80%; }
+
+.submit_button {
+  background: #29839e;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  padding: 13px;
+  margin-top: 20px;
+  outline: none; }
+  .submit_button:hover {
+    background-color: #33a4c7; }
+  .submit_button:active {
+    color: white; }
+
+.edit_button {
+  background: #59b7d4;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  padding: 13px;
+  outline: none; }
+  .edit_button:hover {
+    background-color: #6dc0d9; }
+  .edit_button:active {
+    color: white; }
+
+.additional_button {
+  background: #29839e;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  font-size: 30px;
+  border-radius: 50%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  outline: none; }
+  .additional_button:hover {
+    background-color: #33a4c7; }
+  .additional_button:active {
+    color: white; }
+
+.explanation {
+  font-size: 2em;
+  width: 80%;
+  margin: 0 auto; }
+  @media (max-width: 768px) {
+    .explanation {
+      font-size: 1em; } }
+
+.hint_button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  color: white;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+  top: 90px;
+  right: 25%;
+  font-size: 20px;
+  outline: none; }
+  @media (max-width: 1300px) {
+    .hint_button {
+      top: 90px;
+      right: 10%; } }
+  @media (max-width: 768px) {
+    .hint_button {
+      top: 5px;
+      left: 5px; } }
+
+.modal-header {
+  background-color: #29839e;
+  font-family: 'Fjalla One', sans-serif;
+  color: white;
+  font-size: 3em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #2c4877; }
+
+.modal-body {
+  font-size: 1em; }
+
 .flow_button_months_container {
-  width: 500px;
+  width: 560px;
   margin: 0 auto;
   text-align: center;
   margin-bottom: 20px; }
@@ -43,71 +201,145 @@ select {
   margin-bottom: 20px; }
 
 .empty_flow_month {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin: 5px;
-  background: gainsboro;
-  border: 1px solid black;
-  width: 100px; }
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  margin: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  outline: none;
+  background: #309abb;
+  border: 2px solid #29839e;
+  color: white;
+  overflow: hidden; }
+  .empty_flow_month:target {
+    outline: none; }
+  .empty_flow_month:active {
+    outline: none; }
+  @media (max-width: 768px) {
+    .empty_flow_month {
+      width: 100px;
+      height: 100px;
+      padding: 0px;
+      margin: 5px; } }
+  .empty_flow_month:target {
+    outline: none;
+    color: white; }
+  .empty_flow_month:hover {
+    background: #29839e;
+    color: white; }
+  .empty_flow_month span {
+    display: block; }
 
 .not_empty_flow_month {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin: 5px;
-  background: white;
-  border: 1px solid gainsboro; }
-
-.active_toggle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid gainsboro;
-  margin-bottom: 10px;
-  position: absolute;
-  margin-left: -35px;
-  background: white; }
-
-.not_active_toggle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid gainsboro;
-  margin-bottom: 10px;
-  position: absolute;
-  margin-left: -35px;
-  background: gainsboro; }
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  margin: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  outline: none;
+  background: #29839e;
+  border: 2px solid #2c4877;
+  color: white;
+  margin-bottom: 0;
+  margin-top: 0;
+  overflow: hidden; }
+  .not_empty_flow_month:target {
+    outline: none; }
+  .not_empty_flow_month:active {
+    outline: none; }
+  @media (max-width: 768px) {
+    .not_empty_flow_month {
+      width: 100px;
+      height: 100px;
+      padding: 0px;
+      margin: 5px; } }
+  .not_empty_flow_month:target {
+    outline: none;
+    color: white; }
+  .not_empty_flow_month:hover {
+    background: #309abb;
+    color: white; }
+  .not_empty_flow_month:active {
+    color: white; }
+  .not_empty_flow_month span {
+    display: block; }
 
 .flow_toggle_container {
   text-align: left;
-  margin: 20px 0 10px 200px; }
+  width: 60%;
+  margin: 20px auto 0 10px;
+  padding-left: 40%; }
   @media (max-width: 768px) {
     .flow_toggle_container {
-      margin-left: 100px; } }
-  .flow_toggle_container label {
-    height: 20px; }
+      padding-left: 0;
+      margin-left: 115px; } }
   .flow_toggle_container input {
-    height: 20px;
+    height: 50px;
     border: 1px solid gainsboro;
-    border-radius: 3px; }
+    border-radius: 3px;
+    padding-left: 20px; }
+  .flow_toggle_container span {
+    height: 50px;
+    padding: 15px;
+    display: block;
+    width: 400px; }
+    @media (max-width: 768px) {
+      .flow_toggle_container span {
+        width: 200px; } }
 
-.login_container {
-  margin-top: -20px; }
+.flow_footer {
+  text-align: center; }
 
-@media (max-width: 768px) {
-  .login_greeting {
-    font-size: 3em; } }
+.button_log_in {
+  background: #29839e;
+  color: white;
+  border: 1px solid #2c4877;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  width: 200px;
+  font-size: 2em;
+  margin-top: 90px; }
+  .button_log_in:hover {
+    background-color: #33a4c7; }
+  .button_log_in:hover {
+    background: #33a4c7; }
+  @media (max-width: 768px) {
+    .button_log_in {
+      width: 185px; } }
 
 .profilepersonicon {
   width: 50px; }
 
 .people_button_container {
   margin-bottom: 20px; }
+  .people_button_container button {
+    background: #29839e;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border: 1px solid #2c4877; }
+    @media (max-width: 768px) {
+      .people_button_container button {
+        width: 70px;
+        height: 70px; } }
+    .people_button_container button:hover {
+      background: #33a4c7; }
+
+.num_label {
+  width: 150px;
+  display: inline-block;
+  margin-bottom: 20px; }
 
 .client_names {
   text-align: center;
-  width: 40%;
+  width: 30%;
   margin: 0 auto; }
   @media (max-width: 768px) {
     .client_names {
@@ -120,25 +352,36 @@ select {
   margin-top: 20px; }
 
 .flex_container {
-  width: 60%;
+  text-align: center;
+  width: 40%;
   margin: 0 auto; }
+  .flex_container input {
+    margin: 0 auto;
+    width: 300px; }
+    @media (max-width: 768px) {
+      .flex_container input {
+        width: 200px; } }
+  @media (max-width: 768px) {
+    .flex_container {
+      width: 65%; } }
 
 .flex_submit {
   margin-top: 20px; }
 
-.toggle_container {
-  text-align: left;
-  width: 60%;
-  margin: 20px auto 0 390px; }
-  @media (max-width: 768px) {
-    .toggle_container {
-      margin-left: 100px; } }
-  .toggle_container label {
-    height: 20px; }
-  .toggle_container input {
-    height: 20px;
-    border: 1px solid gainsboro;
-    border-radius: 3px; }
+.add_button {
+  margin: 30px -10px 10px 0; }
+
+.func_next {
+  margin: 10px 0 10px 0;
+  color: white; }
+
+.financ_submit {
+  margin: 30px 0 10px 0; }
+
+.financial_header {
+  width: 70%;
+  text-align: center;
+  margin: 0 auto; }
 
 .results_container {
   border: 1px solid gainsboro;
@@ -148,17 +391,25 @@ select {
   padding: 0;
   padding-bottom: 10px;
   overflow: hidden;
+  background: white;
   float: left; }
+  .results_container_negative {
+    background: red;
+    color: white; }
+  .results_container_positive {
+    background: green;
+    color: white; }
 
 .results_name {
   border-bottom: 1px solid black;
   padding: 30px;
   padding-bottom: 10px;
-  background: gainsboro;
+  background: #29839e;
   margin-top: -20px;
   font-family: 'Fjalla One', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 3px; }
+  letter-spacing: 3px;
+  color: white; }
 
 .results_value {
   border-bottom: 1px solid black;
@@ -186,3 +437,44 @@ select {
   @media (max-width: 768px) {
     .addl_comment {
       width: 80%; } }
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    display: none; } }
+
+.breadcrumb_mobile {
+  border: 1px solid black;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  padding: 10px 10px 10px 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  list-style: none;
+  width: 250px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family: 'Fjalla One', sans-serif; }
+  .breadcrumb_mobile li {
+    font-size: 2em;
+    border-bottom: 1px solid #29839e; }
+    .breadcrumb_mobile li:last-of-type {
+      border-bottom: none; }
+    .breadcrumb_mobile li a {
+      color: #29839e; }
+  .breadcrumb_mobile .active {
+    color: #2c4877; }
+  @media (min-width: 768px) {
+    .breadcrumb_mobile {
+      display: none; } }
+
+.hamburger {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid white;
+  position: absolute;
+  top: 0;
+  right: 0; }
+  @media (min-width: 768px) {
+    .hamburger {
+      display: none; } }

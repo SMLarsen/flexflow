@@ -1,23 +1,20 @@
+/*jshint esversion: 6 */
 app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
-    console.log('BudgetFactory started');
+    // console.log('BudgetFactory started');
 
-    var FLEX = 2;
-    var FUNCTIONAL = 3;
-    var FINANCIAL = 4;
+    const FLEX = 2;
+    const FUNCTIONAL = 3;
+    const FINANCIAL = 4;
 
-    var authFactory = AuthFactory;
-    var templateFactory = TemplateFactory;
+    let authFactory = AuthFactory;
+    let templateFactory = TemplateFactory;
 
-    var flowItemArray = templateFactory.templateData.flowTemplateItems;
-    var financialItemArray = templateFactory.templateData.financialTemplateItems;
-    var functionalItemArray = templateFactory.templateData.functionalTemplateItems;
+    let newFunctionalItemArray = [];
+    let newFinancialItemArray = [];
+    let newFlowItemArray = [];
 
-    var newFunctionalItemArray = [];
-    var newFinancialItemArray = [];
-    var newFlowItemArray = [];
-
-    var profile = {};
-    var flowItems = [];
+    let profile = {};
+    let flowItems = [];
 
     //**************************** Budget Functions ******************************//
 
@@ -26,18 +23,19 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         // Build flow items (id = 1)
         itemMonth = parseInt(itemMonth);
         itemYear = parseInt(itemYear);
-        for (var m = 1; m === flowItemArray.length; m++) {
-            flowItemArray[m].item_sort_sequence = m;
+        for (let m = 1; m === templateFactory.templateData.flowTemplateItems.length; m++) {
+            templateFactory.templateData.flowTemplateItems[m].item_sort_sequence = m;
         }
-        for (var l = 0; l < 12; l++) {
-            for (var k = 0; k < flowItemArray.length; k++) {
-                var newFlowItem = {};
+        for (let l = 0; l < 12; l++) {
+            for (let k = 0; k < templateFactory.templateData.flowTemplateItems.length; k++) {
+                let newFlowItem = {};
                 newFlowItem.item_amount = 0;
                 newFlowItem.budget_template_category_id = 1;
                 newFlowItem.item_month = itemMonth;
                 newFlowItem.item_year = itemYear;
-                newFlowItem.item_name = flowItemArray[k].item_name;
-                newFlowItem.item_sort_sequence = flowItemArray[k].item_sort_sequence;
+                newFlowItem.item_img_src = templateFactory.templateData.flowTemplateItems[k].item_img_src;
+                newFlowItem.item_name = templateFactory.templateData.flowTemplateItems[k].item_name;
+                newFlowItem.item_sort_sequence = templateFactory.templateData.flowTemplateItems[k].item_sort_sequence;
                 newFlowItemArray.push(newFlowItem);
             }
             itemMonth++;
@@ -47,43 +45,40 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             }
         }
         postFlowItems(newFlowItemArray);
-        // console.log('empty flow budget:', newFlowItemArray);
 
         // Build financial items (id = 4)
-        for (var i = 0; i < financialItemArray.length; i++) {
-            var newFinancialItem = {};
+        for (let i = 0; i < templateFactory.templateData.financialTemplateItems.length; i++) {
+            let newFinancialItem = {};
             newFinancialItem.item_amount = 0;
             newFinancialItem.budget_template_category_id = FINANCIAL;
-            newFinancialItem.item_name = financialItemArray[i].item_name;
-            newFinancialItem.item_sort_sequence = financialItemArray[i].item_sort_sequence;
+            newFinancialItem.item_img_src = templateFactory.templateData.financialTemplateItems[i].item_img_src;
+            newFinancialItem.item_name = templateFactory.templateData.financialTemplateItems[i].item_name;
+            newFinancialItem.item_sort_sequence = templateFactory.templateData.financialTemplateItems[i].item_sort_sequence;
             newFinancialItemArray.push(newFinancialItem);
         }
-        // console.log('empty financial budget:', newFinancialItemArray);
         postBudgetItems(newFinancialItemArray, FINANCIAL);
 
         // Build functional items (id = 3)
-        for (var j = 0; j < functionalItemArray.length; j++) {
-            var newFunctionalItem = {};
+        for (let j = 0; j < templateFactory.templateData.functionalTemplateItems.length; j++) {
+            let newFunctionalItem = {};
             newFunctionalItem.item_amount = 0;
             newFunctionalItem.budget_template_category_id = FUNCTIONAL;
-            newFunctionalItem.item_name = functionalItemArray[j].item_name;
-            newFunctionalItem.item_sort_sequence = functionalItemArray[j].item_sort_sequence;
+            newFunctionalItem.item_name = templateFactory.templateData.functionalTemplateItems[j].item_name;
+            newFunctionalItem.item_img_src = templateFactory.templateData.functionalTemplateItems[j].item_img_src;
+            newFunctionalItem.item_sort_sequence = templateFactory.templateData.functionalTemplateItems[j].item_sort_sequence;
             newFunctionalItemArray.push(newFunctionalItem);
         }
-        // console.log('empty functional budget:', newFunctionalItemArray);
         postBudgetItems(newFunctionalItemArray, FUNCTIONAL);
     };
 
     // function to insert budget profile
     postBudget = function(profile) {
-        console.log('postBudget');
-        var itemMonth = profile.budget_start_month;
-        var itemYear = profile.budget_start_year;
+        let itemMonth = profile.budget_start_month;
+        let itemYear = profile.budget_start_year;
         if (profile.meeting_scheduled === null) {
           profile.meeting_scheduled = FALSE;
         }
-        console.log('profile:', profile);
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -95,6 +90,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         buildEmptyBudget(itemMonth, itemYear);
+                        console.log();
                         return;
                     },
                     function(err) {
@@ -108,7 +104,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget profile
     getBudget = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -119,7 +115,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         profile = response.data;
-                        console.log('Profile returned:', response.data);
                         return profile;
                     },
                     function(err) {
@@ -131,10 +126,10 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
     }; //end getBudget
 
+
     // function to update budget profile
     updateBudget = function(profile) {
-        console.log('updateBudget');
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'PUT',
@@ -145,7 +140,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     data: profile
                 })
                 .then(function(response) {
-                        console.log('Profile updated');
                         return;
                     },
                     function(err) {
@@ -157,12 +151,15 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         }
     }; //end updateBudget
 
+    updateBudgetStatus = function(status) {
+      profile.budget_status = status;
+      return updateBudget(profile);
+    };
+
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
-        // console.log('postFlowItems', month);
-        var currentUser = authFactory.getCurrentUser();
-        // console.log('postFlowItems:', month);
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -186,7 +183,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getFlowItems = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -197,7 +194,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         flowItems = response.data;
-                        // console.log('Profile returned:', response.data);
                         return flowItems;
                     },
                     function(err) {
@@ -212,7 +208,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals
     getFlowItemTotalsByMonth = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -236,7 +232,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals for year
     getFlowItemTotalByYear = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
 
         if (currentUser) {
             return $http({
@@ -261,7 +257,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete flow items
     deleteFlowItems = function(month) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'DELETE',
@@ -271,7 +267,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     }
                 })
                 .then(function(response) {
-                        console.log('Flow items deleted successfully');
                         return;
                     },
                     function(err) {
@@ -285,12 +280,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to update flow items (delete all for budgetID then add new items)
     updateFlowItems = function(budgetArray) {
-        var month = budgetArray[0].item_month;
+        let month = budgetArray[0].item_month;
         return deleteFlowItems(month)
             .then(function(response) {
-                    postFlowItems(budgetArray)
+                    return postFlowItems(budgetArray)
                         .then(function(response) {
-                                console.log('Flow items replaced');
                                 return ;
                             },
                             function(err) {
@@ -307,11 +301,10 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** Budget Item Functions ******************************//
     // function to insert budget items
     postBudgetItems = function(budgetArray, categoryID) {
-      // console.log('postBudgetItems:', categoryID, budgetArray);
-        for (var i = 0; i < budgetArray.length; i++) {
+        for (let i = 0; i < budgetArray.length; i++) {
             budgetArray[i].budget_template_category_id = categoryID;
         }
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -322,7 +315,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     data: budgetArray
                 })
                 .then(function(response) {
-                        // console.log('Profile updated');
                         return;
                     },
                     function(err) {
@@ -336,7 +328,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -347,7 +339,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 })
                 .then(function(response) {
                         budgetItems = response.data;
-                        // console.log('Profile returned:', response.data);
                         return budgetItems;
                     },
                     function(err) {
@@ -361,7 +352,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget items totals for year
     getBudgetItemTotal = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -385,7 +376,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete budget items
     deleteBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'DELETE',
@@ -395,7 +386,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                     }
                 })
                 .then(function(response) {
-                        console.log('Budget items deleted successfully');
                         return;
                     },
                     function(err) {
@@ -413,7 +403,6 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
             .then(function(response) {
                     postBudgetItems(budgetArray, categoryID)
                         .then(function(response) {
-                                console.log('Budget items replaced');
                                 return;
                             },
                             function(err) {
@@ -427,11 +416,11 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
                 });
     };
     //**************************** AddiontalInfo Item Functions ******************************//
-    // function to insert financial items
+    // function to insert comments items
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
-        var currentUser = authFactory.getCurrentUser();
-        console.log("email user ", currentUser);
+        let currentUser = authFactory.getCurrentUser();
+        //console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -452,12 +441,35 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         } else {
             console.log('User not signed in');
         }
-    }; //end postFinancialItems
+    }; //end comments items
+
+    // function to insert comments items
+    getAdditionalInfo = function() {
+        let currentUser = authFactory.getCurrentUser();
+        if (currentUser) {
+            return $http({
+                    method: 'GET',
+                    url: '/item/comments',
+                    headers: {
+                        id_token: authFactory.getIdToken()
+                    }
+                })
+                .then(function(response) {
+                        return response;
+                    },
+                    function(err) {
+                        console.log('Error adding comment for', currentUser.email, ': ', err);
+                        return;
+                    });
+        } else {
+            console.log('User not signed in');
+        }
+    }; //end comments items
 
 
 
     // ******************************** APIs ************************************//
-    var publicApi = {
+    let publicApi = {
         // update budget profile
         updateBudget: function(profile) {
             return updateBudget(profile);
@@ -535,6 +547,12 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         },
         postAdditionalInfo: function(budgetArray) {
             return postAdditionalInfo(budgetArray);
+        },
+        getAdditionalInfo: function() {
+            return getAdditionalInfo();
+        },
+        updateBudgetStatus: function(status) {
+            return updateBudgetStatus(status);
         }
 
     };

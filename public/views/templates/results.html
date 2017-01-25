@@ -1,23 +1,78 @@
-<h1 class="jumbotron">Your Flex/Flow Results</h1>
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flowspend">Flow</a></li>
+  <li><a href="#functionalspend">Functional</a></li>
+  <li><a href="#financialspend">Financial</a></li>
+  <li><a href="#additionalinfo">Comments</a></li>
+  <li><a href="#results">Results</a></li>
+</ol>
+
+<h1 class="jumbotron">Flex/Flow Results</h1>
 <div class="full_results_container">
   <div class="results_container">
-    <h4 class="results_name">Flow</h4>
-    <span class="results_value">{{rc.flowTotal | currency:"USD$":0}}</span>
+    <h4 class="results_name">Flex</h4>
+    <span class="results_value">{{rc.flexTotal | currency:"$":0}}</span>
   </div>
   <div class="results_container">
-    <h4 class="results_name">Flex</h4>
-    <span class="results_value">{{rc.flexTotal | currency:"USD$":0}}</span>
+    <h4 class="results_name">Flow</h4>
+    <span class="results_value">{{rc.flowTotal | currency:"$":0}}</span>
   </div>
   <div class="results_container">
     <h4 class="results_name">Functional</h4>
-    <span class="results_value">{{rc.functionalTotal | currency:"USD$":0}}</span>
+    <span class="results_value">{{rc.functionalTotal | currency:"$":0}}</span>
   </div>
   <div class="results_container">
     <h4 class="results_name">Financial</h4>
-    <span class="results_value">{{rc.financialTotal | currency:"USD$":0}}</span>
+    <span class="results_value">{{rc.financialTotal | currency:"$":0}}</span>
+  </div>
+  <div class="results_container">
+    <h4 class="results_name">Income</h4>
+    <span class="results_value">{{rc.takeHomeCash | currency:"$":0}}</span>
+  </div>
+  <div class="results_container" ng-class="{'results_container_positive': rc.netTotal > 0, 'results_container_negative': rc.netTotal < 0}">
+    <h4 class="results_name">Net Total</h4>
+    <span class="results_value">{{rc.netTotal | currency:"$":0}}</span>
   </div>
 </div>
 <div class="results_button_container">
-  <button class="btn btn-primary" ng-click="rc.scheduleMeeting()" type="button" name="button">Schedule Meeting with an Advisor</button>
-  <button class="btn btn-primary" ng-click="rc.logOut()" type="button" name="button">Log Out</button>
+  <button class="edit_button" ng-click="rc.scheduleMeeting()" type="button">Schedule Meeting with an Advisor</button>
+  <button class="submit_button" type="button" data-toggle="modal" data-target="#congratsForm">Complete Flex/Flow</button>
+</div>
+
+<div class="modal fade" id="congratsForm" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Congratulations! You've completed your Flex/Flow Budget!</h4>
+      </div>
+      <div class="modal-body">
+        <p>You've been emailed a PDF of your results, complete with your Flex/Flow goals. If you would like to schedule a meeting with a planner or refine your budget, please click the back button.</p>
+      </div>
+      <div class="modal-footer">
+        <button data-dismiss="modal" class="edit_button">Back</button>
+        <button data-dismiss="modal" ng-click="rc.logOut()" class="submit_button">Log Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+    7/7
+  </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="rc.navActive">
+  <li><a href="#">Home</a></li>
+  <li><a href="#flexspend">Flex</a></li>
+  <li><a href="#flowspend">Flow</a></li>
+  <li><a href="#functionalspend">Functional</a></li>
+  <li><a href="#financialspend">Financial</a></li>
+  <li><a href="#additionalinfo">Comments</a></li>
+  <li class="active">Results</li>
+</ol>
+<div class="hamburger" ng-click="rc.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
 </div>

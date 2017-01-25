@@ -1,18 +1,75 @@
 // globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
 @mixin month_button {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin: 5px;
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  margin: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  outline: none;
+  &:target {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+  @media (max-width: $mobile-width) {
+    width: 100px;
+    height: 100px;
+    padding: 0px;
+    margin: 5px;
+  }
 }
 
 @mixin category_toggle {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: 1px solid gainsboro;
   margin-bottom: 10px;
   position: absolute;
-  margin-left: -35px;
+  margin-left: -65px;
+  background-position: center;
+  background-repeat: no-repeat;
+  outline: none;
+}
 
+@mixin header_text {
+  font-size: 5em;
+  padding: 100px;
+  letter-spacing: 15px;
+  color: lighten($main-color, 50%);
+  margin-bottom: 100px;
+  text-shadow: 3px 3px $accent-color;
+  text-align: center;
+  @media (max-width: $mobile-width) {
+    font-size: 40px;
+    letter-spacing: 8px;
+  }
+}
+
+@mixin button {
+  background: $detail-color;
+  color: white;
+  border: 1px solid $accent-color;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  &:hover {
+    background-color: lighten($detail-color, 10%);
+  }
+}
+
+@mixin secondary_button {
+  background: lighten($detail-color, 20%);
+  color: white;
+  border: 1px solid $accent-color;
+  border-radius: 15px;
+  padding: 20px;
+  outline: none;
+  &:hover {
+    background-color: lighten($detail-color, 25%);
+  }
 }

@@ -1,9 +1,38 @@
-<h1 class="jumbotron">Your Monthly Flex Allowance</h1>
+<ol class="breadcrumb">
+  <li ng-show="fx.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
+</ol>
+
+<button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
+<div class="modal fade" id="hint" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">What is Flex Spending?</h4>
+      </div>
+      <div class="modal-body">
+        <p>This is like your adult allowance. You can spend it on anything, but we need to set a limit up front. These are things you don't need, but want.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="submit_button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h1 class="jumbotron">Monthly Flex Allowance</h1>
+<h3 class="explanation">How much would you like to spend each month on things other than bills? You may have a rough number right now, there is no right or wrong answer and we can adjust this number later.</h3>
 <div class="flex_container">
   <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
-    <input type="text" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
+    <input type="number" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">
   </div>
-  <button class="btn btn-primary flex_submit" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
+  <button class="submit_button" data-toggle="modal" data-target="#flexProfileForm">Submit</button>
 </div>
 <div class="modal fade" id="flexProfileForm" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -16,8 +45,8 @@
         <div ng-repeat="person in fx.flexArray"> <p>{{person.item_name}}: ${{person.item_amount}}</p></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Edit Info</button>
-        <button ng-click="fx.submitFlex()" class="btn btn-default" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Submit</button>
+        <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
+        <button ng-click="fx.submitFlex()" class="submit_button" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>
@@ -33,15 +62,24 @@
         <p>Flow spending is non-monthly expenses that often are what break our budget! Think about holidays, birthdays, field trips and quarterly bills.</p>
       </div>
       <div class="modal-footer">
-        <button onclick="window.location.href='#flowspend'" class="btn btn-default" data-dismiss="modal">Continue</button>
+        <button onclick="window.location.href='#flowspend'" class="submit_button" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>
 </div>
-<br>
-<br>
+
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100" style="width: 11.1%;">
-    2/18
+  <div class="progress-bar" role="progressbar" aria-valuenow="28.6" aria-valuemin="0" aria-valuemax="100" style="width: 28.6%;">
+    2/7
   </div>
+</div>
+
+<ol class="breadcrumb_mobile" ng-show="fx.navActive">
+  <li><a href="#">Home</a></li>
+  <li class="active">Flex</li>
+</ol>
+<div class="hamburger" ng-click="fx.activateMobileNav()">
+  <img src="/assets/images/hamburger.svg" alt="hamburger">
+</div>
+<div ng-include="views/templates/nav.html">
 </div>

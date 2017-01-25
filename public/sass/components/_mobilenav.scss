@@ -1,0 +1,49 @@
+.breadcrumb {
+  // display: block;
+  @media (max-width: $mobile-width) {
+    display: none;
+  }
+}
+
+.breadcrumb_mobile {
+  border: 1px solid black;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  padding: 10px 10px 10px 10px;
+  background-color: hsla(0,0%,100%,0.95);
+  list-style: none;
+  width: 250px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family: 'Fjalla One', sans-serif;
+  li {
+    font-size: 2em;
+    border-bottom: 1px solid $detail-color;
+    &:last-of-type{
+      border-bottom: none;
+    }
+    a {
+      color: $detail-color;
+    }
+  }
+  .active {
+    color: $accent-color;
+  }
+  @media (min-width: $mobile-width) {
+    display: none;
+  }
+}
+
+.hamburger {
+  width: 40px;
+  height: 40px;
+  background-color: hsla(0,0%,100%,0.3);
+  border: 1px solid white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  @media (min-width: $mobile-width) {
+    display: none;
+  }
+}

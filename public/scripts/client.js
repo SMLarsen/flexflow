@@ -49,15 +49,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'ResultsController',
 			controllerAs: 'rc'
 		})
-		.when('/nav', {
-			templateUrl: '/views/templates/nav.html',
-			controller: 'NavController',
-			controllerAs: 'nc'
-		})
-		.when('/savingsgoals', {
-			templateUrl: '/views/templates/savingsgoals.html',
-			controller: 'SavingsGoalsController',
-			controllerAs: 'sg'
+		.when('/report', {
+			templateUrl: '/views/templates/report.html',
+			controller: 'ResultsController',
+			controllerAs: 'rc'
 		})
 		.otherwise({
 			redirectTo: 'home'

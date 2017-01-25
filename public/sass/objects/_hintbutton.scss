@@ -1,0 +1,22 @@
+.hint_button {
+  background: rgba(white, 0.2);
+  border: 1px solid white;
+  color: white;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+  top: 90px;
+  right: 25%;
+  font-size: 20px;
+  outline: none;
+  @media (max-width: 1300px) {
+    top: 90px;
+    right: 10%;
+  }
+  @media (max-width: $mobile-width) {
+    top: 5px;
+    left: 5px;
+  }
+}

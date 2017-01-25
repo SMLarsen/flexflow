@@ -1,5 +1,5 @@
 app.factory("ReportFactory", function($http, AuthFactory) {
-    console.log('ReportFactory started');
+    // console.log('ReportFactory started');
 
     var authFactory = AuthFactory;
 

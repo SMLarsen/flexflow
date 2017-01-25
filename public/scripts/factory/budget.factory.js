@@ -1,19 +1,20 @@
+/*jshint esversion: 6 */
 app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // console.log('BudgetFactory started');
 
-    var FLEX = 2;
-    var FUNCTIONAL = 3;
-    var FINANCIAL = 4;
+    const FLEX = 2;
+    const FUNCTIONAL = 3;
+    const FINANCIAL = 4;
 
-    var authFactory = AuthFactory;
-    var templateFactory = TemplateFactory;
+    let authFactory = AuthFactory;
+    let templateFactory = TemplateFactory;
 
-    var newFunctionalItemArray = [];
-    var newFinancialItemArray = [];
-    var newFlowItemArray = [];
+    let newFunctionalItemArray = [];
+    let newFinancialItemArray = [];
+    let newFlowItemArray = [];
 
-    var profile = {};
-    var flowItems = [];
+    let profile = {};
+    let flowItems = [];
 
     //**************************** Budget Functions ******************************//
 
@@ -22,12 +23,12 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         // Build flow items (id = 1)
         itemMonth = parseInt(itemMonth);
         itemYear = parseInt(itemYear);
-        for (var m = 1; m === templateFactory.templateData.flowTemplateItems.length; m++) {
+        for (let m = 1; m === templateFactory.templateData.flowTemplateItems.length; m++) {
             templateFactory.templateData.flowTemplateItems[m].item_sort_sequence = m;
         }
-        for (var l = 0; l < 12; l++) {
-            for (var k = 0; k < templateFactory.templateData.flowTemplateItems.length; k++) {
-                var newFlowItem = {};
+        for (let l = 0; l < 12; l++) {
+            for (let k = 0; k < templateFactory.templateData.flowTemplateItems.length; k++) {
+                let newFlowItem = {};
                 newFlowItem.item_amount = 0;
                 newFlowItem.budget_template_category_id = 1;
                 newFlowItem.item_month = itemMonth;
@@ -46,8 +47,8 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         postFlowItems(newFlowItemArray);
 
         // Build financial items (id = 4)
-        for (var i = 0; i < templateFactory.templateData.financialTemplateItems.length; i++) {
-            var newFinancialItem = {};
+        for (let i = 0; i < templateFactory.templateData.financialTemplateItems.length; i++) {
+            let newFinancialItem = {};
             newFinancialItem.item_amount = 0;
             newFinancialItem.budget_template_category_id = FINANCIAL;
             newFinancialItem.item_img_src = templateFactory.templateData.financialTemplateItems[i].item_img_src;
@@ -58,8 +59,8 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
         postBudgetItems(newFinancialItemArray, FINANCIAL);
 
         // Build functional items (id = 3)
-        for (var j = 0; j < templateFactory.templateData.functionalTemplateItems.length; j++) {
-            var newFunctionalItem = {};
+        for (let j = 0; j < templateFactory.templateData.functionalTemplateItems.length; j++) {
+            let newFunctionalItem = {};
             newFunctionalItem.item_amount = 0;
             newFunctionalItem.budget_template_category_id = FUNCTIONAL;
             newFunctionalItem.item_name = templateFactory.templateData.functionalTemplateItems[j].item_name;
@@ -72,12 +73,12 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to insert budget profile
     postBudget = function(profile) {
-        var itemMonth = profile.budget_start_month;
-        var itemYear = profile.budget_start_year;
+        let itemMonth = profile.budget_start_month;
+        let itemYear = profile.budget_start_year;
         if (profile.meeting_scheduled === null) {
           profile.meeting_scheduled = FALSE;
         }
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -103,7 +104,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget profile
     getBudget = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -128,7 +129,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to update budget profile
     updateBudget = function(profile) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'PUT',
@@ -158,7 +159,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** Flow Item Functions ******************************//
     // function to insert flow items
     postFlowItems = function(month) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -182,7 +183,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getFlowItems = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -207,7 +208,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals
     getFlowItemTotalsByMonth = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -231,7 +232,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items totals for year
     getFlowItemTotalByYear = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
 
         if (currentUser) {
             return $http({
@@ -256,7 +257,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete flow items
     deleteFlowItems = function(month) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'DELETE',
@@ -279,7 +280,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to update flow items (delete all for budgetID then add new items)
     updateFlowItems = function(budgetArray) {
-        var month = budgetArray[0].item_month;
+        let month = budgetArray[0].item_month;
         return deleteFlowItems(month)
             .then(function(response) {
                     return postFlowItems(budgetArray)
@@ -300,10 +301,10 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     //**************************** Budget Item Functions ******************************//
     // function to insert budget items
     postBudgetItems = function(budgetArray, categoryID) {
-        for (var i = 0; i < budgetArray.length; i++) {
+        for (let i = 0; i < budgetArray.length; i++) {
             budgetArray[i].budget_template_category_id = categoryID;
         }
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'POST',
@@ -327,7 +328,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get flow items
     getBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -351,7 +352,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to get budget items totals for year
     getBudgetItemTotal = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -375,7 +376,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to delete budget items
     deleteBudgetItems = function(categoryID) {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'DELETE',
@@ -418,7 +419,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
     // function to insert comments items
     postAdditionalInfo = function(budgetArray) {
         //console.log("budgetArray: ", budgetArray);
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         //console.log("email user ", currentUser);
         if (currentUser) {
             return $http({
@@ -444,7 +445,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
     // function to insert comments items
     getAdditionalInfo = function() {
-        var currentUser = authFactory.getCurrentUser();
+        let currentUser = authFactory.getCurrentUser();
         if (currentUser) {
             return $http({
                     method: 'GET',
@@ -468,7 +469,7 @@ app.factory("BudgetFactory", function($http, AuthFactory, TemplateFactory) {
 
 
     // ******************************** APIs ************************************//
-    var publicApi = {
+    let publicApi = {
         // update budget profile
         updateBudget: function(profile) {
             return updateBudget(profile);

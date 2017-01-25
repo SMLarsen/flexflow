@@ -1,1 +1,1 @@
-module.exports = process.env.DATABASE_URL;
+module.exports = 'postgres://localhost:5432/flexflow';

@@ -1,10 +1,13 @@
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#flexspend">Flex</a></li>
-  <li><a href="#flowspend">Flow</a></li>
-  <li class="active">Functional</li>
+  <li ng-show="fu.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="fu.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
 </ol>
-<!-- template for input -->
+
 <h1 class="jumbotron">Functional Spending</h1>
 <div class="functional_financial_spending_container">
   <div class="toggle_container" ng-repeat="item in fu.itemArray">
@@ -14,7 +17,7 @@
   </div>
   <button class="additional_button" data-target="#additionalCategories" data-toggle="modal">+</button>
 </div>
-<button class="submit_button" data-toggle="modal" data-target="#functionalData">Submit</button>
+<button class="submit_button" data-toggle="modal" data-target="#functionalData">Continue</button>
 
 <button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
 <div class="modal fade" id="hint" role="dialog">
@@ -67,7 +70,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-        <button class="submit_button" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Submit</button>
+        <button class="submit_button" type="button" ng-click="fu.updateFunctionalItems()" data-target="#greatWork" data-toggle="modal" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>

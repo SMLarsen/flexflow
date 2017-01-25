@@ -1,6 +1,11 @@
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li class="active">Flex</li>
+  <li ng-show="fx.budgetStatusIndex >= 0"><a href="#">Home</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 1"><a href="#flexspend">Flex</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 2"><a href="#flowspend">Flow</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 3"><a href="#functionalspend">Functional</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 4"><a href="#financialspend">Financial</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 6"><a href="#additionalinfo">Comments</a></li>
+  <li ng-show="fx.budgetStatusIndex >= 6"><a href="#results">Results</a></li>
 </ol>
 
 <button class="hint_button" data-toggle="modal" data-target="#hint">?</button>
@@ -40,7 +45,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-        <button ng-click="fx.submitFlex()" class="submit_button" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Submit</button>
+        <button ng-click="fx.submitFlex()" class="submit_button" data-target="#flowSpendForm" data-toggle="modal" data-dismiss="modal">Continue</button>
       </div>
     </div>
   </div>
@@ -74,4 +79,6 @@
 </ol>
 <div class="hamburger" ng-click="fx.activateMobileNav()">
   <img src="/assets/images/hamburger.svg" alt="hamburger">
+</div>
+<div ng-include="views/templates/nav.html">
 </div>

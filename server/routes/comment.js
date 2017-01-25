@@ -10,7 +10,7 @@ var pool = new pg.Pool({
 });
 
 router.get('/', function(req, res) {
-    // /console.log("here in comment ", pool);
+    console.log("here in comment ", pool);
     pool.connect()
         .then(function(client) {
             var queryString = 'SELECT budget_comment, id, created_at FROM budget_comment WHERE budget_id = $1';

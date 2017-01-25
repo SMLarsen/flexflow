@@ -1,21 +1,21 @@
 <h1 class="jumbotron">Create Profile</h1>
 
 <h4>How many adults are in your household?</h4>
-<div class="people_button_container btn-group btn-group-lg" role="group" aria-label="...">
+<div class="people_button_container btn-group btn-group-lg" role="group">
   <button ng-click="cp.clickNumPeople(1)"><img class="profilepersonicon" src="/assets/images/profile-icons/oneperson.svg" /></button>
   <button ng-click="cp.clickNumPeople(2)"><img class="profilepersonicon" src="/assets/images/profile-icons/twopeople.svg" /></button>
   <button ng-click="cp.clickNumPeople(3)"><img class="profilepersonicon" src="/assets/images/profile-icons/threepeople.svg" /></button>
   <button ng-click="cp.clickNumPeople(4)"><img class="profilepersonicon" src="/assets/images/profile-icons/fourpeople.svg" /></button>
 </div>
 <div class="client_names" ng-hide="cp.numPeople === 0">
-  <label for="names">Name(s)</label><br>
+  <label for="names" ng-show="cp.numPeople === 1">Name</label><label for="names" ng-show="cp.numPeople > 1">Names</label><br>
   <div ng-repeat="person in cp.flexArray">
     <input type="text" ng-model="person.item_name" placeholder="e.g. Bob" class="form-control">
   </div><br>
   <label for="total income">Total Household Income</label><br>
-  <input type="number" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control"><br>
+  <input type="number" ng-model="cp.budget.annual_salary" placeholder="e.g. 100000" class="form-control num_label"><br>
   <label for="total take-home">Total Monthly Take-Home Cash</label><br>
-  <input type="number" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control"><br>
+  <input type="number" ng-model="cp.budget.monthly_take_home_amount" placeholder="e.g. 5000" class="form-control num_label"><br>
   <label for="start budget">What month are you starting your budget?</label><br>
   <select name="month" ng-model="cp.budget.budget_start_month">
     <option value="1">January</option>
@@ -35,7 +35,7 @@
     <option ng-repeat="year in cp.nextFiveYears">{{year}}</option>
   </select><br>
   <label><input type="checkbox" ng-model="cp.budget.meeting_scheduled"> I already have a meeting scheduled with a Flex/Flow financial advisor.</label><br>
-  <button class="submit_button" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Submit</button>
+  <button class="submit_button" data-toggle="modal" ng-click="cp.submitProfile()" data-target="#clientProfileForm">Continue</button>
   <div class="modal fade" id="clientProfileForm" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -49,7 +49,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="edit_button" data-dismiss="modal">Edit Info</button>
-          <button ng-click="cp.postBudget()" class="submit_button" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Submit</button>
+          <button ng-click="cp.postBudget()" class="submit_button" data-dismiss="modal" data-target="#savingsGoalsForm" data-toggle="modal">Continue</button>
         </div>
       </div>
     </div>

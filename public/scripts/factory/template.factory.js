@@ -1,5 +1,5 @@
 app.factory("TemplateFactory", function($http) {
-    console.log('TemplateFactory started');
+    // console.log('TemplateFactory started');
 
     var templateData = {
         categoryTemplate: [],
@@ -11,6 +11,9 @@ app.factory("TemplateFactory", function($http) {
 
     // function to do initial load of template date
     loadTemplateData = function() {
+        templateData.flowTemplateItems = [];
+        templateData.functionalTemplateItems = [];
+        templateData.financialTemplateItems = [];
         getCategories();
         getItems();
     }; // end loadTemplateData
@@ -95,11 +98,6 @@ app.factory("TemplateFactory", function($http) {
         }
         return categoryItems;
     }; // end getItemTemplate
-
-    // console.log('Category Flow:', getCategoryTemplate('Flow'));
-    // console.log('Item Flow:', getItemTemplate('Flow'));
-    // console.log('Category Flex:', getCategoryTemplate('Flex'));
-    // console.log('Flex:', getItemTemplate('Flex'));
 
     var publicApi = {
         templateData: templateData,

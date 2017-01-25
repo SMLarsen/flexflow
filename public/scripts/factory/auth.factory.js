@@ -79,6 +79,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
 
 
     var publicApi = {
+      currentUser: currentUser, 
         getIdToken: function() {
             return currentUser.authIdToken;
         },

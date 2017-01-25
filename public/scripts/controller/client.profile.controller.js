@@ -1,5 +1,5 @@
 app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFactory) {
-    console.log('Client Profile controller started');
+    // console.log('Client Profile controller started');
 
     var self = this;
 
@@ -8,22 +8,24 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
     self.budget = {};
     self.flexArray = [];
     self.numPeople = 0;
+    self.savings = undefined;
+    self.monthSavings = undefined;
+    self.navActive = false;
 
     var currentTime = new Date();
 
     var year = currentTime.getFullYear();
     self.nextFiveYears = [];
-    self.navActive = false;
 
     self.activateMobileNav = function() {
-      if(self.navActive === false){
-        self.navActive = true;
-      } else {
-        self.navActive = false;
-      }
+        if (self.navActive === false) {
+            self.navActive = true;
+        } else {
+            self.navActive = false;
+        }
     };
 
-    console.log(year);
+    // console.log(year);
     getYears();
 
     // Function to build array of people in flex budget
@@ -47,7 +49,32 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
     // Function for posting salary info to DB
     self.postBudget = function() {
       // self.budget.meeting_scheduled = false;
-      self.budget.budget_status = "Profile";
+      switch (self.budget.budget_status) {
+        case "Finished":
+        self.budget.budget_status = "Finished";
+        break;
+        case "Comments":
+        self.budget.budget_status = "Comments";
+        break;
+        case "Financial":
+        self.budget.budget_status = "Financial";
+        break;
+        case "Functional":
+        self.budget.budget_status = "Functional";
+        break;
+        case "Flow":
+        self.budget.budget_status = "Flow";
+        break;
+        case "Flex":
+        self.budget.budget_status = "Flex";
+        break;
+        case "Profile":
+        self.budget.budget_status = "Profile";
+        break;
+        default:
+        self.budget.budget_status = "Profile";
+
+      }
         budgetFactory.postBudget(self.budget)
             .then(function(budgetResponse) {
                 budgetFactory.postFlexItems(self.flexArray)
@@ -63,17 +90,14 @@ app.controller('ClientProfileController', ['BudgetFactory', function(BudgetFacto
             });
     }; // End: postBudget
 
-    self.budget = {};
-    self.savings = undefined;
-    self.monthSavings = undefined;
-
+    // Function to get current years for selecting budget start date
     function getYears() {
         self.nextFiveYears.push(year);
         for (var i = 0; i < 4; i++) {
             year++;
             self.nextFiveYears.push(year);
         }
-        console.log(self.nextFiveYears);
-    }
+        // console.log(self.nextFiveYears);
+    } // End: getYears
 
 }]); // END: ClientProfileController

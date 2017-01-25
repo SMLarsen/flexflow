@@ -15,6 +15,36 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 		}
 	};
 
+	budgetFactory.getBudget().then(function(results){
+		self.budget = results;
+		self.budgetStatus = self.budget.budget_status;
+    switch (self.budgetStatus) {
+      case "Finished":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Comments":
+      self.budgetStatusIndex = 6;
+      break;
+      case "Financial":
+      self.budgetStatusIndex = 5;
+      break;
+      case "Functional":
+      self.budgetStatusIndex = 4;
+      break;
+      case "Flow":
+      self.budgetStatusIndex = 3;
+      break;
+      case "Flex":
+      self.budgetStatusIndex = 2;
+      break;
+      case "Profile":
+      self.budgetStatusIndex = 1;
+      break;
+      default:
+      self.budgetStatusIndex = 0;
+    }
+	});
+
 	budgetFactory.getFunctionalItems().then(function(result) {
 		self.itemArray = result;
 		setToggles();
@@ -59,8 +89,24 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 
 	self.updateFunctionalItems = function() {
 		console.log("update functional clicked");
+		setInactiveValuesToZero();
 		budgetFactory.updateFunctionalItems(self.itemArray).then(function(result){
-			budgetFactory.updateBudgetStatus("Functional");
+			switch (self.budget.budget_status) {
+        case "Finished":
+        budgetFactory.updateBudgetStatus("Finished");
+        break;
+        case "Comments":
+        budgetFactory.updateBudgetStatus("Comments");
+        break;
+        case "Financial":
+        budgetFactory.updateBudgetStatus("Financial");
+        break;
+        case "Functional":
+        budgetFactory.updateBudgetStatus("Functional");
+        break;
+        default:
+        budgetFactory.updateBudgetStatus("Functional");
+      }
 		});
 	};
 
@@ -78,5 +124,12 @@ app.controller('FunctionalSpendController', ['BudgetFactory', function (BudgetFa
 		}
 	};
 
+	function setInactiveValuesToZero() {
+    for ( i = 0; i < self.itemArray.length; i++) {
+      if(self.itemArray[i].activeItem === false) {
+        self.itemArray[i].item_amount = 0;
+      }
+    }
+  }
 
 }]);

@@ -7,20 +7,16 @@
   border-radius: 50%;
   text-align: center;
   position: absolute;
-  top: 60px;
-  left: 40px;
+  top: 90px;
+  right: 25%;
   font-size: 20px;
+  outline: none;
+  @media (max-width: 1300px) {
+    top: 90px;
+    right: 10%;
+  }
   @media (max-width: $mobile-width) {
     top: 5px;
     left: 5px;
   }
-}
-
-.modal-header {
-  background-color: $detail-color;
-  font-family: 'Fjalla One', sans-serif;
-  color: white;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 1px 1px $accent-color;
 }

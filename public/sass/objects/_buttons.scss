@@ -31,3 +31,12 @@
     color: white;
   }
 }
+
+.explanation {
+  font-size: 2em;
+  width: 80%;
+  margin: 0 auto;
+  @media (max-width: $mobile-width) {
+    font-size: 1em;
+  }
+}

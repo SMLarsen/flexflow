@@ -49,11 +49,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'ResultsController',
 			controllerAs: 'rc'
 		})
-		.when('/report', {
-			templateUrl: '/views/templates/report.html',
-			controller: 'ResultsController',
-			controllerAs: 'rc'
-		})
 		.otherwise({
 			redirectTo: 'home'
 		});

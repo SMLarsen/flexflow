@@ -1,11 +1,10 @@
 /*jshint esversion: 6 */
-app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', 'ReportFactory', function($http, AuthFactory, BudgetFactory, AdminFactory, ReportFactory) {
+app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'AdminFactory', function($http, AuthFactory, BudgetFactory, AdminFactory) {
     // console.log('Results controller started');
     let self = this;
     const budgetFactory = BudgetFactory;
     const authFactory = AuthFactory;
     const adminFactory = AdminFactory;
-    const reportFactory = ReportFactory;
     const scheduleEmail = adminFactory.getAdminParameter('Scheduling_email');
     const currentUser = authFactory.getCurrentUser();
 
@@ -43,17 +42,14 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
         });
 
     self.scheduleMeeting = function() {
-        console.log('scheduleMeeting clicked');
-        let link = "mailto:" + "isaiah@becomingfinancial.com" +
+        let link = "mailto:" + adminFactory.getAdminParameter('Scheduling_email') +
             "?cc=" + currentUser.email +
             "&subject=" + escape("Financial Planning Meeting Request") +
             "&body=" + escape("I would like to schedule a meeting");
         window.location.href = link;
-
     };
 
     self.logOut = function() {
-        console.log('logout clicked');
         let sendObject = {
             displayName: currentUser.displayName,
             email: currentUser.email,
@@ -74,7 +70,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
                 data: sendObject
             })
             .then(function(response) {
-                console.log('POST mail successful for CSV');
+                // console.log('POST mail successful for CSV');
                 return;
             }, function(err) {
                 console.log('Error sending mail in CSV RESULT', currentUser.email, ': ', err);
@@ -90,7 +86,7 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
 
             })
             .then(function(response) {
-                console.log('POST mail successful for PDF');
+                // console.log('POST mail successful for PDF');
                 return;
             }, function(err) {
                 console.log('Error sending mail in PDF RESULT', currentUser.email, ': ', err);
@@ -106,7 +102,6 @@ app.controller('ResultsController', ['$http', 'AuthFactory', 'BudgetFactory', 'A
         reportFactory.getReportData()
             .then(function(result) {
                 self.reportData = result;
-                console.log('Retrieved report data');
             });
     };
 

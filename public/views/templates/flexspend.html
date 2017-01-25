@@ -17,7 +17,7 @@
         <h4 class="modal-title">What is Flex Spending?</h4>
       </div>
       <div class="modal-body">
-        <p>Imagine you could spend an amount every month on whatever makes you happy. This could be date nights, dinners with friends, new shoes... whatever you enjoy. That's flex spending!</p>
+        <p>This is like your adult allowance. You can spend it on anything, but we need to set a limit up front. These are things you don't need, but want.</p>
       </div>
       <div class="modal-footer">
         <button class="submit_button" data-dismiss="modal">Close</button>
@@ -27,6 +27,7 @@
 </div>
 
 <h1 class="jumbotron">Monthly Flex Allowance</h1>
+<h3 class="explanation">How much would you like to spend each month on things other than bills? You may have a rough number right now, there is no right or wrong answer and we can adjust this number later.</h3>
 <div class="flex_container">
   <div ng-repeat="person in fx.flexArray"><label>{{person.item_name}}</label><br>
     <input type="number" ng-model="person.item_amount" placeholder="e.g. 500" class="form-control">

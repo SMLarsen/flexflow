@@ -1,20 +1,20 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var bodyParser = require('body-parser');
-var decoder = require('./modules/decoder');
-var clientReport = require('./routes/client-report');
-var csv = require('./routes/csv');
-var privateData = require('./routes/private-data');
-var admin = require('./routes/admin');
-var templates = require('./routes/template');
-var profile = require('./routes/profile');
-var item = require('./routes/item');
-var total = require('./routes/total');
-var mail = require('./routes/mail');
-var comment = require('./routes/comment');
+/*jshint esversion: 6 */
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyParser = require('body-parser');
+const decoder = require('./modules/decoder');
+const clientReport = require('./routes/client-report');
+const csv = require('./routes/csv');
+const privateData = require('./routes/private-data');
+const admin = require('./routes/admin');
+const templates = require('./routes/template');
+const profile = require('./routes/profile');
+const item = require('./routes/item');
+const total = require('./routes/total');
 
-var portDecision = process.env.PORT || 5000;
+const portDecision = process.env.PORT || 5000;
 
 app.get('/', function(req, res){
   res.sendFile(path.resolve('./public/views/index.html'));
@@ -36,8 +36,6 @@ app.get("/privateData", privateData);
 app.use("/profile", profile);
 app.use("/item", item);
 app.use("/total", total);
-app.use("/mail", mail);
-app.use("/comment", comment);
 app.use("/client-report", clientReport);
 app.use("/csv", csv);
 

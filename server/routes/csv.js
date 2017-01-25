@@ -1,28 +1,28 @@
 /*jshint esversion: 6 */
 
-var express = require('express');
-var router = express.Router();
-var pg = require('pg');
-var config = require('../modules/pg-config');
-var fs = require('fs');
-var converter = require('json-2-csv');
+const express = require('express');
+const router = express.Router();
+const pg = require('pg');
+const config = require('../modules/pg-config');
+const fs = require('fs');
+const converter = require('json-2-csv');
 
-var nodemailer = require('nodemailer');
-var path = require('path');
+const nodemailer = require('nodemailer');
+const path = require('path');
 
-var pool = new pg.Pool({
+const pool = new pg.Pool({
     database: config.database
 });
 
-var csvData = {};
-var budgetID = '';
+let csvData = {};
+let budgetID = '';
 
 // Route: GET profile for a budget
 router.post("/", function(req, res, next) {
     budgetID = req.budgetID;
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT budget_start_year, budget_start_month, annual_salary, monthly_take_home_amount, meeting_scheduled, budget_status FROM budget ";
+            let queryString = "SELECT budget_start_year, budget_start_month, annual_salary, monthly_take_home_amount, meeting_scheduled, budget_status FROM budget ";
             queryString += "WHERE id = $1 ";
             // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
@@ -31,7 +31,6 @@ router.post("/", function(req, res, next) {
                     client.release();
                     res.sendStatus(500);
                 } else {
-                    // console.log('Reporting profile retrieved');
                     csvData.profile = result.rows[0];
                     client.release();
                     next();
@@ -44,7 +43,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT category_name, item_name, item_amount, item_sort_sequence ";
+            let queryString = "SELECT category_name, item_name, item_amount, item_sort_sequence ";
             queryString += "FROM budget_item, budget_template_category ";
             queryString += "WHERE budget_template_category.id = budget_template_category_id ";
             queryString += "AND budget_id = $1 ";
@@ -74,7 +73,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT item_year, item_month, item_name, item_amount, item_sort_sequence ";
+            let queryString = "SELECT item_year, item_month, item_name, item_amount, item_sort_sequence ";
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "UNION ";
@@ -102,7 +101,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT budget_comment FROM budget_comment ";
+            let queryString = "SELECT budget_comment FROM budget_comment ";
             queryString += "WHERE id = $1 ";
             // console.log('queryString:', queryString);
             client.query(queryString, [req.budgetID], function(err, result) {
@@ -122,9 +121,9 @@ router.post("/", function(req, res, next) {
 
 // Function: format flex, functional, and financial items and add array for each category to csvData object
 function formatItems(itemArray) {
-    var tempCategoryArray = [];
-    var currentCategory = itemArray[0].category_name;
-    for (var i = 0; i < itemArray.length; i++) {
+    let tempCategoryArray = [];
+    let currentCategory = itemArray[0].category_name;
+    for (let i = 0; i < itemArray.length; i++) {
         delete itemArray[i].item_sort_sequence;
         // console.log(i, itemArray[i].item_name, itemArray[i].category_name, currentCategory, itemArray[i]);
         if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
@@ -143,12 +142,12 @@ function formatItems(itemArray) {
 
 // Function: format flow items and add array to csvData object
 function formatFlowItems(itemArray) {
-    var tempCategoryArray = [];
-    var tempItem = {};
-    for (var i = 0; i < itemArray.length; i += 12) {
+    let tempCategoryArray = [];
+    let tempItem = {};
+    for (let i = 0; i < itemArray.length; i += 12) {
         tempItem.category_name = 'Flow';
         tempItem.item_name = itemArray[i].item_name;
-        for (var j = 0; j < 12; j++) {
+        for (let j = 0; j < 12; j++) {
             tempItem['amount_' + (j + 1)] = itemArray[i + j].item_amount;
         }
         tempCategoryArray.push(tempItem);
@@ -156,11 +155,11 @@ function formatFlowItems(itemArray) {
     }
     csvData.Flow = tempCategoryArray;
 }
-var csvContent = '';
+let csvContent = '';
 
 // Route: Create Customer CSV
 router.post("/", function(req, res) {
-    var csvUser = {
+    let csvUser = {
         userName: req.decodedToken.name,
         email: req.decodedToken.email
     };
@@ -171,23 +170,23 @@ router.post("/", function(req, res) {
     converter.json2csv(csvData.Functional, json2csvCallback);
     converter.json2csv(csvData.Financial, json2csvCallback);
     converter.json2csv(csvData.comment, json2csvLastCallback);
-    var filePath = path.join(__dirname, './flexflow-' + req.budgetID + '.csv');
+    let filePath = path.join(__dirname, './flexflow-' + req.budgetID + '.csv');
 
-    var htmlObject = '<p>You have a new csv file for ' + req.body.displayName + '<br>' +
+    let htmlObject = '<p>You have a new csv file for ' + req.body.displayName + '<br>' +
         "Email: " + req.body.email;
 
     // create reusable transporter object using SMTP transport
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'flexflowplanner@gmail.com',
-            pass: 'flexflow!'
+            user: process.env.NODEMAILER_USER,
+            pass: process.env.NODEMAILER_PASS
         }
     });
 
-    var mailOptions = {
-        from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
-        to: "flexflowplanner@gmail.com", // list of receivers
+    let mailOptions = {
+        from: 'Flex Flow Planner ✔ <' + process.env.NODEMAILER_USER + '>', // sender address
+        to: process.env.NODEMAILER_USER, // list of receivers
         subject: 'You have a new FlexFlow csv file for ' + req.body.displayName,
         html: htmlObject,
         attachments: [{
@@ -215,16 +214,16 @@ router.post("/", function(req, res) {
 });
 
 // Function: use json2csv library to add category to csvContent
-var json2csvCallback = function(err, csv) {
+let json2csvCallback = function(err, csv) {
     if (err) throw err;
     csvContent += csv;
 };
 
 // Function: use json2csv library to add category to csvContent then write file
-var json2csvLastCallback = function(err, csv) {
+let json2csvLastCallback = function(err, csv) {
     if (err) throw err;
     csvContent += csv;
-    var fileName = 'flexflow-' + budgetID + '.csv';
+    let fileName = 'flexflow-' + budgetID + '.csv';
     fs.writeFile("./server/routes/" + fileName, csvContent, function(err) {
         if (err) {
             console.log(err);

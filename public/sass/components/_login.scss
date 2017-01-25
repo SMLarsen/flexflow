@@ -2,7 +2,7 @@
 @include button;
   width: 200px;
   font-size: 2em;
-  margin-top: 150px;
+  margin-top: 90px;
   &:hover {
     background: lighten($detail-color, 10%);
   }

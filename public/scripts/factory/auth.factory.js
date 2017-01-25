@@ -1,5 +1,5 @@
 app.factory("AuthFactory", function($firebaseAuth, $http) {
-    console.log('AuthFactory started');
+    // console.log('AuthFactory started');
     var auth = $firebaseAuth();
     var currentUser = {};
     var data = {};
@@ -8,7 +8,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     logIn = function() {
         return auth.$signInWithPopup("google")
             .then(function(firebaseUser) {
-                console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+                // console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
                 currentUser = firebaseUser.user;
                 return currentUser.getToken()
                     .then(function(idToken) {
@@ -22,11 +22,11 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                             .then(function(response) {
                                     currentUser.newUser = response.data.newUser;
                                     currentUser.authIdToken = idToken;
-                                    console.log('Current user authorized:', currentUser);
+                                    // console.log('Current user authorized:', currentUser);
                                     return currentUser;
                                 },
                                 function(err) {
-                                    console.log('Current user not registered:', err);
+                                    // console.log('Current user not registered:', err);
                                     return;
                                 })
                             .catch(function(error) {
@@ -40,7 +40,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
     logOut = function() {
         return auth.$signOut().then(function() {
             currentUser = {};
-            console.log('User logged out');
+            // console.log('User logged out');
         });
     }; // END: logOut
 
@@ -63,7 +63,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
                 }).then(function(response) {
                   currentUser.newUser = response.data.newUser;
                   currentUser.authIdToken = idToken;
-                  console.log('Current user reauthorized:', currentUser);
+                  // console.log('Current user reauthorized:', currentUser);
                   return currentUser;
                 },
                 function(err) {
@@ -79,7 +79,7 @@ app.factory("AuthFactory", function($firebaseAuth, $http) {
 
 
     var publicApi = {
-      currentUser: currentUser, 
+      currentUser: currentUser,
         getIdToken: function() {
             return currentUser.authIdToken;
         },

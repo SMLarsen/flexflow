@@ -1,8 +1,8 @@
 var config = {
-   apiKey: "AIzaSyC7eDpBk_zcYjjt2M1MZ-GWD03QgfHMkRs",
-   authDomain: "flexflow-7b2c8.firebaseapp.com",
-   databaseURL: "https://flexflow-7b2c8.firebaseio.com",
-   storageBucket: "flexflow-7b2c8.appspot.com",
-   messagingSenderId: "11693026219"
+   apiKey: process.env.API_KEY,
+   authDomain: process.env.AUTH_DOMAIN,
+   databaseURL: process.env.CONFIG_DATABASE_URL,
+   storageBucket: process.env.CONFIG_STORAGE_BUCKET,
+   messagingSenderId: process.env.MESSAGING_SENDER_ID
  };
  firebase.initializeApp(config);

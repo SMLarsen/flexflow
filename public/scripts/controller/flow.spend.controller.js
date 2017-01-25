@@ -195,7 +195,6 @@ app.controller('FlowSpendController', ['BudgetFactory', function(BudgetFactory) 
         self.currentYear = month.year;
         pullCurrentMonthData();
         setToggles();
-        console.log(self.flowCategories);
     }; // end enterMonthFlowData
 
     self.saveAndClose = function() {

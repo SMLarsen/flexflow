@@ -1,32 +1,32 @@
 /*jshint esversion: 6 */
 
-var express = require('express');
-var router = express.Router();
-var pg = require('pg');
-var config = require('../modules/pg-config');
-var pdfDocument = require('pdfkit');
-var fs = require('fs');
+const express = require('express');
+const router = express.Router();
+const pg = require('pg');
+const config = require('../modules/pg-config');
+const pdfDocument = require('pdfkit');
+const fs = require('fs');
 
-var nodemailer = require('nodemailer');
-var path = require('path');
+const nodemailer = require('nodemailer');
+const path = require('path');
 
-var pool = new pg.Pool({
+const pool = new pg.Pool({
     database: config.database
 });
 
-var NAME_LENGTH = 22;
-var AMOUNT_LENGTH = 7;
-var MONTHS_ARRAY = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const NAME_LENGTH = 22;
+const AMOUNT_LENGTH = 7;
+const MONTHS_ARRAY = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-var reportData = {};
-var budgetID = 0;
+let reportData = {};
+let budgetID = 0;
 
 // Route: GET item totals for a budget - include additional "Total" row with sum of amounts for each category
 router.post("/", function(req, res, next) {
     budgetID = req.budgetID;
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT category_name, item_name, item_amount, (item_amount * 12) AS annual_amount, item_sort_sequence ";
+            let queryString = "SELECT category_name, item_name, item_amount, (item_amount * 12) AS annual_amount, item_sort_sequence ";
             queryString += "FROM budget_item, budget_template_category ";
             queryString += "WHERE budget_template_category.id = budget_template_category_id ";
             queryString += "AND budget_id = $1 ";
@@ -55,7 +55,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT item_name, item_amount, item_year, item_month, item_sort_sequence ";
+            let queryString = "SELECT item_name, item_amount, item_year, item_month, item_sort_sequence ";
             queryString += "FROM budget_flow_item ";
             queryString += "WHERE budget_id = $1 ";
             queryString += "UNION ";
@@ -91,7 +91,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT * FROM budget ";
+            let queryString = "SELECT * FROM budget ";
             queryString += "WHERE id = $1 ";
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
@@ -112,7 +112,7 @@ router.post("/", function(req, res, next) {
 router.post("/", function(req, res, next) {
     pool.connect()
         .then(function(client) {
-            var queryString = "SELECT * FROM budget_comment ";
+            let queryString = "SELECT * FROM budget_comment ";
             queryString += "WHERE id = $1 ";
             client.query(queryString, [req.budgetID], function(err, result) {
                 if (err) {
@@ -136,20 +136,20 @@ router.post("/", function(req, res, next) {
 
 // Function: Order month labels where startMonth is index = 0
 function formatMonths(startMonth) {
-    var tempMonthArray = MONTHS_ARRAY;
+    let tempMonthArray = MONTHS_ARRAY;
     if (startMonth === 1) {
         return tempMonthArray;
     } else {
-        var newMonthArray = tempMonthArray.splice(0, startMonth - 1);
+        let newMonthArray = tempMonthArray.splice(0, startMonth - 1);
         return tempMonthArray.concat(newMonthArray);
     }
 }
 
 //Function: Formats functional, financial, and flex items by category and puts them in reportData object
 function formatItems(itemArray) {
-    var tempCategoryArray = [];
-    var currentCategory = itemArray[0].category_name;
-    for (var i = 0; i < itemArray.length; i++) {
+    let tempCategoryArray = [];
+    let currentCategory = itemArray[0].category_name;
+    for (let i = 0; i < itemArray.length; i++) {
         if (itemArray[i].category_name !== currentCategory || i === itemArray.length - 1) {
             if (i === itemArray.length - 1) {
                 tempCategoryArray.push(itemArray[i]);
@@ -166,12 +166,12 @@ function formatItems(itemArray) {
 
 //Function: Formats fow items and puts them in reportData object
 function formatFlowItems(itemArray) {
-    var tempCategoryArray = [];
-    var tempItem = {};
-    for (var i = 0; i < itemArray.length; i += 13) {
+    let tempCategoryArray = [];
+    let tempItem = {};
+    for (let i = 0; i < itemArray.length; i += 13) {
         tempItem.category_name = 'Flow';
         tempItem.item_name = itemArray[i].item_name;
-        for (var j = 0; j < 12; j++) {
+        for (let j = 0; j < 12; j++) {
             tempItem['amount_' + (j + 1)] = itemArray[i + j].item_amount;
         }
         tempItem.annual_amount = itemArray[i + 12].item_amount;
@@ -184,10 +184,10 @@ function formatFlowItems(itemArray) {
 // Function: use pdfkit library to create client report pdf -
 // note that pdfkit does not support tables at this time, therefore a non-proportional font is used with much manual formatting
 function createPDF() {
-    var doc = new pdfDocument({
+    let doc = new pdfDocument({
         layout: 'landscape'
     });
-    var fileName = 'flexflow.pdf';
+    let fileName = 'flexflow.pdf';
     doc.pipe(fs.createWriteStream("./server/routes/" + fileName));
 
     // draw some text
@@ -221,7 +221,7 @@ function createPDF() {
         });
 
     // months
-    var months = padRight('    ', NAME_LENGTH) + padLeft(reportData.months[0], AMOUNT_LENGTH) +
+    let months = padRight('    ', NAME_LENGTH) + padLeft(reportData.months[0], AMOUNT_LENGTH) +
         padLeft(reportData.months[1], AMOUNT_LENGTH) + padLeft(reportData.months[2], AMOUNT_LENGTH) +
         padLeft(reportData.months[3], AMOUNT_LENGTH) + padLeft(reportData.months[4], AMOUNT_LENGTH) +
         padLeft(reportData.months[5], AMOUNT_LENGTH) + padLeft(reportData.months[6], AMOUNT_LENGTH) +
@@ -241,7 +241,7 @@ function createPDF() {
     doc.font('Courier', 12)
         .moveDown()
         .text('Flex Accounts:');
-    for (var i = 0; i < reportData.Flex.length; i++) {
+    for (let i = 0; i < reportData.Flex.length; i++) {
         item = reportData.Flex[i];
         formattedItem = formatPDFItem(item);
         doc.font('Courier', 10)
@@ -308,7 +308,7 @@ function createPDF() {
     doc.font('Courier', 12)
         .moveDown()
         .text('Summary:');
-    var takeHome = padLeft(reportData.profile.monthly_take_home_amount, AMOUNT_LENGTH);
+    let takeHome = padLeft(reportData.profile.monthly_take_home_amount, AMOUNT_LENGTH);
     item = padRight('Monthly Takehome', NAME_LENGTH) + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + takeHome + padLeft((reportData.profile.monthly_take_home_amount * 12), AMOUNT_LENGTH);
     doc.font('Courier', 10)
         .moveDown()
@@ -355,14 +355,14 @@ function buildSummaryTotals() {
     reportData.totals.expenses = {};
     reportData.totals.net = {};
 
-    var nonFlowTotal = parseInt(reportData.Flex[reportData.Flex.length - 1].item_amount) +
+    let nonFlowTotal = parseInt(reportData.Flex[reportData.Flex.length - 1].item_amount) +
         parseInt(reportData.Functional[reportData.Functional.length - 1].item_amount) +
         parseInt(reportData.Financial[reportData.Financial.length - 1].item_amount);
-    var flowTotals = reportData.Flow[reportData.Flow.length - 1];
+    let flowTotals = reportData.Flow[reportData.Flow.length - 1];
 
     reportData.totals.expenses.item_name = 'Expenses';
     reportData.totals.expenses.annual_amount = (nonFlowTotal * 12) + parseInt(flowTotals.annual_amount);
-    for (var i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 12; i++) {
         reportData.totals.expenses['amount_' + (i)] = parseInt(flowTotals['amount_' + (i)]) + nonFlowTotal;
     }
 
@@ -376,7 +376,7 @@ function buildSummaryTotals() {
 // Function: format flex, functional, and financial items for report
 function formatPDFItem(item) {
     newItem = padRight(item.item_name, NAME_LENGTH);
-    for (var i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 12; i++) {
         newItem += padLeft(item.item_amount, AMOUNT_LENGTH);
     }
     newItem += padLeft((item.item_amount * 12), 7);
@@ -388,7 +388,7 @@ function padRight(value, length) {
     if (value.length > length) {
         return value.substring(0, length);
     } else {
-        for (var i = value.length; i <= length; i++) {
+        for (let i = value.length; i <= length; i++) {
             value += ' ';
         }
         return value;
@@ -397,16 +397,16 @@ function padRight(value, length) {
 
 // Function: left pad items
 function padLeft(value, length) {
-    var paddedValue = ("         " + value.toString()).slice(-length);
+    let paddedValue = ("         " + value.toString()).slice(-length);
     return paddedValue;
 
 }
 
 // Route: Send email with pdf attachment to client
 router.post("/", function(req, res) {
-    var filePath = path.join(__dirname, './flexflow.pdf');
+    let filePath = path.join(__dirname, './flexflow.pdf');
 
-    var htmlObject = '<h4>Here is your FlexFlow budget summary:</h4>' + '<p>' +
+    let htmlObject = '<h4>Here is your FlexFlow budget summary:</h4>' + '<p>' +
         "Name: " + req.body.displayName + '<br>' +
         "Email: " + req.body.email + '<br>' +
         "Flow Total: $" + req.body.flowTotal + '<br>' +
@@ -417,24 +417,25 @@ router.post("/", function(req, res) {
         "Net Total: $" + req.body.netTotal + '</p>' +
         "<h4> Check out your budget in the attached PDF file</h4>";
 
-    var receivers = req.body.email;
-    var maillist = [
-      'flexflowplanner@gmail.com',
+    let receivers = req.body.email;
+    let maillist = [
+      process.env.NODEMAILER_USER,
       receivers,
     ];
     maillist.toString();
 
+    console.log('emaail: ', process.env.NODEMAILER_USER, process.env.NODEMAILER_PASS);
+
     // create reusable transporter object using SMTP transport
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'flexflowplanner@gmail.com',
-            pass: 'flexflow!'
+          user: process.env.NODEMAILER_USER,
+          pass: process.env.NODEMAILER_PASS
         }
     });
-
-    var mailOptions = {
-        from: 'Flex Flow Planner ✔ <flexflowplanner@gmail.com>', // sender address
+    let mailOptions = {
+      from: 'Flex Flow Planner ✔ <' + process.env.NODEMAILER_USER + '>', // sender address
         to: maillist,  // list of receivers
         subject: 'Congratulations ' + req.body.displayName + ' on Completing Your FlexFlow Budget!', // Subject line
         html: htmlObject,

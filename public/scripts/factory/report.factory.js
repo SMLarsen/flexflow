@@ -109,12 +109,10 @@ app.factory("ReportFactory", function($http, AuthFactory) {
             })
             .then(function(response) {
                     reportData = response.data;
-                    console.log('Report data:', reportData);
                     startingMonthID = reportData.profile.budget_start_month;
                     startingYear = reportData.profile.budget_start_year;
                     setStartingMonth();
                     setYears();
-                    console.log(budgetMonths);
                     return reportData;
                 },
                 function(err) {

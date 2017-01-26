@@ -1,0 +1,33 @@
+.toggle_container {
+  text-align: left;
+  width: 60%;
+  margin: 20px auto 0 auto;
+  padding-left: 25%;
+  @media (max-width: $mobile-width) {
+    margin-left: 150px;
+    padding-left: 0;
+  }
+  input {
+    height: 50px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+    padding-left: 20px;
+  }
+  span {
+    height: 50px;
+    padding: 15px;
+    display: block;
+  }
+}
+
+.active_toggle {
+  @include category_toggle;
+  background-color: lighten($detail-color, 15%);
+  background-size: 80%;
+}
+
+.not_active_toggle {
+  @include category_toggle;
+  background-color: $accent-color;
+  background-size: 80%;
+}

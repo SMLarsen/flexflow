@@ -49,16 +49,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'ResultsController',
 			controllerAs: 'rc'
 		})
-		.when('/nav', {
-			templateUrl: '/views/templates/nav.html',
-			controller: 'NavController',
-			controllerAs: 'nc'
-		})
-		.when('/savingsgoals', {
-			templateUrl: '/views/templates/savingsgoals.html',
-			controller: 'SavingsGoalsController',
-			controllerAs: 'sg'
-		})
 		.otherwise({
 			redirectTo: 'home'
 		});

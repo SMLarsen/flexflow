@@ -42,7 +42,7 @@ router.get("/flowitems/totalbyyear", function(req, res) {
         // console.log('queryString:', queryString);
         client.query(queryString, [req.budgetID], function(err, result) {
             if (err) {
-                console.log('Error getting flow items yearly total', err);
+                // console.log('Error getting flow items yearly total', err);
                 res.sendStatus(500);
             } else {
                 res.send(result.rows[0]);
@@ -68,7 +68,7 @@ router.get("/items/:categoryID", function(req, res) {
                 client.release();
             } else {
                 res.send(result.rows[0]);
-                console.log('Budget items monthly total retrieved');
+                //console.log('Budget items monthly total retrieved');
                 client.release();
             }
         });
